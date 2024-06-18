@@ -1,5 +1,5 @@
 {
-  "name": "pin-hcms",
+  "name": "pin-hcms-core",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -12,10 +12,9 @@
     "lint": "cross-env NODE_OPTIONS=--no-deprecation next lint",
     "ci": "payload migrate && yarn build",
     "generate:types": "payload generate:types",
-    "bump-payload": "tsx ./src/scripts/bump-payload.ts ./package.json && pnpm i",
+    "bump-payload": "tsx ./bump-payload.ts ./package.json && pnpm i",
     "format": "prettier . --check",
-    "format:fix": "prettier . --write",
-    "pull": "git pull && git submodule update"
+    "format:fix": "prettier . --write"
   },
   "dependencies": {
     "@auth/core": "^0.31.0",
