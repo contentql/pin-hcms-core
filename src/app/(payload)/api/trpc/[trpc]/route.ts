@@ -2,7 +2,7 @@ import { fetchRequestHandler } from '@trpc/server/adapters/fetch'
 import { type NextRequest } from 'next/server'
 
 import { createTRPCContext } from '@/trpc'
-import { appRouter } from '@/trpc/router'
+import { appRouter } from '@/trpc/routers'
 
 export const maxDuration = 200
 
