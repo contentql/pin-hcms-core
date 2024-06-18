@@ -1,7 +1,7 @@
 import configPromise from '@payload-config'
 import { getPayloadHMR } from '@payloadcms/next/utilities'
 
-import { getCurrentUser } from '@/lib/payload'
+import { getCurrentUser } from '@/lib/authjs-payload-adapter/payload'
 
 export const revalidate = 60000
 

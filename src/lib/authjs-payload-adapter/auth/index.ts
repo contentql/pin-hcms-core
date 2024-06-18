@@ -4,7 +4,7 @@ import NextAuth from 'next-auth'
 import { getFieldsToSign as getFieldsToSignPayload } from 'payload/auth'
 import 'server-only'
 
-import { getPayload } from '@/lib/payload'
+import { getPayload } from '@/lib/authjs-payload-adapter/payload'
 import { Users } from '@/payload/collections/Users'
 import { COLLECTION_SLUG_USER } from '@/payload/collections/constants'
 

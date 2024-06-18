@@ -1,8 +1,14 @@
 import type { CollectionConfig } from 'payload/types'
 
-import { ADMIN_ACCESS_ROLES, DEFAULT_USER_ROLE } from '@/lib/auth/config'
-import { getAuthJsCookieName, getCurrentUser } from '@/lib/auth/edge'
-import { revalidateUser } from '@/lib/payload/actions'
+import {
+  ADMIN_ACCESS_ROLES,
+  DEFAULT_USER_ROLE,
+} from '@/lib/authjs-payload-adapter/auth/config'
+import {
+  getAuthJsCookieName,
+  getCurrentUser,
+} from '@/lib/authjs-payload-adapter/auth/edge'
+import { revalidateUser } from '@/lib/authjs-payload-adapter/payload/actions'
 import { isAdmin, isAdminOrCurrentUser } from '@/payload/access'
 import {
   ADMIN_AUTH_GROUP,

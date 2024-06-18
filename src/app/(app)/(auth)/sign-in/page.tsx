@@ -1,7 +1,7 @@
 import { redirect } from 'next/navigation'
 
 import SignInForm from '@/app/(app)/(auth)/sign-in/_components/SignInForm'
-import { auth } from '@/lib/auth'
+import { auth } from '@/lib/authjs-payload-adapter/auth'
 
 const SignInPage = async () => {
   const session = await auth()

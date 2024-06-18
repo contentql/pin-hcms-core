@@ -3,7 +3,7 @@
 import { CredentialsSignin } from 'next-auth'
 import { revalidatePath } from 'next/cache'
 
-import { signIn } from '@/lib/auth'
+import { signIn } from '@/lib/authjs-payload-adapter/auth'
 
 export type SignInWithCredentialsResponse =
   | { success: true }

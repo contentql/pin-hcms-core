@@ -3,13 +3,15 @@ import { parseCookie } from 'next/dist/compiled/@edge-runtime/cookies'
 import { type NextRequest, NextResponse } from 'next/server'
 import { match } from 'path-to-regexp'
 
-import authConfig, { SESSION_STRATEGY } from '@/lib/auth/config'
+import authConfig, {
+  SESSION_STRATEGY,
+} from '@/lib/authjs-payload-adapter/auth/config'
 import {
   AUTHJS_COOKIE_NAME,
   SECURE_AUTHJS_COOKIE_NAME,
   findAuthJsCookie,
   getAuthJsToken,
-} from '@/lib/auth/edge'
+} from '@/lib/authjs-payload-adapter/auth/edge'
 import { isWithinExpirationDate } from '@/utils/isWithinExpirationDate'
 
 export const config = {

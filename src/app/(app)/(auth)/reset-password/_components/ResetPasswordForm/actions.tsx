@@ -6,9 +6,9 @@ import { APIError } from 'payload/errors'
 import { Resend } from 'resend'
 
 import ResetPasswordEmailTemplate from '@/emails/reset-password'
-import { signIn } from '@/lib/auth'
-import { getUserByEmail } from '@/lib/auth/edge'
-import { getPayload } from '@/lib/payload'
+import { signIn } from '@/lib/authjs-payload-adapter/auth'
+import { getUserByEmail } from '@/lib/authjs-payload-adapter/auth/edge'
+import { getPayload } from '@/lib/authjs-payload-adapter/payload'
 import { COLLECTION_SLUG_USER } from '@/payload/collections/constants'
 
 const resend = new Resend(env.RESEND_API_KEY)

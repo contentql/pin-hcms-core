@@ -3,10 +3,10 @@
 import { CredentialsSignin } from 'next-auth'
 import { revalidatePath } from 'next/cache'
 
-import { signIn } from '@/lib/auth'
-import { getUserByEmail } from '@/lib/auth/adapter'
-import { DEFAULT_USER_ROLE } from '@/lib/auth/config'
-import { getPayload } from '@/lib/payload'
+import { signIn } from '@/lib/authjs-payload-adapter/auth'
+import { getUserByEmail } from '@/lib/authjs-payload-adapter/auth/adapter'
+import { DEFAULT_USER_ROLE } from '@/lib/authjs-payload-adapter/auth/config'
+import { getPayload } from '@/lib/authjs-payload-adapter/payload'
 import { COLLECTION_SLUG_USER } from '@/payload/collections/constants'
 
 import { SignUpFormData } from './validation'

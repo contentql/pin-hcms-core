@@ -3,7 +3,7 @@ import type { User } from '@payload-types'
 import { headers as getHeaders } from 'next/headers'
 import { getPayload as getPayloadInstance } from 'payload'
 
-import { getCurrentUser as edgeSafeGetCurrentUser } from '@/lib/auth/edge'
+import { getCurrentUser as edgeSafeGetCurrentUser } from '@/lib/authjs-payload-adapter/auth/edge'
 
 export async function getPayload(): ReturnType<typeof getPayloadInstance> {
   return getPayloadInstance({ config: await configPromise })

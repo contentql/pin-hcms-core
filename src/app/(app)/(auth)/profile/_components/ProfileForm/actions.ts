@@ -5,10 +5,14 @@ import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { getFieldsToSign } from 'payload/auth'
 
-import { auth, signOut, unstable_update } from '@/lib/auth'
-import { FIELDS_USER_IS_ALLOWED_TO_CHANGE } from '@/lib/auth/config'
-import { getPayload } from '@/lib/payload'
-import { revalidateUser } from '@/lib/payload/actions'
+import {
+  auth,
+  signOut,
+  unstable_update,
+} from '@/lib/authjs-payload-adapter/auth'
+import { FIELDS_USER_IS_ALLOWED_TO_CHANGE } from '@/lib/authjs-payload-adapter/auth/config'
+import { getPayload } from '@/lib/authjs-payload-adapter/payload'
+import { revalidateUser } from '@/lib/authjs-payload-adapter/payload/actions'
 import { Users } from '@/payload/collections/Users'
 import { COLLECTION_SLUG_USER } from '@/payload/collections/constants'
 

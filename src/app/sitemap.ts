@@ -1,7 +1,7 @@
 import { env } from '@env'
 import type { MetadataRoute } from 'next'
 
-import { getPayload } from '@/lib/payload'
+import { getPayload } from '@/lib/authjs-payload-adapter/payload'
 import { COLLECTION_SLUG_PAGE } from '@/payload/collections/constants'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
