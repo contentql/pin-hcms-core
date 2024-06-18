@@ -42,7 +42,7 @@ export default function Email({
           fontStyle='normal'
         />
       </Head>
-      <Preview>{appName} reset your password</Preview>
+      <Preview>{appName} Reset your password</Preview>
       <Body className='bg-zinc-900 text-zinc-300'>
         <Container className='rounded-lg border border-solid border-white/[0.03] bg-zinc-800 p-12'>
           <Row>
@@ -56,7 +56,7 @@ export default function Email({
             </Column>
             <Column>
               <Heading as='h2' className='text-2xl font-bold text-white'>
-                Reset Passoword
+                Reset Password
               </Heading>
             </Column>
           </Row>
@@ -68,8 +68,7 @@ export default function Email({
             </Text>
             <Button
               className='cursor-pointer rounded-md border border-solid border-blue-700 bg-blue-600 px-4 py-2 text-white'
-              href={resetPasswordLink}
-            >
+              href={resetPasswordLink}>
               Reset password
             </Button>
             <Text className='dark:text-zinc-300'>
