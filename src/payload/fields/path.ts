@@ -1,4 +1,4 @@
-import { getParents } from '@node_modules/@payloadcms/plugin-nested-docs/dist/utilities/getParents'
+import { getParents } from '@payloadcms/plugin-nested-docs'
 import deepmerge from 'deepmerge'
 import type { Field, Payload } from 'payload'
 import { APIError } from 'payload'
