@@ -26,14 +26,12 @@ export default function DeleteAccountSection() {
             className='h-16 w-16 rounded-2xl border border-blue-100 bg-blue-50 p-3 text-blue-400'
             fill='none'
             viewBox='0 0 24 24'
-            stroke='currentColor'
-          >
+            stroke='currentColor'>
             <path
-              stroke-linecap='round'
-              stroke-linejoin='round'
-              stroke-width='2'
-              d='M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z'
-            ></path>
+              strokeLinecap='round'
+              strokeLinejoin='round'
+              strokeWidth='2'
+              d='M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z'></path>
           </svg>
           <div className='ml-3 flex flex-col'>
             <div className='font-medium leading-none'>
@@ -46,8 +44,7 @@ export default function DeleteAccountSection() {
         </div>
         <button
           className='flex-no-shrink ml-4 rounded-full border-2 border-red-500 bg-red-500 px-5 py-2 text-sm font-medium tracking-wider text-white shadow-sm hover:shadow-lg'
-          onClick={() => setOpen(true)}
-        >
+          onClick={() => setOpen(true)}>
           Delete
         </button>
       </div>
@@ -58,8 +55,7 @@ export default function DeleteAccountSection() {
           className='relative z-10'
           aria-labelledby='modal-title'
           role='dialog'
-          aria-modal={false}
-        >
+          aria-modal={false}>
           <div className='fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity'></div>
 
           <div className='fixed inset-0 z-10 w-screen overflow-y-auto'>
@@ -74,11 +70,10 @@ export default function DeleteAccountSection() {
                         viewBox='0 0 24 24'
                         stroke-width='1.5'
                         stroke='currentColor'
-                        aria-hidden='true'
-                      >
+                        aria-hidden='true'>
                         <path
-                          stroke-linecap='round'
-                          stroke-linejoin='round'
+                          strokeLinecap='round'
+                          strokeLinejoin='round'
                           d='M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z'
                         />
                       </svg>
@@ -86,8 +81,7 @@ export default function DeleteAccountSection() {
                     <div className='mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left'>
                       <h3
                         className='text-base font-semibold leading-6 text-gray-900'
-                        id='modal-title'
-                      >
+                        id='modal-title'>
                         Delete account
                       </h3>
                       <div className='mt-2'>
@@ -100,8 +94,7 @@ export default function DeleteAccountSection() {
                       <div className='pt-4'>
                         <label
                           htmlFor='confirmDelete'
-                          className='block text-sm font-medium'
-                        >
+                          className='block text-sm font-medium'>
                           Type{' '}
                           <span className='rounded-md border bg-zinc-50 p-0.5 italic '>
                             delete
@@ -133,16 +126,14 @@ export default function DeleteAccountSection() {
                     <button
                       type='button'
                       disabled={!isAllowedToDelete}
-                      className='inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 disabled:cursor-not-allowed disabled:bg-opacity-50 sm:ml-3 sm:w-auto'
-                    >
+                      className='inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 disabled:cursor-not-allowed disabled:bg-opacity-50 sm:ml-3 sm:w-auto'>
                       {isPending ? 'Deleting...' : 'Delete Account'}
                     </button>
                   </form>
                   <button
                     type='button'
                     onClick={() => setOpen(false)}
-                    className='mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto'
-                  >
+                    className='mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto'>
                     Cancel
                   </button>
                 </div>

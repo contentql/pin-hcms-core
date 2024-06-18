@@ -45,8 +45,7 @@ export const TracingBeam = ({
   return (
     <motion.div
       ref={ref}
-      className={cn('relative mx-auto h-full w-full max-w-6xl', className)}
-    >
+      className={cn('relative mx-auto h-full w-full max-w-6xl', className)}>
       <div className='absolute -left-4 top-28 md:-left-20'>
         <motion.div
           transition={{
@@ -59,8 +58,7 @@ export const TracingBeam = ({
                 ? 'none'
                 : 'rgba(0, 0, 0, 0.24) 0px 3px 8px',
           }}
-          className='border-netural-200 ml-[27px] flex h-4 w-4 items-center justify-center rounded-full border shadow-sm'
-        >
+          className='border-netural-200 ml-[27px] flex h-4 w-4 items-center justify-center rounded-full border shadow-sm'>
           <motion.div
             transition={{
               duration: 0.2,
@@ -80,8 +78,7 @@ export const TracingBeam = ({
           width='22'
           height={svgHeight} // Set the SVG height
           className=' ml-4 block'
-          aria-hidden='true'
-        >
+          aria-hidden='true'>
           <motion.path
             d={`M 1 0V -36 l 18 24 V ${svgHeight * 0.8} l -18 24V ${svgHeight}`}
             fill='none'
@@ -89,8 +86,7 @@ export const TracingBeam = ({
             strokeOpacity='0.16'
             transition={{
               duration: 10,
-            }}
-          ></motion.path>
+            }}></motion.path>
           <motion.path
             d={`M 1 0V -36 l 18 24 V ${svgHeight * 0.8} l -18 24V ${svgHeight}`}
             fill='none'
@@ -99,8 +95,7 @@ export const TracingBeam = ({
             className='motion-reduce:hidden'
             transition={{
               duration: 10,
-            }}
-          ></motion.path>
+            }}></motion.path>
           <defs>
             <motion.linearGradient
               id='gradient'
