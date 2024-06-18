@@ -6,6 +6,7 @@ const nextConfig = {
     outputFileTracingIncludes: {
       '/public': ['./public/**/*'],
     },
+    reactCompiler: false,
   },
   // output: 'standalone',
   reactStrictMode: true,
