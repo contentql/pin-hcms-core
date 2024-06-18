@@ -1,4 +1,4 @@
-import { Block } from 'payload'
+import { Block } from 'payload/types'
 
 export const Test_Block: Block = {
   slug: 'Test',

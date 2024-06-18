@@ -1,6 +1,6 @@
-import { Test } from '@/payload/blocks/Test'
+import RichText from '../../app/(app)/(marketing)/blog/_components/RichText'
 
-import RichText from './RichText'
+import { Test } from '@/payload/blocks/Test'
 
 // const Test = dynamic(() => import('@/payload/blocks/Test') as Promise<any>)
 

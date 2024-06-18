@@ -7,7 +7,7 @@ import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion'
 import { useState } from 'react'
 import { twMerge } from 'tailwind-merge'
 
-import RichText from '@/payload/blocks/RichText'
+import RichText from '@/app/(app)/(marketing)/blog/_components/RichText'
 import { trpc } from '@/trpc/client'
 
 import TagsCard from './tagsCard'
@@ -79,8 +79,7 @@ export function TracingBeamDemo({ slug, data }: { slug: string; data: Blog }) {
               <h2
                 className={twMerge(
                   ' mb-10 text-center text-5xl font-extrabold underline-offset-1 md:mb-20',
-                )}
-              >
+                )}>
                 <span>{dataToUse?.title}</span>
               </h2>
 
@@ -142,8 +141,7 @@ export function TracingBeamDemo({ slug, data }: { slug: string; data: Blog }) {
                   viewport={{
                     once: true,
                   }}
-                  custom={index}
-                >
+                  custom={index}>
                   {(tag?.value as Tag)?.title}
                 </motion.p>
               ))}
@@ -152,7 +150,6 @@ export function TracingBeamDemo({ slug, data }: { slug: string; data: Blog }) {
               <div className='w-full text-xl leading-7 md:w-[90%]'>
                 <RichText
                   content={dataToUse?.description}
-                  blockType={'RichText'}
                   locale={''}
                   blockIndex={0}
                 />
@@ -198,8 +195,7 @@ export const AnimatedTooltip = ({
           className='group  relative -mr-4'
           key={item?.value?.name}
           onMouseEnter={() => setHoveredIndex(item?.value?.id!)}
-          onMouseLeave={() => setHoveredIndex(null)}
-        >
+          onMouseLeave={() => setHoveredIndex(null)}>
           {hoveredIndex === item?.value?.id && (
             <motion.div
               initial={{ opacity: 0, y: 20, scale: 0.6 }}
@@ -219,8 +215,7 @@ export const AnimatedTooltip = ({
                 rotate: rotate,
                 whiteSpace: 'nowrap',
               }}
-              className='absolute -left-1/2 -top-16 z-50 flex translate-x-1/2  flex-col items-center justify-center rounded-md bg-black px-4 py-2 text-xs shadow-xl'
-            >
+              className='absolute -left-1/2 -top-16 z-50 flex translate-x-1/2  flex-col items-center justify-center rounded-md bg-black px-4 py-2 text-xs shadow-xl'>
               <div className='absolute inset-x-10 -bottom-px z-30 h-px w-[20%] bg-gradient-to-r from-transparent via-emerald-500 to-transparent ' />
               <div className='absolute -bottom-px left-10 z-30 h-px w-[40%] bg-gradient-to-r from-transparent via-sky-500 to-transparent ' />
               <div className='relative z-30 text-base font-bold text-white'>
