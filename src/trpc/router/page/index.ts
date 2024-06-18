@@ -1,6 +1,5 @@
 import configPromise from '@payload-config'
 import { getPayloadHMR } from '@payloadcms/next/utilities'
-import { notFound } from 'next/navigation'
 import { z } from 'zod'
 
 import { COLLECTION_SLUG_PAGE } from '@/payload/collections/constants'
@@ -29,12 +28,12 @@ export const pageRouter = router({
           where: { path: { equals: path } },
           depth: 3,
         })
-        if (docs?.length === 0) {
-          notFound()
-        }
-        const page = docs?.at(0)
+        // if (docs?.length === 0) {
+        //   notFound()
+        // }
+        // const page = docs?.at(0)
 
-        return page || null
+        return docs?.at(0) || null
       } catch (error: any) {
         console.log(error)
       }
