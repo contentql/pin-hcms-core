@@ -2,7 +2,7 @@
 
 import { env } from '@env'
 import { revalidatePath } from 'next/cache'
-import { APIError } from 'payload/errors'
+import { APIError } from 'payload'
 import { Resend } from 'resend'
 
 import ResetPasswordEmailTemplate from '@/emails/reset-password'
