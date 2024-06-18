@@ -1,7 +1,7 @@
 import { revalidateUser } from '../payload/actions'
 import { User } from '@payload-types'
 import NextAuth from 'next-auth'
-import { getFieldsToSign as getFieldsToSignPayload } from 'payload/auth'
+import { getFieldsToSign as getFieldsToSignPayload } from 'payload'
 import 'server-only'
 
 import { getPayload } from '@/lib/authjs-payload-adapter/payload'
