@@ -49,6 +49,7 @@ const RenderBlocks: React.FC<RenderBlocksProps> = ({
     <div>
       {dataToUse?.map((block, index) => {
         const Block = blocksJSX[block.blockType as SlugType]
+        
         if (Block) {
           return (
             <div

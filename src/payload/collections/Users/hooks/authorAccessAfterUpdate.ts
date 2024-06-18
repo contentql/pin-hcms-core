@@ -1,5 +1,6 @@
 import { env } from '@env'
-import { APIError, CollectionBeforeChangeHook } from 'payload'
+import { APIError } from 'payload/errors'
+import { CollectionBeforeChangeHook } from 'payload/types'
 
 class CustomAdminError extends APIError {
   constructor(message: string, statusCode: number) {
