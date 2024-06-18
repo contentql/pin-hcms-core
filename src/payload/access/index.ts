@@ -1,4 +1,4 @@
-import { Access } from 'payload'
+import { Access } from 'payload/types'
 
 export const isAdmin: Access = ({ req }) => {
   return req?.user?.role === 'admin'

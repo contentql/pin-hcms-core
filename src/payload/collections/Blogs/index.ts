@@ -4,7 +4,7 @@ import {
   lexicalEditor,
   lexicalHTML,
 } from '@payloadcms/richtext-lexical'
-import { CollectionConfig } from 'payload'
+import type { CollectionConfig } from 'payload/types'
 
 import { slugField } from '@/payload/fields'
 

@@ -1,4 +1,4 @@
-import type { CollectionConfig, Field } from 'payload'
+import type { CollectionConfig, Field } from 'payload/types'
 
 const urlField: Field = {
   name: 'url',

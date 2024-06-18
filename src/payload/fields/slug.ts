@@ -1,5 +1,5 @@
 import deepMerge from 'deepmerge'
-import type { Field, FieldHook } from 'payload'
+import type { Field, FieldHook } from 'payload/types'
 
 const format = (val: string): string =>
   val
