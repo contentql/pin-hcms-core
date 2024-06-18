@@ -177,7 +177,7 @@ export interface Page {
   id: string;
   title: string;
   isHome?: boolean | null;
-  blocks?: TestType[] | null;
+  blocks?: (TestType | RichTextType)[] | null;
   slug?: string | null;
   path?: string | null;
   parent?: (string | null) | Page;
@@ -202,6 +202,30 @@ export interface TestType {
   id?: string | null;
   blockName?: string | null;
   blockType: 'Test';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "RichTextType".
+ */
+export interface RichTextType {
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'RichText';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

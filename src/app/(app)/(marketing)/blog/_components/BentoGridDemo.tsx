@@ -7,7 +7,7 @@ import { useRef, useState } from 'react'
 import {
   BentoGrid,
   BentoGridItem,
-} from '@/app/(app)/(marketing)/blog/_components/Bento-grid'
+} from '@/app/(app)/(marketing)/blog/_components/BentoGrid'
 import { cn } from '@/utils/cn'
 import { formatDate } from '@/utils/dateFormatter'
 
