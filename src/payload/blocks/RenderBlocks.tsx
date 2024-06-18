@@ -5,7 +5,7 @@ import { Page } from '@payload-types'
 import { useLivePreview } from '@payloadcms/live-preview-react'
 import React from 'react'
 
-import { PageNotFound } from '@/components/404'
+import { PageNotFound } from '@/app/(app)/_components/404'
 import { SlugType, blocksJSX } from '@/payload/blocks'
 import { trpc } from '@/trpc/client'
 
@@ -53,8 +53,7 @@ const RenderBlocks: React.FC<RenderBlocksProps> = ({
           return (
             <div
               key={index}
-              className={`${index % 2 === 0 ? 'bg-transparent' : 'bg-[#26304e]'}`}
-            >
+              className={`${index % 2 === 0 ? 'bg-transparent' : 'bg-[#26304e]'}`}>
               <Block {...block} />
             </div>
           )

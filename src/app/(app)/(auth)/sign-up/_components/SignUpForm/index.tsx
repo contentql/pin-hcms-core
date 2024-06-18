@@ -6,7 +6,7 @@ import { useEffect, useState, useTransition } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
-import { signUp } from '@/components/SignUpForm/actions'
+import { signUp } from '@/app/(app)/(auth)/sign-up/_components/SignUpForm/actions'
 
 export const signUpFormSchema = z.object({
   firstName: z.string().min(1, { message: 'First name is required' }),
@@ -148,8 +148,7 @@ const SignUpForm = () => {
             <div>
               <label
                 htmlFor='firstName'
-                className='block text-sm font-medium text-gray-300'
-              >
+                className='block text-sm font-medium text-gray-300'>
                 First Name
               </label>
               <input
@@ -169,8 +168,7 @@ const SignUpForm = () => {
             <div>
               <label
                 htmlFor='lastName'
-                className='block text-sm font-medium text-gray-300'
-              >
+                className='block text-sm font-medium text-gray-300'>
                 Last Name
               </label>
               <input
@@ -190,8 +188,7 @@ const SignUpForm = () => {
             <div>
               <label
                 htmlFor='email'
-                className='block text-sm font-medium text-gray-300'
-              >
+                className='block text-sm font-medium text-gray-300'>
                 E-Mail
               </label>
               <input
@@ -211,8 +208,7 @@ const SignUpForm = () => {
             <div>
               <label
                 htmlFor='password'
-                className='block text-sm font-medium text-gray-300'
-              >
+                className='block text-sm font-medium text-gray-300'>
                 Password
               </label>
               <input
@@ -233,8 +229,7 @@ const SignUpForm = () => {
               <button
                 type='submit'
                 className='w-full rounded-md border-[1px] border-indigo-600 bg-indigo-600 p-2 text-white transition-all duration-500 hover:bg-indigo-700 focus:outline-none focus:ring-1 focus:ring-gray-200 focus:ring-offset-1 disabled:cursor-not-allowed disabled:bg-opacity-50'
-                disabled={isPending}
-              >
+                disabled={isPending}>
                 {isPending ? 'Creating account...' : 'Sign Up'}
               </button>
             </div>
