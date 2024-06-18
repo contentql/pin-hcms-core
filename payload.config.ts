@@ -19,6 +19,7 @@ import { Blogs } from '@/payload/collections/Blogs'
 import { Media } from '@/payload/collections/Media'
 import { Pages } from '@/payload/collections/Pages'
 import { Sessions } from '@/payload/collections/Sessions'
+import { Tags } from '@/payload/collections/Tags'
 import { Users } from '@/payload/collections/Users'
 import { COLLECTION_SLUG_PAGE } from '@/payload/collections/constants'
 import { siteSettings } from '@/payload/globals/SiteSettings'
@@ -31,8 +32,6 @@ import {
   generateTitlePrompt,
   generateURL,
 } from '@/utils/seo'
-
-import { Tags } from './src/payload/collections/Tags'
 
 // import {
 //   generateDescription,
