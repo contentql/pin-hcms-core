@@ -1,10 +1,9 @@
 // import { payloadCloud } from '@payloadcms/plugin-cloud'
 import { env } from '@env'
-import { seo } from '@payload-enchants/seo'
 import { mongooseAdapter } from '@payloadcms/db-mongodb'
 import { resendAdapter } from '@payloadcms/email-resend'
 import { nestedDocsPlugin } from '@payloadcms/plugin-nested-docs'
-// import { seoPlugin } from '@payloadcms/plugin-seo'
+import { seoPlugin } from '@payloadcms/plugin-seo'
 import {
   FixedToolbarFeature,
   lexicalEditor,
@@ -27,18 +26,11 @@ import Icon from '@/payload/style/icons/Icon'
 import Logo from '@/payload/style/icons/Logo'
 import generateBreadcrumbsUrl from '@/utils/generateBreadcrumbsUrl'
 import {
-  generateDescriptionPrompt,
+  generateDescription,
   generateImage,
-  generateTitlePrompt,
+  generateTitle,
   generateURL,
 } from '@/utils/seo'
-
-// import {
-//   generateDescription,
-//   generateImage,
-//   generateTitle,
-//   generateURL,
-// } from '@/utils/seo'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -115,24 +107,14 @@ export default buildConfig({
         region: env.S3_REGION,
       },
     }),
-    // seoPlugin({
-    //   collections: ['blogs'],
-    //   uploadsCollection: 'media',
-    //   tabbedUI: true,
-    //   generateTitle,
-    //   generateDescription,
-    //   generateImage,
-    //   generateURL,
-    // }),
-    seo({
+    seoPlugin({
       collections: ['blogs'],
       uploadsCollection: 'media',
       tabbedUI: true,
-      generateTitleAi: generateTitlePrompt,
-      generateDescriptionAi: generateDescriptionPrompt,
+      generateTitle,
+      generateDescription,
       generateImage,
       generateURL,
-      openaiApiKey: env.OPENAPI_KEY,
     }),
   ],
 

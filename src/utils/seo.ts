@@ -4,7 +4,7 @@ import {
   GenerateImage,
   GenerateTitle,
   GenerateURL,
-} from 'node_modules/@payloadcms/plugin-seo/dist/types'
+} from '@payloadcms/plugin-seo/types'
 
 export const generateTitle: GenerateTitle = (data: any) => {
   const title =
