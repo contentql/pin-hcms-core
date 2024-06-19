@@ -6,18 +6,19 @@ import { serverClient } from '@/trpc/serverClient'
 
 interface PageProps {
   params: {
-    author: string
+    authorName: string
   }
 }
 
 const Author = async ({ params }: PageProps) => {
   try {
     const blogs = await serverClient.author.getBlogsByAuthorName({
-      author: params?.author,
+      authorName: params?.authorName,
     })
     const author = await serverClient.author.getAuthorByName({
-      author: params?.author,
+      authorName: params?.authorName,
     })
+
     return (
       <>
         <AuthorDetails author={author as User} />

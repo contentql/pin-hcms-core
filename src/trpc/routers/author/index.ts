@@ -43,14 +43,15 @@ export const authorRouter = router({
       throw new Error(error.message)
     }
   }),
+
   getBlogsByAuthorName: publicProcedure
     .input(
       z.object({
-        author: z.string(),
+        authorName: z.string(),
       }),
     )
     .query(async ({ input }) => {
-      const { author } = input
+      const { authorName } = input
       try {
         const { docs: blogs } = await payload.find({
           collection: 'blogs',
@@ -59,9 +60,10 @@ export const authorRouter = router({
 
         const blogsRelatedWithAuthor = blogs.filter(blog =>
           blog.author?.find(
-            blogAuthor => (blogAuthor.value as User).name === author,
+            blogAuthor => (blogAuthor.value as User).name === authorName,
           ),
         )
+
         return blogsRelatedWithAuthor
       } catch (error: any) {
         console.log(error)
@@ -72,18 +74,18 @@ export const authorRouter = router({
   getAuthorByName: publicProcedure
     .input(
       z.object({
-        author: z.string(),
+        authorName: z.string(),
       }),
     )
     .query(async ({ input }) => {
-      const { author } = input
+      const { authorName } = input
       try {
         const { docs: user } = await payload.find({
           collection: 'users',
           draft: false,
           where: {
             name: {
-              equals: author,
+              equals: authorName,
             },
           },
         })

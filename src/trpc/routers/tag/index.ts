@@ -11,21 +11,21 @@ export const tagRouter = router({
   getBlogs: publicProcedure
     .input(
       z.object({
-        tag: z.string(),
+        tagSlug: z.string(),
       }),
     )
     .query(async ({ input }) => {
       try {
-        const { tag } = input
+        const { tagSlug } = input
+
         const { docs: tagData } = await payload.find({
           collection: 'tags',
           where: {
             slug: {
-              equals: tag,
+              equals: tagSlug,
             },
           },
         })
-
         const { docs: blogsData } = await payload.find({
           collection: 'blogs',
           where: {
@@ -34,12 +34,14 @@ export const tagRouter = router({
             },
           },
         })
+
         return { blogsData, tagData }
       } catch (error: any) {
         console.log(error)
         throw new Error(error.message)
       }
     }),
+
   getAllTags: publicProcedure.query(async () => {
     try {
       const { docs: allTags } = await payload.find({

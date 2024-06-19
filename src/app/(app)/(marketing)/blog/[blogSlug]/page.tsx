@@ -7,7 +7,7 @@ import { serverClient } from '@/trpc/serverClient'
 import { generateMeta } from '@/utils/generate-meta'
 
 interface PageProps {
-  params: { slug: string }
+  params: { blogSlug: string }
   searchParams: {
     draft: string
   }
@@ -16,9 +16,9 @@ interface PageProps {
 export const revalidate = 0
 
 const Page = async ({ params }: PageProps) => {
-  const { slug } = params
+  const { blogSlug } = params
 
-  const decodedSlug = decodeURIComponent(slug)
+  const decodedSlug = decodeURIComponent(blogSlug)
 
   const blog = await serverClient.blog.getBlogBySlug({ slug: decodedSlug })
   const blogsData = await serverClient.blog.getAllBlogs()

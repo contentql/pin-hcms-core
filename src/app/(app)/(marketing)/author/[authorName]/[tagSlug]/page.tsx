@@ -6,16 +6,16 @@ import { serverClient } from '@/trpc/serverClient'
 
 interface PageProps {
   params: {
-    author: string
-    tag: string
+    authorName: string
+    tagSlug: string
   }
 }
 
 async function page({ params }: PageProps) {
-  console.log('params', params)
   const blogs = await serverClient.tag.getBlogs({
-    tag: params?.tag,
+    tagSlug: params?.tagSlug,
   })
+
   return (
     <>
       <AuthorTagDetails data={blogs?.tagData.at(0) as Tag} />
