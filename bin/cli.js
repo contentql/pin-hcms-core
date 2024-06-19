@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-const { execsync } = require('child_process')
+import { execsync } from 'child_process'
 
 const runCommand = command => {
   try {
