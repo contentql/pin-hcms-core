@@ -11,12 +11,7 @@ const Icon: React.FC = () => {
         height={28}
         alt='ContentQL Favicon'
       /> */}
-      <img
-        src='/images/favicon.ico'
-        width={28}
-        height={28}
-        alt='ContentQL Favicon'
-      />
+      <img src='/favicon.ico' width={28} height={28} alt='ContentQL Favicon' />
     </div>
   )
 }

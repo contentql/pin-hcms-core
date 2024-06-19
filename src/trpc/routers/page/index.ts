@@ -1,5 +1,6 @@
 import configPromise from '@payload-config'
 import { getPayloadHMR } from '@payloadcms/next/utilities'
+import { TRPCError } from '@trpc/server'
 import { z } from 'zod'
 
 import { COLLECTION_SLUG_PAGE } from '@/payload/collections/constants'
@@ -23,19 +24,29 @@ export const pageRouter = router({
         if (!path) path = '/'
         if (Array.isArray(path)) path = path.join('/')
         if (path !== '/') path = ensurePath(path).replace(/\/$/, '')
+
         const { docs } = await payload.find({
           collection: COLLECTION_SLUG_PAGE,
           where: { path: { equals: path } },
           depth: 3,
         })
-        // if (docs?.length === 0) {
-        //   notFound()
-        // }
-        // const page = docs?.at(0)
 
-        return docs?.at(0) || null
+        if (!docs?.length) {
+          throw new TRPCError({ code: 'NOT_FOUND', message: 'Page not found' })
+        }
+
+        return docs.at(0)
       } catch (error: any) {
-        console.log(error)
+        if (error instanceof TRPCError) {
+          throw error
+        }
+
+        console.error('Error fetching page data:', error)
+
+        throw new TRPCError({
+          code: 'INTERNAL_SERVER_ERROR',
+          message: 'Internal server error',
+        })
       }
     }),
 

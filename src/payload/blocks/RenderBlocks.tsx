@@ -5,7 +5,6 @@ import { Page } from '@payload-types'
 import { useLivePreview } from '@payloadcms/live-preview-react'
 import React from 'react'
 
-import { PageNotFound } from '@/components/404'
 import { SlugType, blocksJSX } from '@/payload/blocks'
 import { trpc } from '@/trpc/client'
 
@@ -40,9 +39,9 @@ const RenderBlocks: React.FC<RenderBlocksProps> = ({
   // if (isPageLoading) {
   //   return <Loading />
   // } else {
-  if (!pageData) {
-    return <PageNotFound />
-  }
+  // if (!pageData) {
+  //   return <PageNotFound />
+  // }
   // }
 
   return (

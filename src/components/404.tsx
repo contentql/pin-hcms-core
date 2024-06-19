@@ -1,28 +1,6 @@
 'use client'
 
-import { usePathname, useRouter } from 'next/navigation'
-import { useEffect, useState } from 'react'
-
 export function PageNotFound() {
-  const [seedingStatus, setSeedingStatus] = useState('')
-  const [dots, setDots] = useState('')
-
-  const pathname = usePathname()
-  const router = useRouter()
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setDots(prevDots => {
-        if (prevDots.length < 3) {
-          return prevDots + '.'
-        }
-        return ''
-      })
-    }, 300)
-
-    return () => clearInterval(interval)
-  }, [])
-
   return (
     <section>
       <div className='bg-black text-white'>
