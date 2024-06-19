@@ -1,6 +1,16 @@
 'use client'
 
+import { usePathname } from 'next/navigation'
+
+import { trpc } from '@/trpc/client'
+
 export function PageNotFound() {
+  const pathname = usePathname()
+
+  const { data: pageData } = trpc.page.getPageData.useQuery({ path: pathname })
+
+  if (pageData) window.location.reload()
+
   return (
     <section>
       <div className='bg-black text-white'>
