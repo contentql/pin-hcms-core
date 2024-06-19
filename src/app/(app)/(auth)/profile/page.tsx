@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation'
 
-import ProfileForm from '@/app/(app)/(auth)/profile/_components/ProfileForm'
+import ProfileForm from '@/components/ProfileForm'
 import { getCurrentUser } from '@/lib/authjs-payload-adapter/payload'
 
 const ProfilePage = async () => {

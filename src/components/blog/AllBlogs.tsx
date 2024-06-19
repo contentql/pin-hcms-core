@@ -2,7 +2,7 @@
 
 import { Blog, Tag } from '@payload-types'
 
-import { BentoGridDemo } from '@/app/(app)/(marketing)/blog/_components/BentoGridDemo'
+import { BentoGridDemo } from '@/components/blog/BentoGridDemo'
 import { trpc } from '@/trpc/client'
 
 import BlogHeroSection from './BlogHeroSection'

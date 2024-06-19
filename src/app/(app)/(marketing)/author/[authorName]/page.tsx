@@ -1,7 +1,7 @@
-import AuthorBlogs from '../_components/AuthorBlogs'
-import AuthorDetails from '../_components/AuthorDetails'
 import { User } from '@payload-types'
 
+import AuthorBlogs from '@/components/author/AuthorBlogs'
+import AuthorDetails from '@/components/author/AuthorDetails'
 import { serverClient } from '@/trpc/serverClient'
 
 interface PageProps {

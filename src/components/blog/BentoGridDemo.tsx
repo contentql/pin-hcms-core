@@ -4,10 +4,7 @@ import { Blog, Media } from '@payload-types'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useRef, useState } from 'react'
 
-import {
-  BentoGrid,
-  BentoGridItem,
-} from '@/app/(app)/(marketing)/blog/_components/BentoGrid'
+import { BentoGrid, BentoGridItem } from '@/components/blog/BentoGrid'
 import { cn } from '@/utils/cn'
 import { formatDate } from '@/utils/dateFormatter'
 

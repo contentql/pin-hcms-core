@@ -1,8 +1,8 @@
-import { HorizontalScrollCarousel } from '../_components/HorizontalScrollCarousel'
-import { TracingBeamDemo } from '../_components/TracingBeamDemo'
 import { Blog } from '@payload-types'
 import { Metadata } from 'next'
 
+import { HorizontalScrollCarousel } from '@/components/blog/HorizontalScrollCarousel'
+import { TracingBeamDemo } from '@/components/blog/TracingBeamDemo'
 import { serverClient } from '@/trpc/serverClient'
 import { generateMeta } from '@/utils/generate-meta'
 

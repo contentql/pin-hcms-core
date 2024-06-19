@@ -7,7 +7,7 @@ import { type ComponentProps, useEffect, useState, useTransition } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
-import { signInWithCredentials } from '@/app/(app)/(auth)/sign-in/_components/SignInForm/actions'
+import { signInWithCredentials } from '@/components/SignInForm/actions'
 
 export const loginFormSchema = z.object({
   email: z

@@ -6,7 +6,7 @@ import { useEffect, useState, useTransition } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
-import { signUp } from '@/app/(app)/(auth)/sign-up/_components/SignUpForm/actions'
+import { signUp } from '@/components/SignUpForm/actions'
 
 export const signUpFormSchema = z.object({
   firstName: z.string().min(1, { message: 'First name is required' }),

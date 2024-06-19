@@ -5,7 +5,7 @@ import { Page } from '@payload-types'
 import { useLivePreview } from '@payloadcms/live-preview-react'
 import React from 'react'
 
-import { PageNotFound } from '@/app/(app)/_components/404'
+import { PageNotFound } from '@/components/404'
 import { SlugType, blocksJSX } from '@/payload/blocks'
 import { trpc } from '@/trpc/client'
 
@@ -49,7 +49,7 @@ const RenderBlocks: React.FC<RenderBlocksProps> = ({
     <div>
       {dataToUse?.map((block, index) => {
         const Block = blocksJSX[block.blockType as SlugType]
-        
+
         if (Block) {
           return (
             <div

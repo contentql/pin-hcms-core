@@ -1,18 +1,19 @@
-import { BentoGridDemo } from '../../blog/_components/BentoGridDemo'
-import TagDetails from '../_components/TagDetails'
 import { Blog } from '@payload-types'
 
+import { BentoGridDemo } from '@/components/blog/BentoGridDemo'
+import TagDetails from '@/components/tag/TagDetails'
 import { serverClient } from '@/trpc/serverClient'
 
-const page = async ({
+interface PageProps {
   params: {
-    tag: [tagId],
-  },
-}: {
-  params: { tag: string[] }
-}) => {
+    tagSlug: string
+  }
+}
+
+const page = async ({ params }: PageProps) => {
   try {
-    const blogs = await serverClient.tag.getBlogs({ tag: tagId })
+    const blogs = await serverClient.tag.getBlogs({ tagSlug: params?.tagSlug })
+
     return (
       <div>
         <TagDetails data={blogs?.tagData.at(0) as any} />
