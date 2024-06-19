@@ -1,8 +1,8 @@
 {
-  "name": "pin-hcms-core",
+  "name": "create-cql-app",
   "version": "0.1.0",
-  "private": true,
   "type": "module",
+  "bin": "./bin/cli.js",
   "scripts": {
     "dev": "cross-env NODE_OPTIONS=--no-deprecation next dev",
     "devsafe": "rm -rf .next && cross-env NODE_OPTIONS=--no-deprecation next dev",
