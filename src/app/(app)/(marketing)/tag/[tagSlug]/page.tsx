@@ -1,7 +1,7 @@
 import { Blog } from '@payload-types'
 
-import { BentoGridDemo } from '@/components/blog/BentoGridDemo'
-import TagDetails from '@/components/tag/TagDetails'
+import { BentoGridDemo } from '@/components/marketing/blog/BentoGridDemo'
+import TagDetails from '@/components/marketing/tag/TagDetails'
 import { serverClient } from '@/trpc/serverClient'
 
 interface PageProps {

@@ -1,7 +1,7 @@
 import { Blog, Tag } from '@payload-types'
 
-import AuthorTagDetails from '@/components/author/AuthorTagDetails'
-import BlogsByTag from '@/components/author/BlogsByTag'
+import AuthorTagDetails from '@/components/marketing/author/AuthorTagDetails'
+import BlogsByTag from '@/components/marketing/author/BlogsByTag'
 import { serverClient } from '@/trpc/serverClient'
 
 interface PageProps {

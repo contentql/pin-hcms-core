@@ -1,4 +1,4 @@
-import AllBlogs from '@/components/blog/AllBlogs'
+import AllBlogs from '@/components/marketing/blog/AllBlogs'
 import { serverClient } from '@/trpc/serverClient'
 
 const page = async () => {

@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation'
 
-import SignInForm from '@/components/SignInForm'
+import SignInForm from '@/components/auth/SignInForm'
 import { auth } from '@/lib/authjs-payload-adapter/auth'
 
 const SignInPage = async () => {

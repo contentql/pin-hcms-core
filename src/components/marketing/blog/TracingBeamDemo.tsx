@@ -7,7 +7,7 @@ import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion'
 import { useState } from 'react'
 import { twMerge } from 'tailwind-merge'
 
-import RichText from '@/components/blog/RichText'
+import RichText from '@/components/marketing/blog/RichText'
 import { trpc } from '@/trpc/client'
 
 import TagsCard from './tagsCard'
