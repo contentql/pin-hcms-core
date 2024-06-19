@@ -1,9 +1,8 @@
 #!/usr/bin/env node
-import { execsync } from 'child_process'
 
 const runCommand = command => {
   try {
-    execsync(`${command}`, { stdio: 'inherit' })
+    execSync(`${command}`, { stdio: 'inherit' })
     return true
   } catch (error) {
     console.error(`Failed to execute the command: ${command}`, error)
