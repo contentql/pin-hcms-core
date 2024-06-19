@@ -10,7 +10,7 @@ const runCommand = command => {
   }
 }
 
-const repoName = process.env.argv[2]
+const repoName = process.argv[2]
 const gitCheckoutCommand = `git clone --depth 1 https://github.com/contentql/pin-hcms-core ${repoName}`
 const installDepsCommand = `cd ${repoName} && pnpm i`
 
