@@ -44,7 +44,7 @@
     "framer-motion": "12.0.0-alpha.0",
     "graphql": "^16.8.2",
     "next": "15.0.0-canary.35",
-    "next-auth": "5.0.0-beta.19",
+    "next-auth": "5.0.0-beta.18",
     "path-to-regexp": "^6.2.2",
     "payload": "3.0.0-beta.53",
     "prettier": "^3.2.5",
