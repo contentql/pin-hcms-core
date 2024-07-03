@@ -1,29 +1,38 @@
 import { User } from '@payload-types'
 
-import AuthorBlogs from '@/components/marketing/author/AuthorBlogs'
-import AuthorDetails from '@/components/marketing/author/AuthorDetails'
+import AuthorPostsView from '@/components/marketing/author'
 import { serverClient } from '@/trpc/serverClient'
 
 interface PageProps {
   params: {
     authorName: string
   }
+  searchParams: {
+    tag: string
+  }
 }
 
-const Author = async ({ params }: PageProps) => {
+const Author = async ({ params, searchParams }: PageProps) => {
   try {
-    const blogs = await serverClient.author.getBlogsByAuthorName({
-      authorName: params?.authorName,
-    })
     const author = await serverClient.author.getAuthorByName({
       authorName: params?.authorName,
     })
+    const authorTags = await serverClient.author.getAllTagsByAuthorName({
+      authorName: params?.authorName,
+    })
+    const tag = searchParams?.tag ? searchParams?.tag : authorTags?.at(0)?.slug
 
+    const blogs = await serverClient.author.getBlogsByAuthorNameAndTag({
+      authorName: params?.authorName,
+      tagSlug: tag!,
+    })
     return (
-      <>
-        <AuthorDetails author={author as User} />
-        <AuthorBlogs blogs={blogs} />
-      </>
+      <AuthorPostsView
+        author={author as User}
+        blogsData={blogs?.blogs}
+        totalBlogs={blogs?.totalBlogs}
+        authorTags={authorTags as any}
+      />
     )
   } catch (error) {
     console.error('Error fetching blogs:', error)
