@@ -1,5 +1,6 @@
 'use client'
 
+import { BottomGradient, Input, LabelInputContainer } from '../common/fields'
 import { zodResolver } from '@hookform/resolvers/zod'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
@@ -8,7 +9,6 @@ import { useForm } from 'react-hook-form'
 import { FaGithub } from 'react-icons/fa'
 import { z } from 'zod'
 
-import { BottomGradient, Input, LabelInputContainer } from './Card'
 import { signInWithCredentials } from './actions'
 
 export const loginFormSchema = z.object({
@@ -161,27 +161,27 @@ const SignInForm = () => {
                   {isPending ? 'Signing in...' : 'Sign In'}
                 </button>
               </div>
-              <div className='flex flex-col space-y-4'>
-                <button
-                  className=' group/btn shadow-input relative flex h-10 w-full items-center justify-start space-x-2 rounded-md bg-gray-50 px-4 font-medium text-black dark:bg-zinc-900 dark:shadow-[0px_0px_1px_1px_var(--neutral-800)]'
-                  type='submit'>
-                  <FaGithub className='h-4 w-4 text-neutral-800 dark:text-neutral-300' />
-                  <span className='text-sm text-neutral-700 dark:text-neutral-300'>
-                    GitHub
-                  </span>
-                  <BottomGradient />
-                </button>
-                <button
-                  className=' group/btn shadow-input relative flex h-10 w-full items-center justify-start space-x-2 rounded-md bg-gray-50 px-4 font-medium text-black dark:bg-zinc-900 dark:shadow-[0px_0px_1px_1px_var(--neutral-800)]'
-                  type='submit'>
-                  <FaGithub className='h-4 w-4 text-neutral-800 dark:text-neutral-300' />
-                  <span className='text-sm text-neutral-700 dark:text-neutral-300'>
-                    Google
-                  </span>
-                  <BottomGradient />
-                </button>
-              </div>
             </form>
+            <div className='mt-4 flex flex-col space-y-4'>
+              <button
+                className=' group/btn relative flex h-10 w-full items-center justify-start space-x-2 rounded-md bg-gray-50 px-4 font-medium text-black shadow-input dark:bg-zinc-900 dark:shadow-[0px_0px_1px_1px_var(--neutral-800)]'
+                type='submit'>
+                <FaGithub className='text-neutral-800 dark:text-neutral-300 h-4 w-4' />
+                <span className='text-neutral-700 dark:text-neutral-300 text-sm'>
+                  GitHub
+                </span>
+                <BottomGradient />
+              </button>
+              <button
+                className=' group/btn relative flex h-10 w-full items-center justify-start space-x-2 rounded-md bg-gray-50 px-4 font-medium text-black shadow-input dark:bg-zinc-900 dark:shadow-[0px_0px_1px_1px_var(--neutral-800)]'
+                type='submit'>
+                <FaGithub className='text-neutral-800 dark:text-neutral-300 h-4 w-4' />
+                <span className='text-neutral-700 dark:text-neutral-300 text-sm'>
+                  Google
+                </span>
+                <BottomGradient />
+              </button>
+            </div>
             <div className='mt-4 text-center text-sm text-gray-300'>
               <p>
                 Don&apos;t have an account?{' '}
