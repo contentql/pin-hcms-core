@@ -80,7 +80,7 @@ const SignInForm = () => {
   return (
     <div className='flex min-h-screen bg-black'>
       <div className='flex w-full items-center justify-center'>
-        <div className='mx-auto w-full max-w-md rounded-none drop-shadow-2xl md:rounded-2xl md:p-8'>
+        <div className='mx-auto w-full max-w-md rounded-none drop-shadow-2xl md:rounded-2xl'>
           <div className='w-full max-w-md p-6'>
             {backendLoginResponse && 'error' in backendLoginResponse ? (
               <p className='text-center text-red-500'>
