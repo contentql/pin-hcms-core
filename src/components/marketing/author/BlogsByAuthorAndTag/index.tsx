@@ -1,5 +1,3 @@
-import { BlogListItems } from '../../blog/BlogListItems'
-import AuthorTagDetails from '../AuthorTagDetails'
 import { Blog, Tag, User } from '@payload-types'
 
 const BlogsByAuthorAndTagView = ({
@@ -11,15 +9,7 @@ const BlogsByAuthorAndTagView = ({
   tagDetails: Tag
   blogsData: Blog[]
 }) => {
-  return (
-    <>
-      <AuthorTagDetails
-        tagDetails={tagDetails as Tag}
-        authorDetails={authorDetails as User}
-      />
-      <BlogListItems blogsData={blogsData} />
-    </>
-  )
+  return <h1>Author Blogs</h1>
 }
 
 export default BlogsByAuthorAndTagView
