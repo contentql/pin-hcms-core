@@ -1,4 +1,4 @@
-import RichText from '../../components/marketing/blog/RichText'
+import RichText from '../../components/marketing/blog/BlogPost/RichText'
 
 import { Test } from '@/payload/blocks/Test'
 

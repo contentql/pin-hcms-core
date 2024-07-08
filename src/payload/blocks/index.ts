@@ -1,7 +1,7 @@
 // This is just to consolidate all the existing blocks and it's respective jsx
 // Always prefer to individually import, the required block or jsx
-import { Test } from '@/payload/blocks/Test'
-import { Test_Block } from '@/payload/blocks/Test/block'
+import { Test } from './Test'
+import { Test_Block } from './Test/block'
 
 export const blocksJSX = {
   Test,

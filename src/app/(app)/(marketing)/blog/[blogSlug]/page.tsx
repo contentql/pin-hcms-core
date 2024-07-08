@@ -1,7 +1,7 @@
 import { Blog } from '@payload-types'
 import { Metadata } from 'next'
 
-import BlogPostView from '@/components/marketing/blog'
+import BlogPostView from '@/components/marketing/blog/BlogPost'
 import { serverClient } from '@/trpc/serverClient'
 import { generateMeta } from '@/utils/generate-meta'
 
