@@ -10,9 +10,14 @@ export const Test_Block: Block = {
   },
   fields: [
     {
-      name: 'message',
+      name: 'heading',
       type: 'text',
-      label: 'Message',
+      label: 'Heading',
+    },
+    {
+      name: 'sub_heading',
+      type: 'text',
+      label: 'Sub Heading',
     },
   ],
 }

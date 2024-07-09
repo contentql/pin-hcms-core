@@ -1,8 +1,9 @@
+import { TestType } from '@payload-types'
 import Image from 'next/image'
 import Link from 'next/link'
 import { FaArrowRight } from 'react-icons/fa'
 
-export const Test = () => {
+export const Test = (testData: TestType) => {
   return (
     <div className='mx-auto max-w-7xl '>
       <section className='relative flex min-h-screen flex-col items-center justify-between py-10'>
@@ -22,11 +23,10 @@ export const Test = () => {
         <div>
           <div className='absolute left-[50%] top-[40%] h-[10%] w-[20%] -translate-x-1/2 rounded-full bg-indigo-600 blur-[110px]'></div>
           <h1 className='w-full max-w-2xl text-center text-3xl font-bold text-white md:text-4xl lg:text-7xl'>
-            Develop your own
+            {testData?.heading}
           </h1>
           <h1 className='mt-3 w-full max-w-2xl text-center text-3xl font-bold text-white md:text-4xl lg:text-7xl'>
-            Theme With
-            <span className='ml-3 text-indigo-600'>Cql</span>
+            {testData?.sub_heading}
           </h1>
         </div>
         <div className='flex flex-wrap items-center justify-center gap-8'>
@@ -40,11 +40,13 @@ export const Test = () => {
               </span>
             </h1>
             <p className='text-gray-500'>
-              sign in to access the admin panel sign in to access the admin
-              panel
+              Welcome! Please sign in to your account to access all your
+              features, and services.
             </p>
           </Link>
-          <div className='group w-full cursor-pointer space-y-4 rounded-xl px-2  py-4 transition-all duration-300 hover:bg-zinc-800 md:w-1/5'>
+          <Link
+            href='/author'
+            className='group w-full cursor-pointer space-y-4 rounded-xl px-2  py-4 transition-all duration-300 hover:bg-zinc-800 md:w-1/5'>
             <h1 className='inline-flex items-center gap-x-4 text-2xl font-bold transition-all duration-300'>
               Authors
               <span className='group-hover:translate-x-2'>
@@ -52,11 +54,13 @@ export const Test = () => {
               </span>
             </h1>
             <p className='text-gray-500'>
-              sign in to access the admin panel sign in to access the admin
-              panel
+              Meet the creative minds behind our compelling blogs, where each
+              author brings expertise.
             </p>
-          </div>
-          <div className='group w-full cursor-pointer space-y-4 rounded-xl px-2  py-4 transition-all duration-300 hover:bg-zinc-800 md:w-1/5'>
+          </Link>
+          <Link
+            href='/blog'
+            className='group w-full cursor-pointer space-y-4 rounded-xl px-2  py-4 transition-all duration-300 hover:bg-zinc-800 md:w-1/5'>
             <h1 className='inline-flex items-center gap-x-4 text-2xl font-bold transition-all duration-300'>
               Blogs
               <span className='group-hover:translate-x-2'>
@@ -64,11 +68,13 @@ export const Test = () => {
               </span>
             </h1>
             <p className='text-gray-500'>
-              sign in to access the admin panel sign in to access the admin
-              panel
+              Discover a wealth of knowledge and inspiration in our insightful
+              blog collection.
             </p>
-          </div>
-          <div className='group w-full cursor-pointer space-y-4 rounded-xl px-2  py-4 transition-all duration-300 hover:bg-zinc-800 md:w-1/5'>
+          </Link>
+          <Link
+            href='/tag'
+            className='group w-full cursor-pointer space-y-4 rounded-xl px-2  py-4 transition-all duration-300 hover:bg-zinc-800 md:w-1/5'>
             <h1 className='inline-flex items-center gap-x-4 text-2xl font-bold transition-all duration-300'>
               Tags
               <span className='group-hover:translate-x-2'>
@@ -76,10 +82,9 @@ export const Test = () => {
               </span>
             </h1>
             <p className='text-gray-500'>
-              sign in to access the admin panel sign in to access the admin
-              panel
+              Dive deeper into our blog topics using our convenient tags page.
             </p>
-          </div>
+          </Link>
         </div>
       </section>
     </div>

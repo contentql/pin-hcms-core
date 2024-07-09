@@ -1,3 +1,5 @@
+'use client'
+
 import { Blog } from '@payload-types'
 import Link from 'next/link'
 import { LiaBlogSolid } from 'react-icons/lia'
@@ -16,7 +18,7 @@ const BlogPostView = ({
   const tabs = [
     {
       title: 'Blog Data',
-      id: 'Blog data',
+      id: 'BlogData',
       icon: <LiaBlogSolid size={24} />,
       color: '#5d5dff',
       content: TabContent,
@@ -24,31 +26,26 @@ const BlogPostView = ({
     },
     {
       title: 'Blogs Data',
-      id: 'Blogs data',
+      id: 'BlogsData',
       icon: <LiaBlogSolid size={24} />,
       color: '#5d5dff',
       content: TabContent,
       data: blogsData,
     },
-    {
-      title: 'decodedSlug',
-      id: 'decodedSlug',
-      icon: <LiaBlogSolid size={24} />,
-      color: '#5d5dff',
-      content: TabContent,
-      data: decodedSlug,
-    },
   ]
   return (
     <div className='mx-auto max-h-screen max-w-7xl  gap-6 overflow-hidden px-2'>
-      <TabComponent tabs={tabs} />
-      <div className='mt-4 flex items-center justify-end'>
+      <div className='mt-4 flex items-center justify-between'>
+        <p className='rounded-lg border-2 border-neutral-800 bg-zinc-800 px-4 py-2'>
+          Get Started with src/app/(app)/(marketing)/blog/[blogSlug]
+        </p>
         <Link
           href='/blog'
           className='rounded-lg border-2 border-neutral-800 bg-zinc-800 px-4 py-2'>
-          Back
+          back
         </Link>
       </div>
+      <TabComponent tabs={tabs} />
     </div>
   )
 }

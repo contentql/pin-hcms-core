@@ -7,7 +7,8 @@ export const homePageData: Omit<Page, 'id' | 'createdAt' | 'updatedAt'> = {
   blocks: [
     {
       blockType: 'Test',
-      message: 'Home page',
+      heading: 'Develop your own',
+      sub_heading: 'Theme With Cql',
     },
   ],
 }

@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
-import ReactJson from 'react-json-view'
+import { JSONTree } from 'react-json-tree'
 
 import { cn } from '@/utils/cn'
 
@@ -76,7 +76,7 @@ const TabComponent = ({
 
   return (
     <div className='container'>
-      <div className='m-auto max-w-7xl'>
+      <div className='tabs-component'>
         <ul className='tab-links mx-auto mt-[40px]' role='tablist'>
           {tabs.map((tab: any, index: number) => (
             <motion.li
@@ -129,6 +129,26 @@ export const TabContent = ({
   data: any
 }) => {
   const isValidJson = data && typeof data === 'object'
+  const theme = {
+    scheme: 'monokai',
+    author: 'wimer hazenberg (http://www.monokai.nl)',
+    base00: '#272822',
+    base01: '#383830',
+    base02: '#49483e',
+    base03: '#75715e',
+    base04: '#a59f85',
+    base05: '#f8f8f2',
+    base06: '#f5f4f1',
+    base07: '#f9f8f5',
+    base08: '#f92672',
+    base09: '#fd971f',
+    base0A: '#f4bf75',
+    base0B: '#a6e22e',
+    base0C: '#a1efe4',
+    base0D: '#66d9ef',
+    base0E: '#ae81ff',
+    base0F: '#cc6633',
+  }
   return (
     <motion.div
       role='tabpanel'
@@ -137,11 +157,7 @@ export const TabContent = ({
       variants={tabContentVariant}
       animate={active ? 'active' : 'inactive'}
       initial='inactive'>
-      {isValidJson ? (
-        <ReactJson src={data} theme='eighties' collapsed={false} />
-      ) : (
-        <div className='text-white'>Data not available</div>
-      )}
+      <JSONTree data={data} theme={theme} invertTheme={false} />
     </motion.div>
   )
 }

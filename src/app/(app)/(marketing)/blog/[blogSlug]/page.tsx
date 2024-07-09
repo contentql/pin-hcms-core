@@ -19,7 +19,9 @@ const Page = async ({ params }: PageProps) => {
 
   const decodedSlug = decodeURIComponent(blogSlug)
 
-  const blog = await serverClient.blog.getBlogBySlug({ slug: decodedSlug })
+  const blog = await serverClient.blog.getBlogBySlug({
+    slug: decodedSlug as string,
+  })
   const blogsData = await serverClient.blog.getAllBlogs()
 
   return (
