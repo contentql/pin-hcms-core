@@ -7,8 +7,8 @@ import TabComponent, { TabContent } from '@/components/common/Tabs'
 const TagListView = ({ tags }: { tags: Tag[] }) => {
   const tabs = [
     {
-      title: 'Tag Details',
-      id: 'TagDetails',
+      title: 'Tags',
+      id: 'TagsDetails',
       icon: <LiaBlogSolid size={24} />,
       color: '#5d5dff',
       content: TabContent,

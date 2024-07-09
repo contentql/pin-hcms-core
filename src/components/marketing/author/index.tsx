@@ -11,8 +11,8 @@ interface UserData extends User {
 const AuthorsListView = ({ authors }: { authors: any }) => {
   const tabs = [
     {
-      title: 'Tag Details',
-      id: 'TagDetails',
+      title: 'Authors',
+      id: 'AuthorsData',
       icon: <LiaBlogSolid size={24} />,
       color: '#5d5dff',
       content: TabContent,
