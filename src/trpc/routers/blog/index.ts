@@ -27,7 +27,7 @@ export const blogRouter = router({
   getBlogBySlug: publicProcedure
     .input(
       z.object({
-        slug: z.string(),
+        slug: z.any(),
       }),
     )
     .query(async ({ input }) => {

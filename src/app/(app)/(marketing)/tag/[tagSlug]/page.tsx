@@ -1,4 +1,4 @@
-import TagBlogListView from '@/components/marketing/tag'
+import TagBlogListView from '@/components/marketing/tag/BlogsByTag'
 import { serverClient } from '@/trpc/serverClient'
 
 interface PageProps {

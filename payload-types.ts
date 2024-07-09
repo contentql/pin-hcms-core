@@ -198,7 +198,8 @@ export interface Page {
  * via the `definition` "TestType".
  */
 export interface TestType {
-  message?: string | null;
+  heading?: string | null;
+  sub_heading?: string | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'Test';
