@@ -15,7 +15,7 @@ const tabVariant = {
     },
   },
   inactive: {
-    width: '15%',
+    width: '20%',
     transition: {
       type: 'tween',
       duration: 0.4,
@@ -37,6 +37,7 @@ const tabTextVariant = {
   inactive: {
     opacity: 0,
     x: -30,
+    height: '10px',
     transition: {
       type: 'tween',
       duration: 0.3,
