@@ -77,7 +77,7 @@ const TabComponent = ({
   return (
     <div className='container'>
       <div className='tabs-component'>
-        <ul className='tab-links mx-auto mt-[40px]' role='tablist'>
+        <ul className='tab-links' role='tablist'>
           {tabs.map((tab: any, index: number) => (
             <motion.li
               key={tab.id}

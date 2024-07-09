@@ -6,13 +6,20 @@
   --border-radius: 40px;
 }
 
+.tabs-component {
+  max-width: 800px;
+  margin: auto;
+
+  padding: 40px;
+}
+
 .tab-links {
   padding: 0;
-
+  margin: 0 auto 20px;
   list-style: none;
   max-width: 400px;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
 }
 
 .tab {
@@ -33,6 +40,14 @@
   border-radius: var(--border-radius);
   background: none;
   transition: background 0.5s ease;
+}
+
+.tab svg {
+  height: 30px;
+  width: 30px;
+  min-width: 30px;
+  fill: var(--black);
+  transition: fill 0.5s ease;
 }
 
 .tab.active::before {
