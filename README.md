@@ -33,3 +33,8 @@ Both the collections we create should have the idea of:
 # Exceptions
 
 `NEXT_PUBLIC_PUBLIC_URL` env variable should not have `/` at the ends
+
+# More info to continue
+
+1. nextjs not supporting node runtime
+2. https://developer.tbd.website/docs/web5/troubleshooting/common-errors/

@@ -3,7 +3,7 @@
 import { User } from '@payload-types'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
-import { getFieldsToSign } from 'payload/auth'
+import { getFieldsToSign } from 'payload'
 
 import {
   auth,
