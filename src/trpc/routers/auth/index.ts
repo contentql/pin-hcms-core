@@ -5,7 +5,7 @@ import { cookies } from 'next/headers'
 
 import { publicProcedure, router } from '@/trpc'
 
-import { SignUpSchema } from './validator'
+import { SignInSchema, SignUpSchema } from './validator'
 
 const payload = await getPayloadHMR({
   config: configPromise,
@@ -96,41 +96,41 @@ export const authRouter = router({
       }
     }),
 
-  //   signIn: publicProcedure
-  //     .input(SignInSchema)
-  //     .mutation(async ({ input, ctx }) => {
-  //       const { email, password } = input
+  signIn: publicProcedure
+    .input(SignInSchema)
+    .mutation(async ({ input, ctx }) => {
+      const { email, password } = input
 
-  //       try {
-  //         const result = await payload.login({
-  //           collection: 'users',
-  //           data: {
-  //             email,
-  //             password,
-  //           },
-  //           depth: 2,
-  //           locale: undefined,
-  //           fallbackLocale: undefined,
-  //           overrideAccess: false,
-  //           showHiddenFields: true,
-  //         })
-  //         const cookieStore = cookies()
-  //         cookieStore.set('payload-token', result.token || '', {
-  //           httpOnly: true,
-  //           secure: process.env.NODE_ENV !== 'development',
-  //           maxAge: 60 * 60 * 24 * 7,
-  //           path: '/',
-  //         })
+      try {
+        const result = await payload.login({
+          collection: 'users',
+          data: {
+            email,
+            password,
+          },
+          depth: 2,
+          locale: undefined,
+          fallbackLocale: undefined,
+          overrideAccess: false,
+          showHiddenFields: true,
+        })
+        const cookieStore = cookies()
+        cookieStore.set('payload-token', result.token || '', {
+          httpOnly: true,
+          secure: process.env.NODE_ENV !== 'development',
+          maxAge: 60 * 60 * 24 * 7,
+          path: '/',
+        })
 
-  //         return result
-  //       } catch (error: any) {
-  //         console.error('Error signing in:', error)
-  //         throw new TRPCError({
-  //           code: 'UNAUTHORIZED',
-  //           message: 'Invalid email or password',
-  //         })
-  //       }
-  //     }),
+        return result
+      } catch (error: any) {
+        console.error('Error signing in:', error)
+        throw new TRPCError({
+          code: 'UNAUTHORIZED',
+          message: 'Invalid email or password',
+        })
+      }
+    }),
 
   //   forgotPassword: publicProcedure
   //     .input(ForgotPasswordSchema)
