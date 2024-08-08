@@ -5,7 +5,7 @@ import { unstable_cache } from 'next/cache'
 import { parseCookie } from 'next/dist/compiled/@edge-runtime/cookies'
 import type { ReadonlyRequestCookies } from 'next/dist/server/web/spec-extension/adapters/request-cookies'
 import type { Payload } from 'payload'
-import { parseCookies } from 'payload/auth'
+import { parseCookies } from 'payload'
 
 import {
   COLLECTION_SLUG_SESSIONS,
