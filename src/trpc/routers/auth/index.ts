@@ -1,11 +1,18 @@
+import { env } from '@env'
 import configPromise from '@payload-config'
 import { getPayloadHMR } from '@payloadcms/next/utilities'
 import { TRPCError } from '@trpc/server'
 import { cookies } from 'next/headers'
 
+import { sendResetPasswordEmail } from '@/components/auth/ResetPasswordForm/sendResetPasswordEmail'
 import { publicProcedure, router } from '@/trpc'
 
-import { SignInSchema, SignUpSchema } from './validator'
+import {
+  GenerateTokenSchema,
+  ResetPasswordSchema,
+  SignInSchema,
+  SignUpSchema,
+} from './validator'
 
 const payload = await getPayloadHMR({
   config: configPromise,
@@ -132,75 +139,75 @@ export const authRouter = router({
       }
     }),
 
-  //   forgotPassword: publicProcedure
-  //     .input(ForgotPasswordSchema)
-  //     .mutation(async ({ input }) => {
-  //       const { email } = input
+  forgotPassword: publicProcedure
+    .input(GenerateTokenSchema)
+    .mutation(async ({ input }) => {
+      const { email } = input
 
-  //       try {
-  //         const token = await payload.forgotPassword({
-  //           collection: 'users',
-  //           data: {
-  //             email,
-  //           },
-  //         })
+      try {
+        const token = await payload.forgotPassword({
+          collection: 'users',
+          data: {
+            email,
+          },
+        })
 
-  //         const { docs: users, totalDocs: usersCount } = await payload.find({
-  //           collection: 'users',
-  //           where: {
-  //             email: {
-  //               equals: email,
-  //             },
-  //           },
-  //         })
+        const { docs: users, totalDocs: usersCount } = await payload.find({
+          collection: 'users',
+          where: {
+            email: {
+              equals: email,
+            },
+          },
+        })
 
-  //         if (!usersCount) {
-  //           throw new TRPCError({
-  //             code: 'NOT_FOUND',
-  //             message: 'User not found',
-  //           })
-  //         }
+        if (!usersCount) {
+          throw new TRPCError({
+            code: 'NOT_FOUND',
+            message: 'User not found',
+          })
+        }
 
-  //         const user = users.at(0)
+        const user = users.at(0)
 
-  //         if (env.RESEND_SENDER_EMAIL && user?.username) {
-  //           await sendResetPasswordEmail(email, user?.username, token)
-  //         }
+        if (env.RESEND_SENDER_EMAIL && user?.name) {
+          await sendResetPasswordEmail(email, user?.name, token)
+        }
 
-  //         return { success: true, token }
-  //       } catch (error: any) {
-  //         console.error('Error during forgot password:', error)
-  //         throw new TRPCError({
-  //           code: 'INTERNAL_SERVER_ERROR',
-  //           message: error.message,
-  //         })
-  //       }
-  //     }),
+        return { success: true, token }
+      } catch (error: any) {
+        console.error('Error during forgot password:', error)
+        throw new TRPCError({
+          code: 'INTERNAL_SERVER_ERROR',
+          message: error.message,
+        })
+      }
+    }),
 
-  //   resetPassword: publicProcedure
-  //     .input(ResetPasswordSchema)
-  //     .mutation(async ({ input }) => {
-  //       const { password, token } = input
+  resetPassword: publicProcedure
+    .input(ResetPasswordSchema)
+    .mutation(async ({ input }) => {
+      const { password, token } = input
 
-  //       try {
-  //         const result = await payload.resetPassword({
-  //           collection: 'users',
-  //           data: {
-  //             password,
-  //             token,
-  //           },
-  //           overrideAccess: true,
-  //         })
+      try {
+        const result = await payload.resetPassword({
+          collection: 'users',
+          data: {
+            password,
+            token,
+          },
+          overrideAccess: true,
+        })
 
-  //         return result
-  //       } catch (error: any) {
-  //         console.error('Error resetting password:', error)
-  //         throw new TRPCError({
-  //           code: 'INTERNAL_SERVER_ERROR',
-  //           message: error.message,
-  //         })
-  //       }
-  //     }),
+        return result
+      } catch (error: any) {
+        console.error('Error resetting password:', error)
+        throw new TRPCError({
+          code: 'INTERNAL_SERVER_ERROR',
+          message: error.message,
+        })
+      }
+    }),
 
   //   unlock: publicProcedure.input(UnlockSchema).mutation(async ({ input }) => {
   //     const { email } = input
