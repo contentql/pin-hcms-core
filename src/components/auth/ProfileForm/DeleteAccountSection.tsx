@@ -1,21 +1,41 @@
-import { useEffect, useState } from 'react'
-import { useFormState } from 'react-dom'
+import { useRouter } from 'next/navigation'
+import { useState } from 'react'
+import { toast } from 'sonner'
 
-import { deleteUser } from './actions'
+import { trpc } from '@/trpc/client'
 
 export default function DeleteAccountSection() {
-  const [open, setOpen] = useState(false)
+  const router = useRouter()
+  const [open, setOpen] = useState<boolean>(false)
+  const [confirmation, setConfirmation] = useState<string>('')
+  const [isAllowedToDelete, setIsAllowedToDelete] = useState<boolean>(false)
 
-  const [isAllowedToDelete, setIsAllowedToDelete] = useState(false)
-  const [confirmation, setConfirmation] = useState('')
-  const [state, deleteUserAction, isPending] = useFormState(deleteUser, null)
+  const {
+    mutate: deleteUserMutation,
+    isPending: isDeletePending,
+    isError: isDeleteError,
+    error: deleteError,
+    isSuccess: isDeleteSuccess,
+  } = trpc.user.deleteUser.useMutation({
+    onSuccess: () => {
+      toast.success('Account deleted successfully')
+      router.push('/sign-up')
+    },
+    onError: () => {
+      toast.error('Unable to delete the account, try again!')
+    },
+  })
 
-  useEffect(() => {
-    if (isPending === false && open === true) {
-      setOpen(false)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isPending])
+  const handleDeleteUser = async (e: any) => {
+    e.preventDefault()
+
+    deleteUserMutation()
+  }
+
+  const handleCancelDelete = () => {
+    setOpen(prevState => !prevState)
+    setConfirmation('')
+  }
 
   return (
     <div className='hover:shodow-lg flex flex-col rounded-2xl bg-white p-8 shadow-md'>
@@ -44,7 +64,7 @@ export default function DeleteAccountSection() {
         </div>
         <button
           className='flex-no-shrink ml-4 rounded-full border-2 border-red-500 bg-red-500 px-5 py-2 text-sm font-medium tracking-wider text-white shadow-sm hover:shadow-lg'
-          onClick={() => setOpen(true)}>
+          onClick={() => setOpen(prevState => !prevState)}>
           Delete
         </button>
       </div>
@@ -68,7 +88,7 @@ export default function DeleteAccountSection() {
                         className='h-6 w-6 text-red-600'
                         fill='none'
                         viewBox='0 0 24 24'
-                        stroke-width='1.5'
+                        strokeWidth='1.5'
                         stroke='currentColor'
                         aria-hidden='true'>
                         <path
@@ -122,17 +142,16 @@ export default function DeleteAccountSection() {
                   </div>
                 </div>
                 <div className='bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6'>
-                  <form action={deleteUserAction}>
+                  <form onSubmit={handleDeleteUser}>
                     <button
-                      type='button'
-                      disabled={!isAllowedToDelete}
+                      disabled={!isAllowedToDelete || isDeletePending}
                       className='inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 disabled:cursor-not-allowed disabled:bg-opacity-50 sm:ml-3 sm:w-auto'>
-                      {isPending ? 'Deleting...' : 'Delete Account'}
+                      {isDeletePending ? 'Deleting...' : 'Delete Account'}
                     </button>
                   </form>
                   <button
                     type='button'
-                    onClick={() => setOpen(false)}
+                    onClick={handleCancelDelete}
                     className='mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto'>
                     Cancel
                   </button>

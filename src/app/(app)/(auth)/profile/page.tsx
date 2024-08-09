@@ -1,10 +1,13 @@
+import { headers } from 'next/headers'
 import { redirect } from 'next/navigation'
 
 import ProfileForm from '@/components/auth/ProfileForm'
-import { getCurrentUser } from '@/lib/authjs-payload-adapter/payload'
+import { getCurrentUser } from '@/utils/getCurrentUser'
+import withAuth from '@/utils/withAuth'
 
 const ProfilePage = async () => {
-  const user = await getCurrentUser()
+  const headersList = headers()
+  const user = await getCurrentUser(headersList)
 
   if (!user) return redirect('/sign-in')
 
@@ -28,4 +31,4 @@ const ProfilePage = async () => {
   )
 }
 
-export default ProfilePage
+export default withAuth(ProfilePage)

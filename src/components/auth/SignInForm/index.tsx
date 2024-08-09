@@ -1,45 +1,21 @@
 'use client'
 
-import { BottomGradient, Input, LabelInputContainer } from '../common/fields'
+import { Input, LabelInputContainer } from '../common/fields'
 import { zodResolver } from '@hookform/resolvers/zod'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { type ComponentProps, useEffect, useState, useTransition } from 'react'
 import { useForm } from 'react-hook-form'
-import { FaGithub } from 'react-icons/fa'
+import { toast } from 'sonner'
 import { z } from 'zod'
 
-import { signInWithCredentials } from './actions'
-
-export const loginFormSchema = z.object({
-  email: z
-    .string()
-    .min(1, { message: 'E-mail is required' })
-    .email({ message: 'E-mail is invalid' }),
-  password: z
-    .string()
-    .min(1, { message: 'Password is required' })
-    .min(6, { message: 'Password must be at least 6 characters long' }),
-})
-
-const Separator = ({ children }: ComponentProps<'div'>) => (
-  <div className='relative isolate my-3 flex items-center justify-center'>
-    <p className='bg-white p-2 text-sm font-medium uppercase text-zinc-500 dark:bg-zinc-900'>
-      {children}
-    </p>
-    <hr className='absolute z-[-1] w-full border-0 bg-zinc-200 p-px dark:bg-zinc-600' />
-  </div>
-)
+import { trpc } from '@/trpc/client'
+import { SignInSchema } from '@/trpc/routers/auth/validator'
 
 const SignInForm = () => {
   const router = useRouter()
-  const [isPending, startTransition] = useTransition()
-  const [backendLoginResponse, setBackendLoginResponse] = useState<Awaited<
-    ReturnType<typeof signInWithCredentials>
-  > | null>(null)
 
-  const form = useForm<z.infer<typeof loginFormSchema>>({
-    resolver: zodResolver(loginFormSchema),
+  const form = useForm<z.infer<typeof SignInSchema>>({
+    resolver: zodResolver(SignInSchema),
     mode: 'onBlur',
     defaultValues: {
       email: '',
@@ -51,29 +27,29 @@ const SignInForm = () => {
     register,
     handleSubmit,
     formState: { errors },
-    watch,
+    reset,
   } = form
 
-  const [email, password] = watch(['email', 'password'])
+  const {
+    mutate: signInMutation,
+    isPending: isSignInPending,
+    isError: isSignInError,
+    error: signInError,
+    isSuccess: isSignInSuccess,
+  } = trpc.auth.signIn.useMutation({
+    onSuccess: () => {
+      toast.success('Successfully logged in! Redirecting...')
+      router.push('/profile')
+    },
+    onError: () => {
+      toast.error('Email or password is incorrect, try again!')
+      reset()
+    },
+  })
 
-  useEffect(() => {
-    if (backendLoginResponse && backendLoginResponse.success === false) {
-      setBackendLoginResponse(null)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [email, password])
-
-  const onSubmit = (data: z.infer<typeof loginFormSchema>) => {
-    startTransition(() => {
-      signInWithCredentials({ ...data, redirectTo: '/' }).then(result => {
-        if (!result) return
-        if (result.success === true) {
-          router.push('/')
-        }
-        if ('error' in result) {
-          setBackendLoginResponse(result)
-        }
-      })
+  const onSubmit = (data: z.infer<typeof SignInSchema>) => {
+    signInMutation({
+      ...data,
     })
   }
 
@@ -82,17 +58,6 @@ const SignInForm = () => {
       <div className='flex w-full items-center justify-center'>
         <div className='mx-auto w-full max-w-md rounded-none drop-shadow-2xl md:rounded-2xl'>
           <div className='w-full max-w-md p-6'>
-            {backendLoginResponse && 'error' in backendLoginResponse ? (
-              <p className='text-center text-red-500'>
-                {backendLoginResponse?.error?.code === 'credentials' &&
-                  'Sign in failed. Check the details you provided are incorrect.'}
-              </p>
-            ) : null}
-            {backendLoginResponse && backendLoginResponse?.success === true ? (
-              <p className='text-center text-green-500'>
-                Successfully logged in! Redirecting...
-              </p>
-            ) : null}
             <h1 className='mb-6 text-center text-3xl font-semibold text-white'>
               Sign In
             </h1>
@@ -157,17 +122,17 @@ const SignInForm = () => {
                 <button
                   type='submit'
                   className='w-full rounded-md border-[1px] border-indigo-600 bg-indigo-600 p-2 text-white transition-all duration-500 hover:bg-indigo-700  focus:outline-none focus:ring-1 focus:ring-gray-200 focus:ring-offset-1 disabled:cursor-not-allowed disabled:bg-opacity-50'
-                  disabled={isPending}>
-                  {isPending ? 'Signing in...' : 'Sign In'}
+                  disabled={isSignInPending}>
+                  {isSignInPending ? 'Signing in...' : 'Sign In'}
                 </button>
               </div>
             </form>
-            <div className='mt-4 flex flex-col space-y-4'>
+            {/* <div className='mt-4 flex flex-col space-y-4'>
               <button
                 className=' group/btn relative flex h-10 w-full items-center justify-start space-x-2 rounded-md bg-gray-50 px-4 font-medium text-black shadow-input dark:bg-zinc-900 dark:shadow-[0px_0px_1px_1px_var(--neutral-800)]'
                 type='submit'>
-                <FaGithub className='text-neutral-800 dark:text-neutral-300 h-4 w-4' />
-                <span className='text-neutral-700 dark:text-neutral-300 text-sm'>
+                <FaGithub className='h-4 w-4 text-neutral-800 dark:text-neutral-300' />
+                <span className='text-sm text-neutral-700 dark:text-neutral-300'>
                   GitHub
                 </span>
                 <BottomGradient />
@@ -175,13 +140,13 @@ const SignInForm = () => {
               <button
                 className=' group/btn relative flex h-10 w-full items-center justify-start space-x-2 rounded-md bg-gray-50 px-4 font-medium text-black shadow-input dark:bg-zinc-900 dark:shadow-[0px_0px_1px_1px_var(--neutral-800)]'
                 type='submit'>
-                <FaGithub className='text-neutral-800 dark:text-neutral-300 h-4 w-4' />
-                <span className='text-neutral-700 dark:text-neutral-300 text-sm'>
+                <FaGithub className='h-4 w-4 text-neutral-800 dark:text-neutral-300' />
+                <span className='text-sm text-neutral-700 dark:text-neutral-300'>
                   Google
                 </span>
                 <BottomGradient />
               </button>
-            </div>
+            </div> */}
             <div className='mt-4 text-center text-sm text-gray-300'>
               <p>
                 Don&apos;t have an account?{' '}

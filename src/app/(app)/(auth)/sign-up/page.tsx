@@ -1,12 +1,8 @@
-import { redirect } from 'next/navigation'
-
 import SignUpForm from '@/components/auth/SignUpForm'
-import { auth } from '@/lib/authjs-payload-adapter/auth'
+import withNoAuth from '@/utils/withNoAuth'
 
-const SignInPage = async () => {
-  const session = await auth()
-  if (session) return redirect('/profile')
+const SignUpPage = async () => {
   return <SignUpForm />
 }
 
-export default SignInPage
+export default withNoAuth(SignUpPage)

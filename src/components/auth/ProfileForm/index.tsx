@@ -2,29 +2,63 @@
 
 import type { User } from '@payload-types'
 import { useState } from 'react'
-import { useFormState } from 'react-dom'
+import { toast } from 'sonner'
+
+import { trpc } from '@/trpc/client'
 
 import DeleteAccountSection from './DeleteAccountSection'
-import { updateUser } from './actions'
+
+interface ProfileFormData extends User {
+  confirmPassword: string
+}
 
 const ProfileForm = ({ user }: { user: User }) => {
-  const [formData, setFormData] = useState<User>(user)
+  const [formData, setFormData] = useState<ProfileFormData>({
+    ...user,
+    confirmPassword: '',
+  })
+  const trpcUtils = trpc.useUtils()
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value })
   }
 
-  const [response, updateUserAction, isPending] = useFormState(async () => {
-    const response = await updateUser(formData)
-    if (!response || !response.user) return null
-    alert('Profile updated successfully!')
-    // toast.success('Profile updated successfully!', {
-    //   duration: 2000,
-    //   position: 'top-center',
-    //   dismissible: true,
-    // })
-    return response
-  }, null)
+  const clearPassword = () => {
+    formData.password = ''
+    formData.confirmPassword = ''
+  }
+
+  const { mutate: updateUserMutation, isPending: isUpdateUserPending } =
+    trpc.user.updateUser.useMutation({
+      onSuccess: () => {
+        toast.success('Profile updated successfully')
+        clearPassword()
+        trpcUtils.user.getUser.invalidate()
+      },
+      onError() {
+        toast.error('Update failed, try again!')
+        clearPassword()
+      },
+    })
+
+  const handlerUserUpdate = (e: any) => {
+    e.preventDefault()
+    const sanitizedData = Object.fromEntries(
+      Object.entries(formData).filter(([key, value]) => Boolean(value)),
+    )
+
+    if (
+      sanitizedData.password &&
+      sanitizedData.password !== sanitizedData.confirmPassword
+    ) {
+      toast.error('Passwords do not match!')
+      return
+    }
+
+    updateUserMutation({
+      ...sanitizedData,
+    })
+  }
 
   return (
     <div className='p-2 md:p-4'>
@@ -43,28 +77,24 @@ const ProfileForm = ({ user }: { user: User }) => {
             <div className='flex flex-col space-y-5 sm:ml-8'>
               <button
                 type='button'
-                className='rounded-lg border border-indigo-200 bg-[#202142] px-7 py-3.5 text-base font-medium text-indigo-100 hover:bg-indigo-900 focus:z-10 focus:outline-none focus:ring-4 focus:ring-indigo-200 '
-              >
+                className='rounded-lg border border-indigo-200 bg-[#202142] px-7 py-3.5 text-base font-medium text-indigo-100 hover:bg-indigo-900 focus:z-10 focus:outline-none focus:ring-4 focus:ring-indigo-200 '>
                 Change picture
               </button>
               <button
                 type='button'
-                className='rounded-lg border border-indigo-200 bg-white px-7 py-3.5 text-base font-medium text-indigo-900 hover:bg-indigo-100 hover:text-[#202142] focus:z-10 focus:outline-none focus:ring-4 focus:ring-indigo-200 '
-              >
+                className='rounded-lg border border-indigo-200 bg-white px-7 py-3.5 text-base font-medium text-indigo-900 hover:bg-indigo-100 hover:text-[#202142] focus:z-10 focus:outline-none focus:ring-4 focus:ring-indigo-200 '>
                 Delete picture
               </button>
             </div>
           </div>
 
           <form
-            action={updateUserAction}
-            className='mt-8 items-center text-[#202142] sm:mt-14'
-          >
+            onSubmit={handlerUserUpdate}
+            className='mt-8 items-center text-[#202142] sm:mt-14'>
             <div className='mb-4 sm:mb-6'>
               <label
                 htmlFor='name'
-                className='block text-sm font-medium text-gray-700'
-              >
+                className='block text-sm font-medium text-gray-700'>
                 Name
               </label>
               <input
@@ -72,7 +102,7 @@ const ProfileForm = ({ user }: { user: User }) => {
                 id='name'
                 name='name'
                 placeholder='John'
-                value={formData.name || ''}
+                value={formData?.name || ''}
                 onChange={handleOnChange}
                 className='mt-1 w-full rounded-md border p-2 transition-colors duration-300 focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-offset-2'
               />
@@ -81,8 +111,7 @@ const ProfileForm = ({ user }: { user: User }) => {
             <div className='mb-4 sm:mb-6'>
               <label
                 htmlFor='email'
-                className='block text-sm font-medium text-gray-700'
-              >
+                className='block text-sm font-medium text-gray-700'>
                 E-Mail
               </label>
               <input
@@ -90,7 +119,7 @@ const ProfileForm = ({ user }: { user: User }) => {
                 id='email'
                 name='email'
                 placeholder='john.doe@example.com'
-                value={formData.email}
+                value={formData?.email}
                 disabled
                 className='mt-1 w-full rounded-md border p-2 transition-colors duration-300 focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-offset-2'
               />
@@ -100,8 +129,7 @@ const ProfileForm = ({ user }: { user: User }) => {
               <div className='w-full'>
                 <label
                   htmlFor='password'
-                  className='block text-sm font-medium text-gray-700'
-                >
+                  className='block text-sm font-medium text-gray-700'>
                   New Password
                 </label>
                 <input
@@ -109,6 +137,7 @@ const ProfileForm = ({ user }: { user: User }) => {
                   id='password'
                   name='password'
                   placeholder='● ● ● ● ● ● ● ● ●'
+                  value={formData.password || ''}
                   onChange={handleOnChange}
                   className='mt-1 w-full rounded-md border p-2 transition-colors duration-300 focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-offset-2'
                 />
@@ -117,8 +146,7 @@ const ProfileForm = ({ user }: { user: User }) => {
               <div className='w-full'>
                 <label
                   htmlFor='confirmPassword'
-                  className='block text-sm font-medium text-gray-700'
-                >
+                  className='block text-sm font-medium text-gray-700'>
                   Confirm Password
                 </label>
                 <input
@@ -126,6 +154,7 @@ const ProfileForm = ({ user }: { user: User }) => {
                   id='confirmPassword'
                   name='confirmPassword'
                   placeholder='● ● ● ● ● ● ● ● ●'
+                  value={formData.confirmPassword || ''}
                   onChange={handleOnChange}
                   className='mt-1 w-full rounded-md border p-2 transition-colors duration-300 focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-offset-2'
                 />
@@ -135,9 +164,8 @@ const ProfileForm = ({ user }: { user: User }) => {
             <div className='flex justify-end'>
               <button
                 type='submit'
-                className='w-full rounded-lg  bg-indigo-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-indigo-800 focus:outline-none focus:ring-4 focus:ring-indigo-300 dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800 sm:w-auto'
-              >
-                {isPending ? 'Updating...' : 'Update Profile'}
+                className={`w-full rounded-lg bg-indigo-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-indigo-800 focus:outline-none focus:ring-4 focus:ring-indigo-300 dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800 sm:w-auto ${isUpdateUserPending ? 'cursor-not-allowed opacity-50' : ''}`}>
+                {isUpdateUserPending ? 'Updating...' : 'Update Profile'}
               </button>
             </div>
           </form>

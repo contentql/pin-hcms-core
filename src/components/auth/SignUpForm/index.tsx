@@ -3,35 +3,20 @@
 import { Input, LabelInputContainer } from '../common/fields'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from 'next/navigation'
-import { useEffect, useState, useTransition } from 'react'
 import { useForm } from 'react-hook-form'
+import { toast } from 'sonner'
 import { z } from 'zod'
 
-import { signUp } from './actions'
+import { trpc } from '@/trpc/client'
+import { SignUpSchema } from '@/trpc/routers/auth/validator'
 
-export const signUpFormSchema = z.object({
-  firstName: z.string().min(1, { message: 'First name is required' }),
-  lastName: z.string().min(1, { message: 'Last name is required' }),
-  email: z
-    .string()
-    .min(1, { message: 'E-mail is required' })
-    .email({ message: 'E-mail is invalid' }),
-  password: z
-    .string()
-    .min(1, { message: 'Password is required' })
-    .min(6, { message: 'Password must be at least 6 characters long' }),
-})
-
-export type SignUpFormData = z.infer<typeof signUpFormSchema>
+export type SignUpFormData = z.infer<typeof SignUpSchema>
 
 const SignUpForm = () => {
-  const [isPending, startTransition] = useTransition()
-  const [backendSignUpResponse, setBackendSignUpResponse] = useState<any>(null)
-
   const router = useRouter()
 
   const form = useForm<SignUpFormData>({
-    resolver: zodResolver(signUpFormSchema),
+    resolver: zodResolver(SignUpSchema),
     mode: 'onBlur',
     defaultValues: {
       firstName: '',
@@ -45,30 +30,29 @@ const SignUpForm = () => {
     register,
     handleSubmit,
     formState: { errors },
-    watch,
+    reset,
   } = form
 
-  const [firstName, lastName, email, password] = watch([
-    'firstName',
-    'lastName',
-    'email',
-    'password',
-  ])
-
-  useEffect(() => {
-    if (backendSignUpResponse) {
-      setBackendSignUpResponse(null)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [firstName, lastName, email, password])
+  const {
+    mutate: signUpMutation,
+    isPending: isSignUpPending,
+    isError: isSignUpError,
+    error: signUpError,
+    isSuccess: isSignUpSuccess,
+  } = trpc.auth.signUp.useMutation({
+    onSuccess: () => {
+      toast.success('Account created! Redirecting to profile page.')
+      reset()
+      router.push('/profile')
+    },
+    onError: () => {
+      toast.error('Unable to create an account, try again!')
+    },
+  })
 
   const onSubmit = async (data: SignUpFormData) => {
-    startTransition(async () => {
-      const result = await signUp({ ...data, redirectTo: '/profile' })
-      setBackendSignUpResponse(result)
-      if (result.success) {
-        router.push('/profile')
-      }
+    signUpMutation({
+      ...data,
     })
   }
 
@@ -76,14 +60,6 @@ const SignUpForm = () => {
     <div className='flex min-h-screen bg-black'>
       <div className='flex w-full items-center justify-center'>
         <div className='w-full max-w-md p-6'>
-          {backendSignUpResponse &&
-          !backendSignUpResponse?.success &&
-          backendSignUpResponse?.error ? (
-            <p color='red'>{backendSignUpResponse.error.message}</p>
-          ) : null}
-          {backendSignUpResponse && backendSignUpResponse?.success ? (
-            <p color='green'>Account created! Redirecting...</p>
-          ) : null}
           <h1 className='mb-6 text-center text-3xl font-semibold text-white'>
             Sign Up
           </h1>
@@ -189,8 +165,8 @@ const SignUpForm = () => {
               <button
                 type='submit'
                 className='w-full rounded-md border-[1px] border-indigo-600 bg-indigo-600 p-2 text-white transition-all duration-500 hover:bg-indigo-700 focus:outline-none focus:ring-1 focus:ring-gray-200 focus:ring-offset-1 disabled:cursor-not-allowed disabled:bg-opacity-50'
-                disabled={isPending}>
-                {isPending ? 'Creating account...' : 'Sign Up'}
+                disabled={isSignUpPending}>
+                {isSignUpPending ? 'Creating account...' : 'Sign Up'}
               </button>
             </div>
           </form>

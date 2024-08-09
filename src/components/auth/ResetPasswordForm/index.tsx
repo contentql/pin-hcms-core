@@ -3,27 +3,21 @@
 import { Input, LabelInputContainer } from '../common/fields'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from 'next/navigation'
-import { useState, useTransition } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
-import { generateResetPasswordToken, resetPassword } from './actions'
+import { trpc } from '@/trpc/client'
+import {
+  GenerateTokenSchema,
+  ResetPasswordSchema,
+} from '@/trpc/routers/auth/validator'
 
-const generateTokenSchema = z.object({
-  email: z.string().email({ message: 'Invalid email address' }),
-})
-
-const resetPasswordSchema = z.object({
-  password: z
-    .string()
-    .min(8, { message: 'Password must be at least 8 characters long' }),
-  token: z.string(),
-})
+// import { generateResetPasswordToken, resetPassword } from './actions'
 
 // Form component to request a password reset token
 export function GenerateResetTokenForm() {
-  const form = useForm<z.infer<typeof generateTokenSchema>>({
-    resolver: zodResolver(generateTokenSchema),
+  const form = useForm<z.infer<typeof GenerateTokenSchema>>({
+    resolver: zodResolver(GenerateTokenSchema),
     mode: 'onBlur',
     defaultValues: { email: '' },
   })
@@ -32,23 +26,25 @@ export function GenerateResetTokenForm() {
     handleSubmit,
     formState: { errors },
   } = form
-  const [message, setMessage] = useState<string | null>(null)
-  const [isSubmitting, startTransition] = useTransition()
 
-  const onSubmit = async (data: z.infer<typeof generateTokenSchema>) => {
-    startTransition(async () => {
-      const response = await generateResetPasswordToken(data)
-      if (!response.success) {
-        form.setError('email', {
-          type: 'manual',
-          message: response.error.message,
-        })
-        setMessage(null)
-      } else {
-        setMessage(
-          "Reset link sent to your email. Don't forget to check your spam inbox!",
-        )
-      }
+  const {
+    mutate: generateResetPasswordTokenMutation,
+    isPending: isGeneratePasswordPending,
+    isError: isGeneratePasswordError,
+    error: generatePasswordError,
+    isSuccess: isGeneratePasswordSuccess,
+  } = trpc.auth.forgotPassword.useMutation({
+    onSuccess: () => {
+      //   toast.success('Please check you mail!')
+    },
+    onError: () => {
+      //   toast.error('Error sending you mail, try again!')
+    },
+  })
+
+  const onSubmit = async (data: z.infer<typeof GenerateTokenSchema>) => {
+    generateResetPasswordTokenMutation({
+      ...data,
     })
   }
 
@@ -75,7 +71,9 @@ export function GenerateResetTokenForm() {
         <div className='mt-10'>
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className='space-y-4'>
-              {message && <p className='text-red-500'>{message}</p>}
+              {isGeneratePasswordError && (
+                <p className='text-red-500'>{generatePasswordError.message}</p>
+              )}
               <div>
                 <LabelInputContainer className='mb-4'>
                   <div className='inline-flex justify-between'>
@@ -103,9 +101,9 @@ export function GenerateResetTokenForm() {
               </div>
               <button
                 type='submit'
-                disabled={isSubmitting}
+                disabled={isGeneratePasswordPending}
                 className='mt-3 inline-flex w-full items-center justify-center gap-2 rounded-md border border-transparent bg-indigo-600 px-4 py-3 text-sm font-semibold text-white transition-all hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-800 focus:ring-offset-2 disabled:cursor-not-allowed disabled:bg-opacity-50 dark:focus:ring-offset-gray-800'>
-                {isSubmitting ? 'Sending...' : 'Send Reset Link'}
+                {isGeneratePasswordPending ? 'Sending...' : 'Send Reset Link'}
               </button>
             </div>
           </form>
@@ -119,33 +117,36 @@ export function GenerateResetTokenForm() {
 export function ResetPasswordForm({ token }: { token: string }) {
   const router = useRouter()
   const form = useForm({
-    resolver: zodResolver(resetPasswordSchema),
+    resolver: zodResolver(ResetPasswordSchema),
     mode: 'onBlur',
     defaultValues: { token, password: '' },
   })
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = form
-  const [message, setMessage] = useState<string | null>(null)
-  const [isSubmitting, startTransition] = useTransition()
 
-  const onSubmit = async (data: z.infer<typeof resetPasswordSchema>) => {
-    startTransition(async () => {
-      const result = await resetPassword({ ...data, redirectTo: '/profile' })
-      if (!result.success) {
-        form.setError('password', {
-          type: 'manual',
-          message:
-            result?.error?.message ||
-            'Failed to reset password. Please try again.',
-        })
-        setMessage(null)
-      } else {
-        setMessage('Password reset successfully. Redirecting...')
-        setTimeout(() => router.push('/profile'), 2000)
-      }
+  const {
+    mutate: resetPasswordMutation,
+    isPending: isResetPasswordPending,
+    isError: isResetPasswordError,
+    error: resetPasswordError,
+    isSuccess: isResetPasswordSuccess,
+  } = trpc.auth.resetPassword.useMutation({
+    onSuccess: () => {
+      //   toast.success('Changed your password!')
+      router.push('/sign-in')
+    },
+    onError: () => {
+      //   toast.error('Not able to change your password, try again!')
+    },
+  })
+
+  const onSubmit = async (data: z.infer<typeof ResetPasswordSchema>) => {
+    resetPasswordMutation({
+      ...data,
     })
   }
 
@@ -164,7 +165,12 @@ export function ResetPasswordForm({ token }: { token: string }) {
         <div className='mt-10'>
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className='space-y-4'>
-              {message && <p className='text-green-500'>{message}</p>}
+              {isResetPasswordError && (
+                <p className='text-red-500'>{resetPasswordError.message}</p>
+              )}
+              {isResetPasswordSuccess && (
+                <p className='text-green-500'>Updated Password ✅</p>
+              )}
               <div>
                 <LabelInputContainer className='mb-4'>
                   <div className='inline-flex justify-between'>
@@ -192,9 +198,9 @@ export function ResetPasswordForm({ token }: { token: string }) {
               </div>
               <button
                 type='submit'
-                disabled={isSubmitting}
+                disabled={isResetPasswordPending}
                 className='mt-3 inline-flex w-full items-center justify-center gap-2 rounded-md border border-transparent bg-indigo-600 px-4 py-3 text-sm font-semibold text-white transition-all hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-800 focus:ring-offset-2 disabled:cursor-not-allowed disabled:bg-opacity-50 dark:focus:ring-offset-gray-800'>
-                {isSubmitting ? 'Processing...' : 'Reset Password'}
+                {isResetPasswordPending ? 'Processing...' : 'Reset Password'}
               </button>
             </div>
           </form>
