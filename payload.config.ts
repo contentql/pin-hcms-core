@@ -17,7 +17,6 @@ import { fileURLToPath } from 'url'
 import { Blogs } from '@/payload/collections/Blogs'
 import { Media } from '@/payload/collections/Media'
 import { Pages } from '@/payload/collections/Pages'
-import { Sessions } from '@/payload/collections/Sessions'
 import { Tags } from '@/payload/collections/Tags'
 import { Users } from '@/payload/collections/Users'
 import { COLLECTION_SLUG_PAGE } from '@/payload/collections/constants'
@@ -86,7 +85,7 @@ export default buildConfig({
   },
   cors: [env.PAYLOAD_URL],
   csrf: [env.PAYLOAD_URL],
-  collections: [Users, Media, Tags, Blogs, Pages, Sessions],
+  collections: [Users, Media, Tags, Blogs, Pages],
   globals: [siteSettings],
   plugins: [
     nestedDocsPlugin({
