@@ -48,4 +48,17 @@ export const blogRouter = router({
         throw new Error(error.message)
       }
     }),
+
+  getBlogsCount: publicProcedure.query(async () => {
+    try {
+      const { totalDocs } = await payload.count({
+        collection: 'blogs',
+      })
+
+      return totalDocs
+    } catch (error: any) {
+      console.log(error)
+      throw new Error(error.message)
+    }
+  }),
 })

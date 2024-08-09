@@ -7,6 +7,7 @@ import { siteSettingsRouter } from '@/trpc/routers/site-settings'
 import { tagRouter } from '@/trpc/routers/tag'
 
 import { authRouter } from './auth'
+import { userRouter } from './user/user-route'
 
 export const appRouter = router({
   auth: authRouter,
@@ -16,6 +17,7 @@ export const appRouter = router({
   tag: tagRouter,
   author: authorRouter,
   seed: seedRouter,
+  user: userRouter,
 })
 
 export type AppRouter = typeof appRouter

@@ -1,11 +1,11 @@
 'use client'
 
-import { BottomGradient, Input, LabelInputContainer } from '../common/fields'
+import { Input, LabelInputContainer } from '../common/fields'
 import { zodResolver } from '@hookform/resolvers/zod'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
-import { FaGithub } from 'react-icons/fa'
+import { toast } from 'sonner'
 import { z } from 'zod'
 
 import { trpc } from '@/trpc/client'
@@ -38,9 +38,11 @@ const SignInForm = () => {
     isSuccess: isSignInSuccess,
   } = trpc.auth.signIn.useMutation({
     onSuccess: () => {
-      router.push('/')
+      toast.success('Successfully logged in! Redirecting...')
+      router.push('/profile')
     },
     onError: () => {
+      toast.error('Email or password is incorrect, try again!')
       reset()
     },
   })
@@ -56,16 +58,6 @@ const SignInForm = () => {
       <div className='flex w-full items-center justify-center'>
         <div className='mx-auto w-full max-w-md rounded-none drop-shadow-2xl md:rounded-2xl'>
           <div className='w-full max-w-md p-6'>
-            {isSignInError ? (
-              <p className='text-center text-red-500'>
-                Sign in failed. Check the details you provided are incorrect.
-              </p>
-            ) : null}
-            {isSignInSuccess ? (
-              <p className='text-center text-green-500'>
-                Successfully logged in! Redirecting...
-              </p>
-            ) : null}
             <h1 className='mb-6 text-center text-3xl font-semibold text-white'>
               Sign In
             </h1>
@@ -135,7 +127,7 @@ const SignInForm = () => {
                 </button>
               </div>
             </form>
-            <div className='mt-4 flex flex-col space-y-4'>
+            {/* <div className='mt-4 flex flex-col space-y-4'>
               <button
                 className=' group/btn relative flex h-10 w-full items-center justify-start space-x-2 rounded-md bg-gray-50 px-4 font-medium text-black shadow-input dark:bg-zinc-900 dark:shadow-[0px_0px_1px_1px_var(--neutral-800)]'
                 type='submit'>
@@ -154,7 +146,7 @@ const SignInForm = () => {
                 </span>
                 <BottomGradient />
               </button>
-            </div>
+            </div> */}
             <div className='mt-4 text-center text-sm text-gray-300'>
               <p>
                 Don&apos;t have an account?{' '}

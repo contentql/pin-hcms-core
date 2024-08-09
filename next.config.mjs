@@ -2,13 +2,13 @@ import { withPayload } from '@payloadcms/next/withPayload'
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  outputFileTracingIncludes: {
+    '/public': ['./public/**/*'],
+  },
   experimental: {
-    outputFileTracingIncludes: {
-      '/public': ['./public/**/*'],
-    },
     reactCompiler: false,
   },
-  // output: 'standalone',
+  output: 'standalone',
   reactStrictMode: true,
   compiler: {
     // removeConsole: process.env.NODE_ENV !== 'development', // Remove console.log in production

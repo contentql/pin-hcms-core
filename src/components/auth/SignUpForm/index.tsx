@@ -4,6 +4,7 @@ import { Input, LabelInputContainer } from '../common/fields'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
+import { toast } from 'sonner'
 import { z } from 'zod'
 
 import { trpc } from '@/trpc/client'
@@ -40,8 +41,12 @@ const SignUpForm = () => {
     isSuccess: isSignUpSuccess,
   } = trpc.auth.signUp.useMutation({
     onSuccess: () => {
+      toast.success('Account created! Redirecting to profile page.')
       reset()
       router.push('/profile')
+    },
+    onError: () => {
+      toast.error('Unable to create an account, try again!')
     },
   })
 
@@ -55,14 +60,6 @@ const SignUpForm = () => {
     <div className='flex min-h-screen bg-black'>
       <div className='flex w-full items-center justify-center'>
         <div className='w-full max-w-md p-6'>
-          {isSignUpError ? (
-            <p style={{ color: 'red', textAlign: 'center' }}>
-              {signUpError.message}
-            </p>
-          ) : null}
-          {isSignUpSuccess ? (
-            <p color='green'>Account created! Redirecting...</p>
-          ) : null}
           <h1 className='mb-6 text-center text-3xl font-semibold text-white'>
             Sign Up
           </h1>

@@ -50,7 +50,7 @@ export const generateImage: GenerateImage = (data: any) => {
   const image =
     typeof data?.doc?.img?.value === 'string' ? data?.doc?.img?.value : ''
 
-  return image
+  return data.doc.blog_image
 }
 
 export const generateURL: GenerateURL = (data: any) => {
