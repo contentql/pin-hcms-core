@@ -1,9 +1,9 @@
 /**
- * Matches an input path against a Next.js style path pattern.
+ * Matches an input path against a Next.js-style path pattern.
  * Supports dynamic segments, required catch-all, and optional catch-all routes.
  *
  * @param inputPath - The actual path (e.g., '/author/mani/test')
- * @param patternPath - The Next.js style pattern path (e.g., '/author/[authorName]/test')
+ * @param patternPath - The Next.js-style pattern path (e.g., '/author/[authorName]/test')
  * @returns {boolean} - Returns true if the input path matches the pattern path.
  *
  * @example
@@ -39,31 +39,41 @@ export function matchNextJsPath(
     const patternSegment = patternSegments[i]
     const inputSegment = inputSegments[i]
 
+    // ? Note: We are not using these routing patterns in our backend currently,
+    // ? but we are handling them for future purposes to support optional and required catch-all segments.
+    // ? These conditions are designed to handle:
+    // ? - Optional catch-all segments that match zero or more segments.
+    // ? - Required catch-all segments that match one or more segments.
+
     if (patternSegment.startsWith('[[...') && patternSegment.endsWith(']]')) {
-      // Optional catch-all (matches zero or more segments)
+      // Optional catch-all segment: matches zero or more segments
       return true
     }
 
     if (patternSegment.startsWith('[...') && patternSegment.endsWith(']')) {
-      // Required catch-all (matches one or more segments)
+      // Required catch-all segment: matches one or more segments
+      // The input path must have at least as many segments as the pattern path.
       return inputSegments.length >= patternSegments.length
     }
 
     if (patternSegment.startsWith('[') && patternSegment.endsWith(']')) {
-      // Dynamic segment (matches any single segment)
+      // Dynamic segment: matches exactly one segment
+      // If the input segment is missing or undefined, return false.
       if (!inputSegment) return false
       continue
     }
 
     if (patternSegment !== inputSegment) {
-      // Static segment (must match exactly)
+      // Static segment: must match exactly
       return false
     }
   }
 
-  // Ensure all input segments are matched, or the last pattern segment is an optional catch-all
+  // Ensure the input path has the exact number of segments as the pattern,
+  // or allow for an optional catch-all segment that can match fewer segments.
   return (
     inputSegments.length === patternSegments.length ||
-    patternSegments[patternSegments.length - 1].startsWith('[[...')
+    (patternSegments[patternSegments.length - 1]?.startsWith('[[...') &&
+      patternSegments[patternSegments.length - 1]?.endsWith(']]'))
   )
 }
