@@ -32,21 +32,32 @@ const countOccurrences = (arr: string[], target: string): number => {
     return item === target ? count + 1 : count
   }, 0)
 }
-
+let count = 0
 const compareRoutes = (
   parentRoutes: string[][],
   urlRoute: string[],
 ): boolean => {
   return parentRoutes.some(parentRoute => {
-    const value = countOccurrences(parentRoute, 'details') * -1
+    // returns number of details present in
+    // ['authors', 'details', 'details]
+    // ['authors', 'akhil', 'welcome']
+    const value = countOccurrences(parentRoute, 'details') * -1 // -2
 
     console.log(value, parentRoute, urlRoute, parentRoute.slice(0, -2))
-    return (
+
+    const condition =
       parentRoute.length >= 2 &&
       parentRoute
-        .slice(0, value) // ['authors', 'details', 'details]
-        .every((route, index) => route === urlRoute.slice(0, value)[index]) // ['authors', 'akhil', 'tag]
-    )
+        .slice(0, value) // ['authors']
+        .every((route, index) => route === urlRoute.slice(0, value)[index])
+
+    if (condition) {
+      // storing the count value
+      count = value * -1
+    }
+
+    // ['authors', 'details', 'details]
+    return condition
   })
 }
 
@@ -54,6 +65,9 @@ const Page = async ({ params }: { params: { route: string[] } }) => {
   const payload = await getPayloadHMR({ config: configPromise })
 
   const { docs: existingPages } = await payload.find({ collection: 'pages' })
+
+  // storing the original params to directly send it to the render blocks
+  const originalParams = params
 
   const allPages = existingPages.map(page => page.path)
   const urlRouteExistInPages = allPages.includes(
@@ -79,15 +93,17 @@ const Page = async ({ params }: { params: { route: string[] } }) => {
 
   let importantData
 
-  console.log(params.route) // ['authors', 'akhil', 'tags']
-
-  console.log(params.route && compareRoutes(requiredRouteFormat, params.route))
-
   if (!urlRouteExistInPages) {
-    // const value = countOccurrences(parentRoute, 'details')
     if (params.route && compareRoutes(requiredRouteFormat, params.route)) {
-      importantData = params.route.pop() // ['authors', 'akhil',]
-      params.route.push('details') // ['authors', 'akhil', 'details']
+      // filling an array with 'details' string based on count
+      const detailsArray = Array.from({ length: count }, () => 'details')
+
+      // Removing and adding detailsArray to route
+      params.route.splice(params.route.length - count, count, ...detailsArray)
+
+      // params.route.splice(1, count)
+      // importantData = params.route.pop() // ['authors', 'akhil',]
+      // params.route.push('details') // ['authors', 'akhil', 'details']
     }
   }
 
@@ -96,7 +112,12 @@ const Page = async ({ params }: { params: { route: string[] } }) => {
       path: params?.route,
     })
 
-    return <RenderBlocks pageInitialData={pageData as PageType} slug={params} />
+    return (
+      <RenderBlocks
+        pageInitialData={pageData as PageType}
+        slug={originalParams}
+      />
+    )
   } catch (error) {
     console.error('Error: Page not found')
     notFound()
