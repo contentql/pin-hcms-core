@@ -52,7 +52,7 @@ const RenderBlocks: React.FC<RenderBlocksProps> = ({
         if (Block) {
           return (
             <div key={index}>
-              <Block {...block} />
+              <Block block={block} slug={slug} />
             </div>
           )
         }

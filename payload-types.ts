@@ -186,7 +186,7 @@ export interface Page {
   title: string;
   isHome?: boolean | null;
   isDynamic?: boolean | null;
-  blocks?: TestType[] | null;
+  blocks?: (TestType | DynamicContentTypes)[] | null;
   slug?: string | null;
   path?: string | null;
   parent?: (string | null) | Page;
@@ -212,6 +212,16 @@ export interface TestType {
   id?: string | null;
   blockName?: string | null;
   blockType: 'Test';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "DynamicContentTypes".
+ */
+export interface DynamicContentTypes {
+  collection_slug?: ('blogs' | 'tags' | 'users') | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'DynamicContent';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

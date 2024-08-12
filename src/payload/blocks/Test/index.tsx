@@ -3,7 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { FaArrowRight } from 'react-icons/fa'
 
-export const Test = (testData: TestType) => {
+export const Test = ({ block }: { block: TestType }) => {
   return (
     <div className='mx-auto max-w-7xl '>
       <section className='relative flex min-h-screen flex-col items-center justify-between py-10'>
@@ -23,10 +23,10 @@ export const Test = (testData: TestType) => {
         <div>
           <div className='absolute left-[50%] top-[40%] h-[10%] w-[20%] -translate-x-1/2 rounded-full bg-indigo-600 blur-[110px]'></div>
           <h1 className='w-full max-w-2xl text-center text-3xl font-bold text-white md:text-4xl lg:text-7xl'>
-            {testData?.heading}
+            {block?.heading}
           </h1>
           <h1 className='mt-3 w-full max-w-2xl text-center text-3xl font-bold text-white md:text-4xl lg:text-7xl'>
-            {testData?.sub_heading}
+            {block?.sub_heading}
           </h1>
         </div>
         <div className='flex flex-wrap items-center justify-center gap-8'>
