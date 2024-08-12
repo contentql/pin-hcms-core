@@ -4,12 +4,18 @@ import { headers } from 'next/headers'
 
 import { getCurrentUser } from '@/utils/getCurrentUser'
 
-const MarketingLayout = async ({ children }: { children: React.ReactNode }) => {
+interface LayoutProps {
+  children: React.ReactNode
+}
+
+const AccountLayout: React.FC<LayoutProps> = async ({ children }) => {
   const payload = await getPayloadHMR({ config: configPromise })
+
   const initData = await payload.findGlobal({
     slug: 'site-settings',
     draft: false,
   })
+
   const headersList = headers()
   const user = await getCurrentUser(headersList)
 
@@ -22,4 +28,4 @@ const MarketingLayout = async ({ children }: { children: React.ReactNode }) => {
   )
 }
 
-export default MarketingLayout
+export default AccountLayout
