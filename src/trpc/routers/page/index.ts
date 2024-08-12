@@ -6,6 +6,7 @@ import { z } from 'zod'
 import { COLLECTION_SLUG_PAGE } from '@/payload/collections/constants'
 import { publicProcedure, router } from '@/trpc'
 import ensurePath from '@/utils/ensurePath'
+import { matchNextJsPath } from '@/utils/matchNextJsPath'
 
 const payload = await getPayloadHMR({
   config: configPromise,
@@ -25,17 +26,24 @@ export const pageRouter = router({
         if (Array.isArray(path)) path = path.join('/')
         if (path !== '/') path = ensurePath(path).replace(/\/$/, '')
 
-        const { docs } = await payload.find({
+        const { docs: allPages } = await payload.find({
           collection: COLLECTION_SLUG_PAGE,
-          where: { path: { equals: path } },
           depth: 3,
         })
 
-        if (!docs?.length) {
+        if (!allPages?.length) {
           throw new TRPCError({ code: 'NOT_FOUND', message: 'Page not found' })
         }
 
-        return docs.at(0)
+        const matchingPage = allPages.find(page =>
+          matchNextJsPath(path, page.path!),
+        )
+
+        if (!matchingPage) {
+          throw new TRPCError({ code: 'NOT_FOUND', message: 'Page not found' })
+        }
+
+        return matchingPage
       } catch (error: any) {
         if (error instanceof TRPCError) {
           throw error

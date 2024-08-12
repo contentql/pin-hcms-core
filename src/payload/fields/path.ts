@@ -86,7 +86,10 @@ const pathField = (overrides?: Partial<Field>): Field =>
               [currentDoc],
             )
 
-            const updatedPath = generateBreadcrumbsUrl(docs, currentDoc)
+            const updatedPath =
+              originalDoc?.path !== value
+                ? value
+                : generateBreadcrumbsUrl(docs, currentDoc)
             const isNewPathConflicting = await willPathConflict({
               payload,
               path: updatedPath,

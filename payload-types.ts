@@ -185,6 +185,7 @@ export interface Page {
   id: string;
   title: string;
   isHome?: boolean | null;
+  isDynamic?: boolean | null;
   blocks?: TestType[] | null;
   slug?: string | null;
   path?: string | null;
