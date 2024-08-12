@@ -9,11 +9,9 @@ import TabComponent, { TabContent } from '@/components/common/Tabs'
 const BlogPostView = ({
   blog,
   blogsData,
-  decodedSlug,
 }: {
   blog: Blog
   blogsData: Blog[]
-  decodedSlug: string
 }) => {
   const tabs = [
     {
