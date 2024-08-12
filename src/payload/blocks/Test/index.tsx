@@ -1,9 +1,14 @@
+import { Params } from '../types'
 import { TestType } from '@payload-types'
 import Image from 'next/image'
 import Link from 'next/link'
 import { FaArrowRight } from 'react-icons/fa'
 
-export const Test = ({ block }: { block: TestType }) => {
+interface Props extends TestType {
+  params: Params
+}
+
+export const Test = ({ params, ...block }: Props) => {
   return (
     <div className='mx-auto max-w-7xl '>
       <section className='relative flex min-h-screen flex-col items-center justify-between py-10'>

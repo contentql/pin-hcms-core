@@ -8,21 +8,21 @@ import React from 'react'
 import { SlugType, blocksJSX } from '@/payload/blocks'
 import { trpc } from '@/trpc/client'
 
+import { Params } from './types'
+
 interface RenderBlocksProps {
-  slug: any
-  pageInitialData: Page // layout should be an array of objects conforming to the Page["layout"] type
+  params: Params
+  pageInitialData: Page
 }
 
 const RenderBlocks: React.FC<RenderBlocksProps> = ({
   pageInitialData,
-  slug,
+  params,
 }) => {
-  // get the data using slug
-  // use react query to fetch the data
-  // the data from layout should act as the default value for react query
+  // Fetch the page data using path
   const { data: pageData, isLoading: isPageLoading } =
     trpc.page.getPageData.useQuery(
-      { path: slug.route },
+      { path: params.route },
       { initialData: pageInitialData },
     )
 
@@ -36,14 +36,6 @@ const RenderBlocks: React.FC<RenderBlocksProps> = ({
   // Determine which data to use based on whether live preview data is available
   const dataToUse = livePreviewData?.blocks || pageData?.blocks
 
-  // if (isPageLoading) {
-  //   return <Loading />
-  // } else {
-  // if (!pageData) {
-  //   return <PageNotFound />
-  // }
-  // }
-
   return (
     <div>
       {dataToUse?.map((block, index) => {
@@ -52,11 +44,12 @@ const RenderBlocks: React.FC<RenderBlocksProps> = ({
         if (Block) {
           return (
             <div key={index}>
-              <Block block={block} slug={slug} />
+              <Block params={params} {...block} />
             </div>
           )
         }
-        return <h3 key={slug}>Block does not exist </h3>
+
+        return <h3 key={block.id}>Block does not exist </h3>
       })}
     </div>
   )

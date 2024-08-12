@@ -1,9 +1,12 @@
 import { Blog } from '@payload-types'
 
-import type { AdditionalBlockProps } from '@/payload/blocks/Blocks'
-
 import Container from './Container'
 import LexicalContent from './LexicalContent'
+
+type AdditionalBlockProps = {
+  blockIndex: number
+  locale: string
+}
 
 export default function RichText({
   content,
