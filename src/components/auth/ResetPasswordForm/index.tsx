@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
+import { Alert, AlertDescription } from '@/components/common/Alert'
 import { trpc } from '@/trpc/client'
 import {
   GenerateTokenSchema,
@@ -52,16 +53,29 @@ export function GenerateResetTokenForm() {
     <main
       id='content'
       role='main'
-      className='flex min-h-screen w-full items-center justify-center bg-black'>
-      <div className='mx-auto w-full max-w-md rounded-none drop-shadow-2xl md:rounded-2xl md:p-8'>
+      className='bg-base-100 flex min-h-screen w-full items-center justify-center'>
+      <div className='mx-auto w-full max-w-md drop-shadow-2xl  md:p-8'>
         <div className='text-center'>
-          <h1 className='block text-2xl font-bold text-gray-800 dark:text-white'>
+          {isGeneratePasswordSuccess ? (
+            <Alert variant='success' className='mb-12'>
+              <AlertDescription>
+                An email verification has been successfully sent.
+              </AlertDescription>
+            </Alert>
+          ) : isGeneratePasswordError ? (
+            <Alert variant='danger' className='mb-12'>
+              <AlertDescription>
+                {generatePasswordError.message}
+              </AlertDescription>
+            </Alert>
+          ) : null}
+          <h1 className='text-base-content block text-2xl font-bold'>
             Forgot password?
           </h1>
-          <p className='mt-2 text-sm text-gray-600 dark:text-gray-400'>
+          <p className='text-base-content/70 mt-2 text-sm'>
             Remember your password?
             <a
-              className='pl-1 font-medium text-indigo-600 decoration-1 hover:underline'
+              className='text-base-content pl-1 font-medium decoration-1 hover:underline'
               href='/sign-in'>
               SignIn here
             </a>
@@ -71,20 +85,17 @@ export function GenerateResetTokenForm() {
         <div className='mt-10'>
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className='space-y-4'>
-              {isGeneratePasswordError && (
-                <p className='text-red-500'>{generatePasswordError.message}</p>
-              )}
               <div>
                 <LabelInputContainer className='mb-4'>
                   <div className='inline-flex justify-between'>
                     <label
                       htmlFor='email'
-                      className='mb-2 ml-1 block text-sm font-bold dark:text-white'>
+                      className='text-base-content/70 mb-2 ml-1 block text-sm font-bold'>
                       Email address
                     </label>
                     {errors.email && (
                       <p
-                        className='mt-2 hidden text-xs text-red-600'
+                        className='text-error mt-2 hidden text-xs'
                         id='email-error'>
                         {errors.email.message}
                       </p>
@@ -102,7 +113,7 @@ export function GenerateResetTokenForm() {
               <button
                 type='submit'
                 disabled={isGeneratePasswordPending}
-                className='mt-3 inline-flex w-full items-center justify-center gap-2 rounded-md border border-transparent bg-indigo-600 px-4 py-3 text-sm font-semibold text-white transition-all hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-800 focus:ring-offset-2 disabled:cursor-not-allowed disabled:bg-opacity-50 dark:focus:ring-offset-gray-800'>
+                className='bg-primary text-base-content hover:bg-primary-focus rounded-rounded-btn mt-3 inline-flex w-full items-center justify-center gap-2 border border-transparent px-4 py-3 text-sm font-semibold transition-all  disabled:cursor-not-allowed disabled:bg-opacity-50 '>
                 {isGeneratePasswordPending ? 'Sending...' : 'Send Reset Link'}
               </button>
             </div>
@@ -151,13 +162,22 @@ export function ResetPasswordForm({ token }: { token: string }) {
   }
 
   return (
-    <main className='flex h-screen w-full items-center justify-center bg-black'>
-      <div className='w-full max-w-md rounded-none drop-shadow-2xl md:rounded-2xl md:p-8'>
+    <main className='bg-base-100 flex h-screen w-full items-center justify-center'>
+      <div className='w-full max-w-md  drop-shadow-2xl'>
         <div className='text-center'>
-          <h1 className='block text-2xl font-bold text-gray-800 dark:text-white'>
+          {isResetPasswordSuccess ? (
+            <Alert variant='success' className='mb-12'>
+              <AlertDescription>Updated Password ✅</AlertDescription>
+            </Alert>
+          ) : isResetPasswordError ? (
+            <Alert variant='danger' className='mb-12'>
+              <AlertDescription>{resetPasswordError.message}</AlertDescription>
+            </Alert>
+          ) : null}
+          <h1 className='text-base-content block text-2xl font-bold'>
             Almost there!
           </h1>
-          <p className='mt-2 text-sm text-gray-600 dark:text-gray-400'>
+          <p className='text-base-content/70 mt-2 text-sm'>
             Please enter a new password to reset.
           </p>
         </div>
@@ -165,23 +185,17 @@ export function ResetPasswordForm({ token }: { token: string }) {
         <div className='mt-10'>
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className='space-y-4'>
-              {isResetPasswordError && (
-                <p className='text-red-500'>{resetPasswordError.message}</p>
-              )}
-              {isResetPasswordSuccess && (
-                <p className='text-green-500'>Updated Password ✅</p>
-              )}
               <div>
                 <LabelInputContainer className='mb-4'>
                   <div className='inline-flex justify-between'>
                     <label
                       htmlFor='password'
-                      className='mb-2 ml-1 block text-sm font-bold dark:text-white'>
+                      className='text-base-content/70 mb-2 ml-1 block text-sm font-bold'>
                       Enter password
                     </label>
                     {errors.password && (
                       <p
-                        className='mt-2 hidden text-xs text-red-600'
+                        className='text-error mt-2 hidden text-xs'
                         id='email-error'>
                         {errors.password.message}
                       </p>
@@ -199,7 +213,7 @@ export function ResetPasswordForm({ token }: { token: string }) {
               <button
                 type='submit'
                 disabled={isResetPasswordPending}
-                className='mt-3 inline-flex w-full items-center justify-center gap-2 rounded-md border border-transparent bg-indigo-600 px-4 py-3 text-sm font-semibold text-white transition-all hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-800 focus:ring-offset-2 disabled:cursor-not-allowed disabled:bg-opacity-50 dark:focus:ring-offset-gray-800'>
+                className='rounded-rounded-btn bg-primary text-primary-content hover:bg-primary-focus mt-3 inline-flex w-full items-center justify-center gap-2 border border-transparent px-4 py-3 text-sm font-semibold transition-all disabled:cursor-not-allowed disabled:bg-opacity-50 '>
                 {isResetPasswordPending ? 'Processing...' : 'Reset Password'}
               </button>
             </div>

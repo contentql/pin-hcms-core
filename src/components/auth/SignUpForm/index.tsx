@@ -7,6 +7,7 @@ import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { z } from 'zod'
 
+import { Alert, AlertDescription } from '@/components/common/Alert'
 import { trpc } from '@/trpc/client'
 import { SignUpSchema } from '@/trpc/routers/auth/validator'
 
@@ -41,7 +42,6 @@ const SignUpForm = () => {
     isSuccess: isSignUpSuccess,
   } = trpc.auth.signUp.useMutation({
     onSuccess: () => {
-      toast.success('Account created! Redirecting to profile page.')
       reset()
       router.push('/profile')
     },
@@ -57,13 +57,26 @@ const SignUpForm = () => {
   }
 
   return (
-    <div className='flex min-h-screen bg-black'>
+    <div className='bg-base-100 flex min-h-screen'>
       <div className='flex w-full items-center justify-center'>
         <div className='w-full max-w-md p-6'>
-          <h1 className='mb-6 text-center text-3xl font-semibold text-white'>
+          {isSignUpSuccess ? (
+            <Alert variant='success' className='mb-12'>
+              <AlertDescription>
+                Successfully Signed up ! Redirecting...
+              </AlertDescription>
+            </Alert>
+          ) : isSignUpError ? (
+            <Alert variant='danger' className='mb-12'>
+              <AlertDescription>
+                Sign up failed. Check the details you provided.
+              </AlertDescription>
+            </Alert>
+          ) : null}
+          <h1 className='text-base-content mb-6 text-center text-3xl font-semibold'>
             Sign Up
           </h1>
-          <h1 className='mb-6 text-center text-sm font-semibold text-gray-300'>
+          <h1 className='text-base-content mb-6 text-center text-sm font-semibold'>
             Join to Our Community with all time access and free{' '}
           </h1>
 
@@ -73,11 +86,11 @@ const SignUpForm = () => {
                 <div className='inline-flex justify-between'>
                   <label
                     htmlFor='firstName'
-                    className='block text-sm font-medium text-gray-300'>
+                    className='text-base-content/70 block text-sm font-medium'>
                     First Name
                   </label>
                   {errors?.firstName && (
-                    <p className='text-sm text-red-500'>
+                    <p className='text-error text-sm'>
                       {errors.firstName.message}
                     </p>
                   )}
@@ -96,11 +109,11 @@ const SignUpForm = () => {
                 <div className='inline-flex justify-between'>
                   <label
                     htmlFor='lastName'
-                    className='block text-sm font-medium text-gray-300'>
+                    className='text-base-content/70 block text-sm font-medium'>
                     Last Name
                   </label>
                   {errors?.lastName && (
-                    <p className='text-sm text-red-500'>
+                    <p className='text-error text-sm'>
                       {errors.lastName.message}
                     </p>
                   )}
@@ -120,13 +133,11 @@ const SignUpForm = () => {
                 <div className='inline-flex justify-between'>
                   <label
                     htmlFor='email'
-                    className='block text-sm font-medium text-gray-300'>
+                    className='text-base-content/70 block text-sm font-medium'>
                     E-Mail
                   </label>
                   {errors?.email && (
-                    <p className='text-sm text-red-500'>
-                      {errors.email.message}
-                    </p>
+                    <p className='text-error text-sm'>{errors.email.message}</p>
                   )}
                 </div>
                 <Input
@@ -143,11 +154,11 @@ const SignUpForm = () => {
                 <div className='inline-flex justify-between'>
                   <label
                     htmlFor='password'
-                    className='block text-sm font-medium text-gray-300'>
+                    className='text-base-content/70 block text-sm font-medium'>
                     Password
                   </label>
                   {errors?.password && (
-                    <p className='text-sm text-red-500'>
+                    <p className='text-error text-sm'>
                       {errors.password.message}
                     </p>
                   )}
@@ -164,16 +175,16 @@ const SignUpForm = () => {
             <div>
               <button
                 type='submit'
-                className='w-full rounded-md border-[1px] border-indigo-600 bg-indigo-600 p-2 text-white transition-all duration-500 hover:bg-indigo-700 focus:outline-none focus:ring-1 focus:ring-gray-200 focus:ring-offset-1 disabled:cursor-not-allowed disabled:bg-opacity-50'
+                className='bg-primary text-base-content hover:bg-primary-focus  rounded-rounded-btn w-full p-2 transition-all duration-500 focus:outline-none disabled:cursor-not-allowed disabled:bg-opacity-50'
                 disabled={isSignUpPending}>
                 {isSignUpPending ? 'Creating account...' : 'Sign Up'}
               </button>
             </div>
           </form>
-          <div className='mt-4 text-center text-sm text-gray-300'>
+          <div className='text-base-content/70 mt-4 text-center text-sm'>
             <p>
               Already have an account?{' '}
-              <a href='/sign-in' className='text-white hover:underline'>
+              <a href='/sign-in' className='text-base-content hover:underline'>
                 SignIn here
               </a>
             </p>
