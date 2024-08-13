@@ -50,13 +50,9 @@ export default buildConfig({
     },
     livePreview: {
       url: ({ data, collectionConfig, locale }) => {
-        const baseUrl = env.NEXT_PUBLIC_PUBLIC_URL
+        const baseUrl = env.PAYLOAD_URL
 
-        if (collectionConfig?.slug === 'blogs') {
-          return `${baseUrl}/blog/${data.slug}`
-        } else {
-          return `${baseUrl}/${data.slug}${locale ? `?locale=${locale.code}` : ''}`
-        }
+        return `${baseUrl}/${data.path}${locale ? `?locale=${locale.code}` : ''}`
       },
 
       collections: ['pages', 'blogs'],
