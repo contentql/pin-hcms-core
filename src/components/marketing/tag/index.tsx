@@ -22,7 +22,7 @@ const TagListView = ({ tags }: { tags: Tag[] }) => {
           Get Started with src/app/(app)/(marketing)/tag
         </p>
         <Link
-          href={`/tag/${tags?.at(0)?.slug!}`}
+          href={`/tags/${tags?.at(0)?.slug!}`}
           className='rounded-lg border-2 border-neutral-800 bg-zinc-800 px-4 py-2'>
           View blogs
         </Link>

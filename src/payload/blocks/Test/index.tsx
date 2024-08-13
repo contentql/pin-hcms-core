@@ -50,7 +50,7 @@ export const Test = ({ params, ...block }: Props) => {
             </p>
           </Link>
           <Link
-            href='/author'
+            href='/authors'
             className='group w-full cursor-pointer space-y-4 rounded-xl px-2  py-4 transition-all duration-300 hover:bg-zinc-800 md:w-1/5'>
             <h1 className='inline-flex items-center gap-x-4 text-2xl font-bold transition-all duration-300'>
               Authors
@@ -64,7 +64,7 @@ export const Test = ({ params, ...block }: Props) => {
             </p>
           </Link>
           <Link
-            href='/blog'
+            href='/blogs'
             className='group w-full cursor-pointer space-y-4 rounded-xl px-2  py-4 transition-all duration-300 hover:bg-zinc-800 md:w-1/5'>
             <h1 className='inline-flex items-center gap-x-4 text-2xl font-bold transition-all duration-300'>
               Blogs
@@ -78,7 +78,7 @@ export const Test = ({ params, ...block }: Props) => {
             </p>
           </Link>
           <Link
-            href='/tag'
+            href='/tags'
             className='group w-full cursor-pointer space-y-4 rounded-xl px-2  py-4 transition-all duration-300 hover:bg-zinc-800 md:w-1/5'>
             <h1 className='inline-flex items-center gap-x-4 text-2xl font-bold transition-all duration-300'>
               Tags

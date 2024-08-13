@@ -18,11 +18,11 @@ const BlogPostsView = ({ blogs }: { blogs: Blog[] }) => {
   return (
     <div className='mx-auto max-h-screen max-w-7xl  gap-6 overflow-hidden px-2'>
       <div className='mt-4 flex items-center justify-between'>
-        <p className='rounded-lg border-2 border-neutral-800 bg-zinc-800 px-4 py-2'>
+        <p className='border-neutral rounded-lg border-2 bg-zinc-800 px-4 py-2'>
           Get Started with src/app/(app)/(marketing)/blog
         </p>
         <Link
-          href={`/blog/${blogs?.at(0)?.slug!}`}
+          href={`/blogs/${blogs?.at(0)?.slug!}`}
           className='rounded-lg border-2 border-neutral-800 bg-zinc-800 px-4 py-2'>
           view blog post
         </Link>

@@ -26,7 +26,7 @@ const AuthorsListView = ({ authors }: { authors: any }) => {
           Get Started with src/app/(app)/(marketing)/author
         </p>
         <Link
-          href={`/author/${authors?.at(0)?.name}`}
+          href={`/authors/${authors?.at(0)?.name}`}
           className='rounded-lg border-2 border-neutral-800 bg-zinc-800 px-4 py-2'>
           view blogs
         </Link>
