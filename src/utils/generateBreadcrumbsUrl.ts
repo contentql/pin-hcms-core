@@ -14,17 +14,11 @@ export default function generateBreadcrumbsUrl(docs: any, lastDoc: any) {
           doc?.id !== lastDoc?.id ? `${url}${doc.path ?? ''}` : url,
         prefix,
       )
-    : '/'
-
-  console.log('Parent Paths: ', parentPaths)
+    : ''
 
   const slug = lastDoc?.isDynamic ? `[${lastDoc?.slug}]` : `${lastDoc?.slug}`
 
-  console.log('Slug: ', slug)
-
   const path = `${parentPaths}/${slug}`
-
-  console.log('Path: ', path)
 
   return path
 }
