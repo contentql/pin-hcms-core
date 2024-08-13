@@ -23,7 +23,7 @@ import { COLLECTION_SLUG_PAGE } from '@/payload/collections/constants'
 import { siteSettings } from '@/payload/globals/SiteSettings'
 import Icon from '@/payload/style/icons/Icon'
 import Logo from '@/payload/style/icons/Logo'
-import generateBreadcrumbsUrl from '@/utils/generateBreadcrumbsUrl'
+import { generateBreadcrumbsUrl } from '@/utils/generateBreadcrumbsUrl'
 import {
   generateDescription,
   generateImage,
