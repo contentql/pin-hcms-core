@@ -188,6 +188,7 @@ export interface Page {
   isDynamic?: boolean | null;
   blocks?: (TestType | DynamicContentTypes)[] | null;
   slug?: string | null;
+  pathMode?: ('generate' | 'custom') | null;
   path?: string | null;
   parent?: (string | null) | Page;
   breadcrumbs?:
