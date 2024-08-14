@@ -4,10 +4,6 @@ import { mongooseAdapter } from '@payloadcms/db-mongodb'
 import { resendAdapter } from '@payloadcms/email-resend'
 import { nestedDocsPlugin } from '@payloadcms/plugin-nested-docs'
 import { seoPlugin } from '@payloadcms/plugin-seo'
-import {
-  FixedToolbarFeature,
-  lexicalEditor,
-} from '@payloadcms/richtext-lexical'
 import { slateEditor } from '@payloadcms/richtext-slate'
 import { s3Storage } from '@payloadcms/storage-s3'
 import path from 'path'
@@ -121,14 +117,7 @@ export default buildConfig({
   }),
 
   sharp,
-  editor: process.env.LEXICAL_EDITOR
-    ? lexicalEditor({
-        features: ({ defaultFeatures }) => [
-          ...defaultFeatures,
-          FixedToolbarFeature(),
-        ],
-      })
-    : slateEditor({}),
+  editor: slateEditor({}),
 
   secret: env.PAYLOAD_SECRET,
   db: mongooseAdapter({
