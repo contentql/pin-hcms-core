@@ -3,45 +3,47 @@
 import type { User } from '@payload-types'
 import { useState } from 'react'
 import { toast } from 'sonner'
+import { z } from 'zod'
 
 import { trpc } from '@/trpc/client'
 
 import DeleteAccountSection from './DeleteAccountSection'
+import Profile from './Profile'
 
-interface ProfileFormData extends User {
-  confirmPassword: string
-}
+const ProfileFormSchema = z.object({
+  name: z.string().optional().nullable(),
+  bio: z.string().optional().nullable(),
+  password: z.string().optional().nullable(),
+  confirmPassword: z.string().optional().nullable(),
+})
+type ProfileFormDataType = z.infer<typeof ProfileFormSchema>
 
 const ProfileForm = ({ user }: { user: User }) => {
-  const [formData, setFormData] = useState<ProfileFormData>({
-    ...user,
+  const [formData, setFormData] = useState<ProfileFormDataType>({
+    name: user?.name,
+    password: '',
     confirmPassword: '',
   })
   const trpcUtils = trpc.useUtils()
 
-  const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleOnChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
     setFormData({ ...formData, [e.target.name]: e.target.value })
-  }
-
-  const clearPassword = () => {
-    formData.password = ''
-    formData.confirmPassword = ''
   }
 
   const { mutate: updateUserMutation, isPending: isUpdateUserPending } =
     trpc.user.updateUser.useMutation({
       onSuccess: () => {
         toast.success('Profile updated successfully')
-        clearPassword()
         trpcUtils.user.getUser.invalidate()
       },
       onError() {
-        toast.error('Update failed, try again!')
-        clearPassword()
+        return null
       },
     })
 
-  const handlerUserUpdate = (e: any) => {
+  const handleUserUpdateForm = (e: any) => {
     e.preventDefault()
     const sanitizedData = Object.fromEntries(
       Object.entries(formData).filter(([key, value]) => Boolean(value)),
@@ -63,11 +65,13 @@ const ProfileForm = ({ user }: { user: User }) => {
   return (
     <div className='p-2 md:p-4'>
       <div className='mt-8 w-full px-6 pb-8 sm:rounded-lg'>
-        <h2 className='pl-6 text-2xl font-bold sm:text-xl'>Public Profile</h2>
+        <h2 className='pl-6 text-2xl font-bold text-base-content sm:text-xl'>
+          Personal Information
+        </h2>
 
         <div className='mx-auto mt-8 grid'>
-          <div className='flex flex-col items-center space-y-5 sm:flex-row sm:space-y-0'>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
+          {/* <div className='flex flex-col items-center space-y-5 sm:flex-row sm:space-y-0'>
+            eslint-disable-next-line @next/next/no-img-element
             <img
               className='h-40 w-40 rounded-full object-cover p-1 ring-2 ring-indigo-300 dark:ring-indigo-500'
               src='https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGZhY2V8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60'
@@ -77,7 +81,7 @@ const ProfileForm = ({ user }: { user: User }) => {
             <div className='flex flex-col space-y-5 sm:ml-8'>
               <button
                 type='button'
-                className='rounded-lg border border-indigo-200 bg-[#202142] px-7 py-3.5 text-base font-medium text-indigo-100 hover:bg-indigo-900 focus:z-10 focus:outline-none focus:ring-4 focus:ring-indigo-200 '>
+                className='rounded-lg border border-indigo-200 bg-[#26304e] px-7 py-3.5 text-base font-medium text-indigo-100 hover:bg-indigo-600 focus:z-10 focus:outline-none focus:ring-4 focus:ring-indigo-200 '>
                 Change picture
               </button>
               <button
@@ -86,15 +90,18 @@ const ProfileForm = ({ user }: { user: User }) => {
                 Delete picture
               </button>
             </div>
+          </div> */}
+          <div className='flex flex-col items-center justify-center space-y-5 sm:flex-row sm:space-y-0'>
+            <Profile initialUser={user} />
           </div>
 
           <form
-            onSubmit={handlerUserUpdate}
-            className='mt-8 items-center text-[#202142] sm:mt-14'>
+            onSubmit={handleUserUpdateForm}
+            className='mt-8 items-center sm:mt-14'>
             <div className='mb-4 sm:mb-6'>
               <label
                 htmlFor='name'
-                className='block text-sm font-medium text-gray-700'>
+                className='block text-sm font-medium text-base-content/70'>
                 Name
               </label>
               <input
@@ -102,16 +109,16 @@ const ProfileForm = ({ user }: { user: User }) => {
                 id='name'
                 name='name'
                 placeholder='John'
-                value={formData?.name || ''}
+                value={user?.name || ''}
                 onChange={handleOnChange}
-                className='mt-1 w-full rounded-md border p-2 transition-colors duration-300 focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-offset-2'
+                className='mt-1 w-full rounded-md bg-base-200 p-2 text-base-content transition-colors duration-300 focus:border-base-content/40 focus:outline-none focus:ring-1 focus:ring-base-content/40 focus:ring-offset-1'
               />
             </div>
 
             <div className='mb-4 sm:mb-6'>
               <label
                 htmlFor='email'
-                className='block text-sm font-medium text-gray-700'>
+                className='block text-sm font-medium text-base-content/70'>
                 E-Mail
               </label>
               <input
@@ -119,17 +126,34 @@ const ProfileForm = ({ user }: { user: User }) => {
                 id='email'
                 name='email'
                 placeholder='john.doe@example.com'
-                value={formData?.email}
+                value={user?.email}
                 disabled
-                className='mt-1 w-full rounded-md border p-2 transition-colors duration-300 focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-offset-2'
+                className='mt-1 w-full rounded-md bg-base-200 p-2 text-base-content transition-colors duration-300 focus:border-base-content/40 focus:outline-none focus:ring-1 focus:ring-base-content/40 focus:ring-offset-1'
               />
             </div>
+
+            {/* <div className='mb-4 sm:mb-6'>
+              <label
+                htmlFor='bio'
+                className='block text-sm font-medium text-gray-300'>
+                Bio
+              </label>
+              <textarea
+                id='bio'
+                name='bio'
+                placeholder=''
+                value={user?.bio || ''}
+                onChange={handleOnChange}
+                className='mt-1 w-full rounded-md bg-[#1e2846] p-2 text-white transition-colors duration-300 focus:border-gray-200 focus:outline-none focus:ring-1 focus:ring-gray-300 focus:ring-offset-1'
+                rows={4} // You can adjust the number of rows as needed
+              />
+            </div> */}
 
             <div className='mb-4 flex w-full flex-col items-center space-x-0 space-y-2 sm:mb-6 sm:flex-row sm:space-x-4 sm:space-y-0'>
               <div className='w-full'>
                 <label
                   htmlFor='password'
-                  className='block text-sm font-medium text-gray-700'>
+                  className='block text-sm font-medium text-base-content/70'>
                   New Password
                 </label>
                 <input
@@ -137,16 +161,15 @@ const ProfileForm = ({ user }: { user: User }) => {
                   id='password'
                   name='password'
                   placeholder='● ● ● ● ● ● ● ● ●'
-                  value={formData.password || ''}
                   onChange={handleOnChange}
-                  className='mt-1 w-full rounded-md border p-2 transition-colors duration-300 focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-offset-2'
+                  className='mt-1 w-full rounded-md bg-base-200 p-2 text-base-content transition-colors duration-300 focus:border-base-content/40 focus:outline-none focus:ring-1 focus:ring-base-content/40 focus:ring-offset-1'
                 />
               </div>
 
               <div className='w-full'>
                 <label
                   htmlFor='confirmPassword'
-                  className='block text-sm font-medium text-gray-700'>
+                  className='block text-sm font-medium text-base-content/70'>
                   Confirm Password
                 </label>
                 <input
@@ -154,9 +177,8 @@ const ProfileForm = ({ user }: { user: User }) => {
                   id='confirmPassword'
                   name='confirmPassword'
                   placeholder='● ● ● ● ● ● ● ● ●'
-                  value={formData.confirmPassword || ''}
                   onChange={handleOnChange}
-                  className='mt-1 w-full rounded-md border p-2 transition-colors duration-300 focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-offset-2'
+                  className='mt-1 w-full rounded-md bg-base-200 p-2 text-base-content transition-colors duration-300 focus:border-base-content/40 focus:outline-none focus:ring-1 focus:ring-base-content/40 focus:ring-offset-1'
                 />
               </div>
             </div>
@@ -164,7 +186,7 @@ const ProfileForm = ({ user }: { user: User }) => {
             <div className='flex justify-end'>
               <button
                 type='submit'
-                className={`w-full rounded-lg bg-indigo-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-indigo-800 focus:outline-none focus:ring-4 focus:ring-indigo-300 dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800 sm:w-auto ${isUpdateUserPending ? 'cursor-not-allowed opacity-50' : ''}`}>
+                className='w-full rounded-lg  bg-primary px-5 py-2.5 text-center text-sm font-medium text-base-content hover:bg-primary-focus focus:outline-none focus:ring-4 focus:ring-primary/30 sm:w-auto'>
                 {isUpdateUserPending ? 'Updating...' : 'Update Profile'}
               </button>
             </div>
