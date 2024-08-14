@@ -152,7 +152,7 @@ export interface Blog {
     | null;
   sub_title: string;
   blog_image: string | Media;
-  description: {
+  content: {
     root: {
       type: string;
       children: {
@@ -167,7 +167,6 @@ export interface Blog {
     };
     [k: string]: unknown;
   };
-  description_html?: string | null;
   meta?: {
     title?: string | null;
     description?: string | null;

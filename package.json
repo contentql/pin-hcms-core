@@ -25,6 +25,7 @@
     "@payloadcms/plugin-nested-docs": "beta",
     "@payloadcms/plugin-seo": "beta",
     "@payloadcms/richtext-lexical": "beta",
+    "@payloadcms/richtext-slate": "beta",
     "@payloadcms/storage-s3": "beta",
     "@payloadcms/translations": "beta",
     "@payloadcms/ui": "beta",
