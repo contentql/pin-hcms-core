@@ -5,7 +5,7 @@ import { Page } from '@payload-types'
 import { useLivePreview } from '@payloadcms/live-preview-react'
 import React from 'react'
 
-import { SlugType, blocksJSX } from '@/payload/blocks'
+import { blocksJSX } from '@/payload/blocks'
 import { trpc } from '@/trpc/client'
 
 import { Params } from './types'
@@ -34,12 +34,13 @@ const RenderBlocks: React.FC<RenderBlocksProps> = ({
   })
 
   // Determine which data to use based on whether live preview data is available
-  const dataToUse = livePreviewData?.blocks || pageData?.blocks
+  const dataToUse = livePreviewData?.layout || pageData?.layout
 
   return (
     <div>
       {dataToUse?.map((block, index) => {
-        const Block = blocksJSX[block.blockType as SlugType]
+        // Casting to 'React.FC<any>' to bypass TypeScript error related to 'Params' type incompatibility.
+        const Block = blocksJSX[block.blockType] as React.FC<any>
 
         if (Block) {
           return (

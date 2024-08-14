@@ -4,11 +4,11 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { FaArrowRight } from 'react-icons/fa'
 
-interface Props extends TestType {
+interface TestProps extends TestType {
   params: Params
 }
 
-const Test: React.FC<Props> = ({ params, ...block }) => {
+const Test: React.FC<TestProps> = ({ params, ...block }) => {
   return (
     <div className='mx-auto max-w-7xl'>
       <section className='relative flex min-h-screen flex-col items-center justify-between py-10'>

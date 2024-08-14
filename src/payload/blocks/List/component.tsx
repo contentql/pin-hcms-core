@@ -9,11 +9,11 @@ import BlogPostsView from '@/components/marketing/blog'
 import TagListView from '@/components/marketing/tag'
 import { trpc } from '@/trpc/client'
 
-interface Props extends DynamicContentTypes {
+interface ListProps extends DynamicContentTypes {
   params: Params
 }
 
-const List: React.FC<Props> = ({ params, ...block }) => {
+const List: React.FC<ListProps> = ({ params, ...block }) => {
   switch (block?.collection_slug) {
     case 'blogs': {
       const { data: blogs } = trpc.blog.getAllBlogs.useQuery()
