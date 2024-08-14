@@ -337,6 +337,12 @@ a {
   transition-property: background-color, color;
 }
 
+.nav nav a.active {
+  padding-left: 0;
+  font-weight: 600;
+  background: var(--theme-elevation-150);
+}
+
 .nav nav a:focus:not(:focus-visible) {
   box-shadow: none;
   font-weight: 500;
@@ -364,6 +370,19 @@ a {
   border-radius: var(--style-radius-m);
   transition: var(--dr-fast) var(--dr-transition);
   transition-property: background-color, color;
+}
+
+.checkbox-input:not(.checkbox-input--read-only):active .checkbox-input__input,
+.checkbox-input:not(.checkbox-input--read-only):active input[type='checkbox'],
+.checkbox-input:not(.checkbox-input--read-only):focus-within
+  .checkbox-input__input,
+.checkbox-input:not(.checkbox-input--read-only):focus-within
+  input[type='checkbox'],
+.checkbox-input:not(.checkbox-input--read-only):focus .checkbox-input__input,
+.checkbox-input:not(.checkbox-input--read-only):focus input[type='checkbox'] {
+  outline: 0;
+  box-shadow: 0 0 3px 3px var(--dr--primary) !important;
+  border: 1px solid var(--theme-elevation-150);
 }
 
 .checkbox-input__input input[type='checkbox'] {
@@ -871,7 +890,7 @@ h1 {
   padding-left: 6px;
   padding-right: 6px;
   font-size: 45px;
-  color: #3c3939;
+  color: var(--theme-text);
 }
 
 /* Success Toast Close Button (empty) */
