@@ -5,9 +5,9 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
-import { toast } from 'sonner'
 import { z } from 'zod'
 
+import { Alert, AlertDescription } from '@/components/common/Alert'
 import { trpc } from '@/trpc/client'
 import { SignInSchema } from '@/trpc/routers/auth/validator'
 
@@ -38,11 +38,9 @@ const SignInForm = () => {
     isSuccess: isSignInSuccess,
   } = trpc.auth.signIn.useMutation({
     onSuccess: () => {
-      toast.success('Successfully logged in! Redirecting...')
       router.push('/profile')
     },
     onError: () => {
-      toast.error('Email or password is incorrect, try again!')
       reset()
     },
   })
@@ -54,14 +52,27 @@ const SignInForm = () => {
   }
 
   return (
-    <div className='flex min-h-screen bg-black'>
+    <div className='bg-base-100 flex min-h-screen'>
       <div className='flex w-full items-center justify-center'>
-        <div className='mx-auto w-full max-w-md rounded-none drop-shadow-2xl md:rounded-2xl'>
+        <div className='mx-auto w-full max-w-md  drop-shadow-2xl'>
           <div className='w-full max-w-md p-6'>
-            <h1 className='mb-6 text-center text-3xl font-semibold text-white'>
+            {isSignInSuccess ? (
+              <Alert variant='success' className='mb-12'>
+                <AlertDescription>
+                  Successfully logged in! Redirecting...
+                </AlertDescription>
+              </Alert>
+            ) : signInError ? (
+              <Alert variant='danger' className='mb-12'>
+                <AlertDescription>
+                  Sign in failed. Check the details you provided are incorrect.
+                </AlertDescription>
+              </Alert>
+            ) : null}
+            <h1 className='text-base-content mb-6 text-center text-3xl font-semibold'>
               Sign In
             </h1>
-            <h1 className='mb-6 text-center text-sm font-semibold text-gray-300'>
+            <h1 className='text-base-content mb-6 text-center text-sm font-semibold'>
               Join to Our Community with all time access and free{' '}
             </h1>
 
@@ -71,11 +82,11 @@ const SignInForm = () => {
                   <div className='inline-flex justify-between'>
                     <label
                       htmlFor='email'
-                      className='block text-sm font-medium text-gray-300'>
+                      className='text-base-content/70 block text-sm font-medium'>
                       E-Mail
                     </label>
                     {errors?.email && (
-                      <p className='text-sm text-red-500'>
+                      <p className='text-error text-sm'>
                         {errors.email.message}
                       </p>
                     )}
@@ -94,11 +105,11 @@ const SignInForm = () => {
                   <div className='inline-flex justify-between'>
                     <label
                       htmlFor='password'
-                      className='block text-sm font-medium text-gray-300'>
+                      className='text-base-content/70 block text-sm font-medium'>
                       Password
                     </label>
                     {errors?.password && (
-                      <p className='text-sm text-red-500'>
+                      <p className='text-error text-sm'>
                         {errors.password.message}
                       </p>
                     )}
@@ -112,7 +123,7 @@ const SignInForm = () => {
                   />
                 </LabelInputContainer>
               </div>
-              <p className='text-sm text-gray-700 dark:text-gray-300'>
+              <p className='text-base-content/70 text-sm'>
                 Forgot your password?{' '}
                 <Link className='underline' href='/reset-password'>
                   Reset it.
@@ -121,36 +132,18 @@ const SignInForm = () => {
               <div>
                 <button
                   type='submit'
-                  className='w-full rounded-md border-[1px] border-indigo-600 bg-indigo-600 p-2 text-white transition-all duration-500 hover:bg-indigo-700  focus:outline-none focus:ring-1 focus:ring-gray-200 focus:ring-offset-1 disabled:cursor-not-allowed disabled:bg-opacity-50'
+                  className='bg-primary hover:bg-primary-focus text-primary-content  rounded-rounded-btn w-full p-2 transition-all duration-500  focus:outline-none  disabled:cursor-not-allowed disabled:bg-opacity-50'
                   disabled={isSignInPending}>
                   {isSignInPending ? 'Signing in...' : 'Sign In'}
                 </button>
               </div>
             </form>
-            {/* <div className='mt-4 flex flex-col space-y-4'>
-              <button
-                className=' group/btn relative flex h-10 w-full items-center justify-start space-x-2 rounded-md bg-gray-50 px-4 font-medium text-black shadow-input dark:bg-zinc-900 dark:shadow-[0px_0px_1px_1px_var(--neutral-800)]'
-                type='submit'>
-                <FaGithub className='h-4 w-4 text-neutral-800 dark:text-neutral-300' />
-                <span className='text-sm text-neutral-700 dark:text-neutral-300'>
-                  GitHub
-                </span>
-                <BottomGradient />
-              </button>
-              <button
-                className=' group/btn relative flex h-10 w-full items-center justify-start space-x-2 rounded-md bg-gray-50 px-4 font-medium text-black shadow-input dark:bg-zinc-900 dark:shadow-[0px_0px_1px_1px_var(--neutral-800)]'
-                type='submit'>
-                <FaGithub className='h-4 w-4 text-neutral-800 dark:text-neutral-300' />
-                <span className='text-sm text-neutral-700 dark:text-neutral-300'>
-                  Google
-                </span>
-                <BottomGradient />
-              </button>
-            </div> */}
-            <div className='mt-4 text-center text-sm text-gray-300'>
+            <div className='text-base-content/70 mt-4 text-center text-sm'>
               <p>
                 Don&apos;t have an account?{' '}
-                <a href='/sign-up' className='text-white hover:underline'>
+                <a
+                  href='/sign-up'
+                  className='text-base-content hover:underline'>
                   SignUp here
                 </a>
               </p>
