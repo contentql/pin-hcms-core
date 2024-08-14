@@ -90,15 +90,4 @@ jobs:
             RESEND_API_KEY=${{ secrets.RESEND_API_KEY }}
             RESEND_SENDER_EMAIL=${{ secrets.RESEND_SENDER_EMAIL }}
             RESEND_SENDER_NAME=${{ secrets.RESEND_SENDER_NAME }}
-            NEXT_PUBLIC_IS_LIVE=${{ secrets.NEXT_PUBLIC_IS_LIVE }}
-            PAYLOAD_PUBLIC_DRAFT_SECRET=${{ secrets.PAYLOAD_PUBLIC_DRAFT_SECRET }}
-            NEXT_PRIVATE_DRAFT_SECRET=${{ secrets.NEXT_PRIVATE_DRAFT_SECRET }}
-            REVALIDATION_KEY=${{ secrets.REVALIDATION_KEY }}
-            NEXT_PRIVATE_REVALIDATION_KEY=${{ secrets.NEXT_PRIVATE_REVALIDATION_KEY }}
-            AUTH_SECRET=${{ secrets.AUTH_SECRET }}
-            AUTH_TRUST_HOST=${{ secrets.AUTH_TRUST_HOST }}
-            AUTH_VERPOSE=${{ secrets.AUTH_VERPOSE }}
-            AUTH_GITHUB_ID=${{ secrets.AUTH_GITHUB_ID }}
-            AUTH_GITHUB_SECRET=${{ secrets.AUTH_GITHUB_SECRET }}
-            OPENAPI_KEY=${{ secrets.OPENAPI_KEY }}
             SUBSCRIPTION_PLAN=${{secrets.SUBSCRIPTION_PLAN}}
