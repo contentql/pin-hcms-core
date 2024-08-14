@@ -1,24 +1,25 @@
+'use client'
+
 import { Blog } from '@payload-types'
 import Link from 'next/link'
 import { LiaBlogSolid } from 'react-icons/lia'
 
 import TabComponent, { TabContent } from '@/components/common/Tabs'
 
-function TagBlogListView({
-  tagDetails,
-  blogs,
-}: {
-  tagDetails: any
-  blogs: Blog[]
-}) {
+interface BlogDetailsProps {
+  blog: Blog
+  blogsData: Blog[]
+}
+
+const BlogDetails: React.FC<BlogDetailsProps> = ({ blog, blogsData }) => {
   const tabs = [
     {
-      title: 'Tag Details',
-      id: 'TagDetails',
+      title: 'Blog Data',
+      id: 'BlogData',
       icon: <LiaBlogSolid size={24} />,
       color: '#5d5dff',
       content: TabContent,
-      data: tagDetails,
+      data: blog,
     },
     {
       title: 'Blogs Data',
@@ -26,18 +27,17 @@ function TagBlogListView({
       icon: <LiaBlogSolid size={24} />,
       color: '#5d5dff',
       content: TabContent,
-      data: blogs,
+      data: blogsData,
     },
   ]
-
   return (
     <div className='mx-auto max-h-screen min-h-screen max-w-7xl  gap-6 overflow-hidden px-2'>
       <div className='mt-4 flex items-center justify-between'>
         <p className='rounded-rounded-box border-2 border-base-content/10 bg-base-content/20 px-4 py-2'>
-          Get Started with src/app/(app)/(marketing)/tag/[tagSlug]
+          Get Started with src/app/(app)/(marketing)/blog/[blogSlug]
         </p>
         <Link
-          href='/tag'
+          href='/blogs'
           className='rounded-rounded-box border-2 border-base-content/10 bg-base-content/20 px-4 py-2'>
           back
         </Link>
@@ -47,4 +47,4 @@ function TagBlogListView({
   )
 }
 
-export default TagBlogListView
+export default BlogDetails

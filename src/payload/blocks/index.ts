@@ -1,7 +1,7 @@
 // This is just to consolidate all the existing blocks and their respective JSX components
 // Always prefer to individually import the required block or JSX in other parts of your application
 // Importing the block components and its configurations
-import { DynamicContent, DynamicContentConfig } from './DynamicContent'
+import { Details, DetailsConfig } from './Details'
 import { List, ListConfig } from './List'
 import { Test, TestConfig } from './Test'
 
@@ -9,10 +9,10 @@ import { Test, TestConfig } from './Test'
 // This object allows dynamic rendering of components based on the block names
 export const blocksJSX = {
   Test,
-  DynamicContent,
+  Details,
   List,
 }
 
 // Exporting an array that consolidates all block configurations
 // This array is useful for registering or iterating over all blocks and their configurations in one place
-export const blocks = [TestConfig, DynamicContentConfig, ListConfig]
+export const blocks = [TestConfig, DetailsConfig, ListConfig]

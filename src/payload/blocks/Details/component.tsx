@@ -1,28 +1,26 @@
 'use client'
 
 import { Params } from '../types'
-import { Blog, DynamicContentTypes } from '@payload-types'
+import { Blog, DetailsType } from '@payload-types'
 
-import AuthorPostsView from '@/components/marketing/author/BlogsByAuthorAndTag'
-import BlogPostView from '@/components/marketing/blog/BlogPost'
-import TagBlogListView from '@/components/marketing/tag/BlogsByTag'
 import { trpc } from '@/trpc/client'
 
-interface DynamicContentProps extends DynamicContentTypes {
+import AuthorDetails from './components/AuthorDetails'
+import BlogDetails from './components/BlogDetails'
+import TagDetails from './components/TagDetails'
+
+interface DetailsProps extends DetailsType {
   params: Params
 }
 
-const DynamicContent: React.FC<DynamicContentProps> = ({
-  params,
-  ...block
-}) => {
+const Details: React.FC<DetailsProps> = ({ params, ...block }) => {
   switch (block?.collection_slug) {
     case 'blogs': {
       const { data: blog } = trpc.blog.getBlogBySlug.useQuery({
         slug: params?.route.at(-1),
       })
       const { data: blogs } = trpc.blog.getAllBlogs.useQuery()
-      return <BlogPostView blog={blog as Blog} blogsData={blogs as Blog[]} />
+      return <BlogDetails blog={blog as Blog} blogsData={blogs as Blog[]} />
     }
 
     case 'tags': {
@@ -30,7 +28,7 @@ const DynamicContent: React.FC<DynamicContentProps> = ({
         tagSlug: params?.route.at(-1)!,
       })
       return (
-        <TagBlogListView
+        <TagDetails
           blogs={blogs?.blogsData as Blog[]}
           tagDetails={blogs?.tagData?.at(0)}
         />
@@ -46,13 +44,10 @@ const DynamicContent: React.FC<DynamicContentProps> = ({
       })
 
       return (
-        <AuthorPostsView
-          author={author as any}
-          blogsData={authorBlogs as any}
-        />
+        <AuthorDetails author={author as any} blogsData={authorBlogs as any} />
       )
     }
   }
 }
 
-export default DynamicContent
+export default Details

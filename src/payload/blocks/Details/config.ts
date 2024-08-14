@@ -1,9 +1,9 @@
 import { Block } from 'payload'
 
-const DynamicContentConfig: Block = {
-  slug: 'DynamicContent',
+const DetailsConfig: Block = {
+  slug: 'Details',
   // imageURL: '',
-  interfaceName: 'DynamicContentTypes',
+  interfaceName: 'DetailsType',
   labels: {
     singular: 'Dynamic Content Block',
     plural: 'Dynamic Content Blocks',
@@ -31,4 +31,4 @@ const DynamicContentConfig: Block = {
   ],
 }
 
-export default DynamicContentConfig
+export default DetailsConfig

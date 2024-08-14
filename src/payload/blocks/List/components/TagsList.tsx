@@ -1,34 +1,33 @@
-import { User } from '@payload-types'
+import { Tag } from '@payload-types'
 import Link from 'next/link'
 import { LiaBlogSolid } from 'react-icons/lia'
 
 import TabComponent, { TabContent } from '@/components/common/Tabs'
 
-interface UserData extends User {
-  count: number
+interface TagsListProps {
+  tags: Tag[]
 }
-
-const AuthorsListView = ({ authors }: { authors: any }) => {
+const TagsList: React.FC<TagsListProps> = ({ tags }) => {
   const tabs = [
     {
-      title: 'Authors',
-      id: 'AuthorsData',
+      title: 'Tags',
+      id: 'TagsDetails',
       icon: <LiaBlogSolid size={24} />,
       color: '#5d5dff',
       content: TabContent,
-      data: authors,
+      data: tags,
     },
   ]
   return (
     <div className='mx-auto max-h-screen min-h-screen max-w-7xl  gap-6 overflow-hidden px-2'>
       <div className='mt-4 flex items-center justify-between'>
         <p className='rounded-rounded-box border-2 border-base-content/10 bg-base-content/20 px-4 py-2'>
-          Get Started with src/app/(app)/(marketing)/author
+          Get Started with src/app/(app)/(marketing)/tag
         </p>
         <Link
-          href={`/authors/${authors?.at(0)?.name}`}
+          href={`/tag/${tags?.at(0)?.slug!}`}
           className='rounded-rounded-box border-2 border-base-content/10 bg-base-content/20 px-4 py-2'>
-          view blogs
+          View tag details
         </Link>
       </div>
       <TabComponent tabs={tabs} />
@@ -36,4 +35,4 @@ const AuthorsListView = ({ authors }: { authors: any }) => {
   )
 }
 
-export default AuthorsListView
+export default TagsList
