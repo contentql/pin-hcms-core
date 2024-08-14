@@ -218,6 +218,13 @@ a:-webkit-any-link {
   text-decoration: none;
 }
 
+.step-nav {
+  padding-left: 9px;
+  display: flex;
+  align-items: center;
+  gap: calc(var(--base) / 3);
+}
+
 /* Nav Button */
 .hamburger__wrapper {
   background-color: #edebeb;
@@ -432,12 +439,69 @@ a:-webkit-any-link {
 /* Background */
 .template-default__wrap {
   font-family: var(--font-body);
-  padding-left: 11px;
-  padding-right: 11px;
+  padding-left: 24px;
+  padding-right: 4px;
   color: #2f2f2f;
-  padding-top: 24px;
   padding-bottom: 24px;
   border-radius: 55px;
+}
+
+.section-title__input {
+  display: none;
+}
+
+.template-default__nav-toggler-wrapper {
+  position: fixed;
+  z-index: var(--z-modal);
+  top: 0;
+  left: 0;
+  height: var(--app-header-height);
+  width: var(--gutter-h);
+  display: flex;
+  align-items: center;
+  padding-left: 20px;
+  justify-content: center;
+}
+
+.relationship__wrap {
+  display: flex;
+  width: 100%;
+  gap: 11px;
+}
+
+.doc-controls__meta {
+  padding-left: 7px;
+}
+
+h1 {
+  line-height: 4rem;
+}
+
+.rich-text__wrapper {
+  width: 100%;
+  border: 1px solid black;
+  padding: 19px;
+}
+
+.doc-tab__label {
+  display: flex;
+  position: relative;
+  align-items: center;
+  gap: 4px;
+  width: 100%;
+  height: 100%;
+  padding: calc(var(--base) / 2) calc(var(--base));
+  border-radius: 3px;
+}
+
+.doc-tab {
+  position: relative;
+  border-radius: var(--style-radius-m);
+}
+
+.btn--size-medium,
+.btn--size-small {
+  padding: 0.8928571429rem 1.7857142857rem;
 }
 
 .btn {
@@ -462,8 +526,8 @@ a:-webkit-any-link {
   padding-left: 17px;
   padding-right: 17px;
   color: var(--color-base-800);
-  padding-top: 17px;
-  padding-bottom: 17px;
+  padding-top: 10px;
+  padding-bottom: 10px;
   font-size: 14px;
   font-weight: bold;
 }
@@ -480,6 +544,12 @@ a:-webkit-any-link {
   box-shadow: none;
 }
 
+.file-details {
+  background-color: var(--theme-elevation-50);
+  border-radius: var(--style-radius-m);
+  border: 2px solid var(--theme-elevation-150);
+}
+
 .doc-controls__dots {
   margin: 0;
   display: flex;
@@ -489,8 +559,14 @@ a:-webkit-any-link {
   gap: 2px;
   border: 2px solid var(--theme-elevation-100);
   border-radius: 8px;
-  height: calc(var(--base) * 1.8);
-  width: calc(var(--base) * 1.8);
+  height: calc(var(--base) * 1.4);
+  width: calc(var(--base) * 1.4);
+}
+
+.doc-tab__count {
+  padding: 6px 6px;
+  background-color: var(--theme-elevation-100);
+  border-radius: var(--style-radius-m);
 }
 
 /* Primary Button */
@@ -499,8 +575,8 @@ a:-webkit-any-link {
   padding-left: 17px;
   padding-right: 17px;
   color: var(--theme-elevation-0);
-  padding-top: 17px;
-  padding-bottom: 17px;
+  padding-top: 10px;
+  padding-bottom: 10px;
   font-size: 14px;
   font-weight: bold;
 }
