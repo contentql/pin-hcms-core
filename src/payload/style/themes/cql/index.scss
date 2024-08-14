@@ -417,11 +417,10 @@ a {
 
 /* Dashboard Card */
 .card {
-  background-color: #ecebeb;
-  border: 1px none var(--theme-elevation-200);
+  background-color: var(--theme-elevation-50);
+  border: 1px none var(--dr--primary);
   padding: 2.2321428571rem 1.7857142857rem;
   border-radius: 8px;
-  color: #604d4d;
   min-height: 9.153846rem;
   display: flex;
   gap: 2px;
@@ -438,7 +437,7 @@ a {
 /* Dashboard Card Title */
 .card__title {
   font-family: var(--font-body);
-  color: #000000;
+  color: var(--theme-text);
   border: 1px none;
   font-size: 15px;
 }
@@ -975,7 +974,7 @@ h1 {
   background-color: var(--theme-elevation-50);
   border-radius: var(--style-radius-m);
   overflow: hidden;
-  padding: 0px;
+  padding: 0px 0px 0px 10px;
 }
 
 .list-controls .search-filter {
@@ -1095,7 +1094,7 @@ h1 {
   line-height: 1.9230769231rem;
   -webkit-appearance: none;
   box-shadow: none;
-  padding: 0.9615384615rem 1.4423076923rem 0.9615384615rem 3.8461538462rem;
+  padding: 0.9615384615rem 1.4423076923rem 0.9615384615rem 0rem;
   background-color: var(--theme-elevation-50);
   border: none;
 }
