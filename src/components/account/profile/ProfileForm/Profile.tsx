@@ -73,17 +73,6 @@ const Profile = ({ initialUser }: { initialUser: User | undefined }) => {
           <p className='mt-2 text-base-content'>Author</p>
         )}
       </div>
-      {/* <p className='mt-2 line-clamp-3 text-sm text-white'>{user?.bio}</p> */}
-      {/* <div className='mt-4 flex justify-center'>
-        {user?.socialMedia?.map(item => (
-          <a
-            key={item?.id}
-            href={item?.url}
-            className='rounded-full p-2 text-white'>
-            {listOfIcons[item?.icon!]}
-          </a>
-        ))}
-      </div> */}
     </div>
   )
 }

@@ -12,7 +12,6 @@ import Profile from './Profile'
 
 const ProfileFormSchema = z.object({
   name: z.string().optional().nullable(),
-  bio: z.string().optional().nullable(),
   password: z.string().optional().nullable(),
   confirmPassword: z.string().optional().nullable(),
 })
@@ -70,27 +69,6 @@ const ProfileForm = ({ user }: { user: User }) => {
         </h2>
 
         <div className='mx-auto mt-8 grid'>
-          {/* <div className='flex flex-col items-center space-y-5 sm:flex-row sm:space-y-0'>
-            eslint-disable-next-line @next/next/no-img-element
-            <img
-              className='h-40 w-40 rounded-full object-cover p-1 ring-2 ring-indigo-300 dark:ring-indigo-500'
-              src='https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGZhY2V8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60'
-              alt='Bordered avatar'
-            />
-
-            <div className='flex flex-col space-y-5 sm:ml-8'>
-              <button
-                type='button'
-                className='rounded-lg border border-indigo-200 bg-[#26304e] px-7 py-3.5 text-base font-medium text-indigo-100 hover:bg-indigo-600 focus:z-10 focus:outline-none focus:ring-4 focus:ring-indigo-200 '>
-                Change picture
-              </button>
-              <button
-                type='button'
-                className='rounded-lg border border-indigo-200 bg-white px-7 py-3.5 text-base font-medium text-indigo-900 hover:bg-indigo-100 hover:text-[#202142] focus:z-10 focus:outline-none focus:ring-4 focus:ring-indigo-200 '>
-                Delete picture
-              </button>
-            </div>
-          </div> */}
           <div className='flex flex-col items-center justify-center space-y-5 sm:flex-row sm:space-y-0'>
             <Profile initialUser={user} />
           </div>
@@ -131,24 +109,6 @@ const ProfileForm = ({ user }: { user: User }) => {
                 className='mt-1 w-full rounded-md bg-base-200 p-2 text-base-content transition-colors duration-300 focus:border-base-content/40 focus:outline-none focus:ring-1 focus:ring-base-content/40 focus:ring-offset-1'
               />
             </div>
-
-            {/* <div className='mb-4 sm:mb-6'>
-              <label
-                htmlFor='bio'
-                className='block text-sm font-medium text-gray-300'>
-                Bio
-              </label>
-              <textarea
-                id='bio'
-                name='bio'
-                placeholder=''
-                value={user?.bio || ''}
-                onChange={handleOnChange}
-                className='mt-1 w-full rounded-md bg-[#1e2846] p-2 text-white transition-colors duration-300 focus:border-gray-200 focus:outline-none focus:ring-1 focus:ring-gray-300 focus:ring-offset-1'
-                rows={4} // You can adjust the number of rows as needed
-              />
-            </div> */}
-
             <div className='mb-4 flex w-full flex-col items-center space-x-0 space-y-2 sm:mb-6 sm:flex-row sm:space-x-4 sm:space-y-0'>
               <div className='w-full'>
                 <label
@@ -165,7 +125,6 @@ const ProfileForm = ({ user }: { user: User }) => {
                   className='mt-1 w-full rounded-md bg-base-200 p-2 text-base-content transition-colors duration-300 focus:border-base-content/40 focus:outline-none focus:ring-1 focus:ring-base-content/40 focus:ring-offset-1'
                 />
               </div>
-
               <div className='w-full'>
                 <label
                   htmlFor='confirmPassword'
