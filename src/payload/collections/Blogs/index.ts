@@ -1,9 +1,3 @@
-import {
-  FixedToolbarFeature,
-  HTMLConverterFeature,
-  lexicalEditor,
-  lexicalHTML,
-} from '@payloadcms/richtext-lexical'
 import type { CollectionConfig } from 'payload'
 
 import { slugField } from '@/payload/fields'
@@ -131,26 +125,36 @@ export const Blogs: CollectionConfig = {
         description: 'upload blog image',
       },
     },
+    // {
+    //   name: 'description',
+    //   type: 'richText',
+    //   label: 'Content',
+    //   required: true,
+    //   editor: env.SUBSCRIPTION_PLAN
+    //     ? lexicalEditor({
+    //         features: ({ defaultFeatures }) => [
+    //           ...defaultFeatures,
+    //           FixedToolbarFeature(),
+    //           HTMLConverterFeature({}),
+    //         ],
+    //       })
+    //     : slateEditor({}),
+    //   admin: {
+    //     description:
+    //       'Main content of the blog post. Use the rich text editor for formatting.',
+    //   },
+    // },
     {
-      name: 'description',
+      name: 'content',
       type: 'richText',
       label: 'Content',
       required: true,
-      editor: lexicalEditor({
-        features: ({ defaultFeatures }) => [
-          ...defaultFeatures,
-          FixedToolbarFeature(),
-          HTMLConverterFeature({}),
-        ],
-      }),
+      // editor: slateEditor({}),
       admin: {
         description:
           'Main content of the blog post. Use the rich text editor for formatting.',
       },
     },
-    lexicalHTML('description', {
-      name: 'description_html',
-    }),
 
     // slugField(),
   ],

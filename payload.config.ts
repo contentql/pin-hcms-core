@@ -4,10 +4,7 @@ import { mongooseAdapter } from '@payloadcms/db-mongodb'
 import { resendAdapter } from '@payloadcms/email-resend'
 import { nestedDocsPlugin } from '@payloadcms/plugin-nested-docs'
 import { seoPlugin } from '@payloadcms/plugin-seo'
-import {
-  FixedToolbarFeature,
-  lexicalEditor,
-} from '@payloadcms/richtext-lexical'
+import { slateEditor } from '@payloadcms/richtext-slate'
 import { s3Storage } from '@payloadcms/storage-s3'
 import path from 'path'
 import { buildConfig } from 'payload'
@@ -23,7 +20,7 @@ import { COLLECTION_SLUG_PAGE } from '@/payload/collections/constants'
 import { siteSettings } from '@/payload/globals/SiteSettings'
 import Icon from '@/payload/style/icons/Icon'
 import Logo from '@/payload/style/icons/Logo'
-import generateBreadcrumbsUrl from '@/utils/generateBreadcrumbsUrl'
+import { generateBreadcrumbsUrl } from '@/utils/generateBreadcrumbsUrl'
 import {
   generateDescription,
   generateImage,
@@ -50,13 +47,9 @@ export default buildConfig({
     },
     livePreview: {
       url: ({ data, collectionConfig, locale }) => {
-        const baseUrl = env.NEXT_PUBLIC_PUBLIC_URL
+        const baseUrl = env.PAYLOAD_URL
 
-        if (collectionConfig?.slug === 'blogs') {
-          return `${baseUrl}/blog/${data.slug}`
-        } else {
-          return `${baseUrl}/${data.slug}${locale ? `?locale=${locale.code}` : ''}`
-        }
+        return `${baseUrl}/${data.path}${locale ? `?locale=${locale.code}` : ''}`
       },
 
       collections: ['pages', 'blogs'],
@@ -124,12 +117,7 @@ export default buildConfig({
   }),
 
   sharp,
-  editor: lexicalEditor({
-    features: ({ defaultFeatures }) => [
-      ...defaultFeatures,
-      FixedToolbarFeature(),
-    ],
-  }),
+  editor: slateEditor({}),
 
   secret: env.PAYLOAD_SECRET,
   db: mongooseAdapter({

@@ -1,8 +1,8 @@
 import type { CollectionConfig } from 'payload'
 
 import { COLLECTION_SLUG_PAGE } from '@/payload/collections/constants'
-import { pathField, slugField } from '@/payload/fields'
-import { blocksField } from '@/payload/fields/blocks'
+import { pathField, pathModeField, slugField } from '@/payload/fields'
+import { layoutField } from '@/payload/fields/layout'
 
 export const Pages: CollectionConfig = {
   slug: COLLECTION_SLUG_PAGE,
@@ -31,16 +31,28 @@ export const Pages: CollectionConfig = {
       unique: true,
     },
     {
-      name: 'isHome',
-      label: 'HomePage',
-      type: 'checkbox',
-      defaultValue: false,
+      type: 'row',
+      fields: [
+        {
+          name: 'isHome',
+          label: 'Home Page',
+          type: 'checkbox',
+          defaultValue: false,
+        },
+        {
+          name: 'isDynamic',
+          label: 'Dynamic Page',
+          type: 'checkbox',
+          defaultValue: false,
+        },
+      ],
       admin: {
         position: 'sidebar',
       },
     },
-    blocksField(),
+    layoutField(),
     slugField(),
+    pathModeField(),
     pathField(),
   ],
 }

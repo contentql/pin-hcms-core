@@ -4,13 +4,7 @@ import { headers } from 'next/headers'
 
 import { getCurrentUser } from '@/utils/getCurrentUser'
 
-export const revalidate = 60000
-
-export default async function Layout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+const MarketingLayout = async ({ children }: { children: React.ReactNode }) => {
   const payload = await getPayloadHMR({ config: configPromise })
   const initData = await payload.findGlobal({
     slug: 'site-settings',
@@ -27,3 +21,5 @@ export default async function Layout({
     </div>
   )
 }
+
+export default MarketingLayout

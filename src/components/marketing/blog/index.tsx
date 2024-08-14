@@ -16,14 +16,14 @@ const BlogPostsView = ({ blogs }: { blogs: Blog[] }) => {
     },
   ]
   return (
-    <div className='mx-auto max-h-screen max-w-7xl  gap-6 overflow-hidden px-2'>
+    <div className='mx-auto max-h-screen min-h-screen max-w-7xl  gap-6 overflow-hidden px-2'>
       <div className='mt-4 flex items-center justify-between'>
-        <p className='rounded-lg border-2 border-neutral-800 bg-zinc-800 px-4 py-2'>
+        <p className='rounded-rounded-box border-2 border-base-content/10 bg-base-content/20 px-4 py-2'>
           Get Started with src/app/(app)/(marketing)/blog
         </p>
         <Link
-          href={`/blog/${blogs?.at(0)?.slug!}`}
-          className='rounded-lg border-2 border-neutral-800 bg-zinc-800 px-4 py-2'>
+          href={`/blogs/${blogs?.at(0)?.slug!}`}
+          className='border-neutral-800 rounded-rounded-box border-base-content/10 bg-base-content/20 px-4 py-2'>
           view blog post
         </Link>
       </div>

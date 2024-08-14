@@ -152,22 +152,9 @@ export interface Blog {
     | null;
   sub_title: string;
   blog_image: string | Media;
-  description: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
+  content: {
     [k: string]: unknown;
-  };
-  description_html?: string | null;
+  }[];
   meta?: {
     title?: string | null;
     description?: string | null;
@@ -185,8 +172,10 @@ export interface Page {
   id: string;
   title: string;
   isHome?: boolean | null;
-  blocks?: TestType[] | null;
+  isDynamic?: boolean | null;
+  layout?: (TestType | DynamicContentTypes | ListType)[] | null;
   slug?: string | null;
+  pathMode?: ('generate' | 'custom') | null;
   path?: string | null;
   parent?: (string | null) | Page;
   breadcrumbs?:
@@ -211,6 +200,27 @@ export interface TestType {
   id?: string | null;
   blockName?: string | null;
   blockType: 'Test';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "DynamicContentTypes".
+ */
+export interface DynamicContentTypes {
+  collection_slug?: ('blogs' | 'tags' | 'users') | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'DynamicContent';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "List_type".
+ */
+export interface ListType {
+  title?: string | null;
+  collection_slug?: ('blogs' | 'tags' | 'users') | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'List';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
