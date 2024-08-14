@@ -4,8 +4,6 @@ import { motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
 import { JSONTree } from 'react-json-tree'
 
-import { cn } from '@/utils/cn'
-
 const tabVariant = {
   active: {
     width: '55%',
@@ -63,7 +61,6 @@ const TabComponent = ({
     )
   }, [activeTabIndex, tabs])
 
-  // Default to a tab based on the URL hash value
   useEffect(() => {
     const tabFromHash = tabs.findIndex(
       (tab: any) => `#${tab.id}` === window.location.hash,
@@ -76,19 +73,32 @@ const TabComponent = ({
   }
 
   return (
-    <div className='container'>
-      <div className='tabs-component'>
-        <ul className='tab-links' role='tablist'>
+    <div className='container mx-auto max-w-screen-lg overflow-hidden px-10'>
+      <div className='tabs-component mx-auto max-w-2xl py-10'>
+        <ul
+          className='tab-links mb-5 flex list-none justify-center space-x-4 p-0'
+          role='tablist'>
           {tabs.map((tab: any, index: number) => (
             <motion.li
               key={tab.id}
-              className={cn('tab', { active: activeTabIndex === index })}
+              className={`tab relative ${
+                activeTabIndex === index ? 'active' : ''
+              }`}
               role='presentation'
               variants={tabVariant}
               animate={activeTabIndex === index ? 'active' : 'inactive'}>
-              <a href={`#${tab.id}`} onClick={() => onTabClick(index)}>
+              <a
+                href={`#${tab.id}`}
+                onClick={() => onTabClick(index)}
+                className={`flex items-center overflow-hidden px-6 py-3 text-2xl font-semibold no-underline transition-all duration-500 ${
+                  activeTabIndex === index
+                    ? 'bg-primary text-white'
+                    : 'text-primary'
+                } rounded-[40px]`}>
                 {tab.icon}
-                <motion.span variants={tabTextVariant}>{tab.title}</motion.span>
+                <motion.span className='ml-2' variants={tabTextVariant}>
+                  {tab.title}
+                </motion.span>
               </a>
             </motion.li>
           ))}
@@ -105,8 +115,6 @@ const TabComponent = ({
     </div>
   )
 }
-
-export default TabComponent
 
 const tabContentVariant = {
   active: {
@@ -129,36 +137,17 @@ export const TabContent = ({
   active: any
   data: any
 }) => {
-  const isValidJson = data && typeof data === 'object'
-  const theme = {
-    scheme: 'monokai',
-    author: 'wimer hazenberg (http://www.monokai.nl)',
-    base00: '#272822',
-    base01: '#383830',
-    base02: '#49483e',
-    base03: '#75715e',
-    base04: '#a59f85',
-    base05: '#f8f8f2',
-    base06: '#f5f4f1',
-    base07: '#f9f8f5',
-    base08: '#f92672',
-    base09: '#fd971f',
-    base0A: '#f4bf75',
-    base0B: '#a6e22e',
-    base0C: '#a1efe4',
-    base0D: '#66d9ef',
-    base0E: '#ae81ff',
-    base0F: '#cc6633',
-  }
   return (
     <motion.div
       role='tabpanel'
       id={id}
-      className='codeContainer mx-auto mt-10 h-screen w-full overflow-scroll rounded-2xl bg-zinc-800 p-4 md:h-[500px] lg:max-w-4xl'
+      className='mx-auto mt-10 h-screen w-full overflow-y-scroll rounded-2xl bg-base-200 p-4 md:h-[500px] lg:max-w-4xl'
       variants={tabContentVariant}
       animate={active ? 'active' : 'inactive'}
       initial='inactive'>
-      <JSONTree data={data} theme={theme} invertTheme={false} />
+      <JSONTree data={data} invertTheme={false} />
     </motion.div>
   )
 }
+
+export default TabComponent
