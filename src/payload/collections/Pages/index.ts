@@ -2,7 +2,7 @@ import type { CollectionConfig } from 'payload'
 
 import { COLLECTION_SLUG_PAGE } from '@/payload/collections/constants'
 import { pathField, pathModeField, slugField } from '@/payload/fields'
-import { blocksField } from '@/payload/fields/blocks'
+import { layoutField } from '@/payload/fields/layout'
 
 export const Pages: CollectionConfig = {
   slug: COLLECTION_SLUG_PAGE,
@@ -50,7 +50,7 @@ export const Pages: CollectionConfig = {
         position: 'sidebar',
       },
     },
-    blocksField(),
+    layoutField(),
     slugField(),
     pathModeField(),
     pathField(),

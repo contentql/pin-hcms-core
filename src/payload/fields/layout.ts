@@ -2,13 +2,13 @@ import { blocks } from '../blocks/index'
 import deepMerge from 'deepmerge'
 import { type Field } from 'payload'
 
-type BlocksField = (overrides?: Partial<Field>) => Field
-
-export const blocksField: BlocksField = overrides => {
+export const layoutField = (overrides?: Partial<Field>): Field => {
   return deepMerge<Field, Partial<Field>>(
     {
-      name: 'blocks',
+      name: 'layout',
+      label: 'Page Layout',
       type: 'blocks',
+      minRows: 1,
       blocks,
     },
     overrides || {},

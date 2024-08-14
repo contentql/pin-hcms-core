@@ -186,7 +186,7 @@ export interface Page {
   title: string;
   isHome?: boolean | null;
   isDynamic?: boolean | null;
-  blocks?: (TestType | DynamicContentTypes | ListType)[] | null;
+  layout?: (TestType | DynamicContentTypes | ListType)[] | null;
   slug?: string | null;
   pathMode?: ('generate' | 'custom') | null;
   path?: string | null;
