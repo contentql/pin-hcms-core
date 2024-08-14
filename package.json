@@ -16,7 +16,6 @@
     "format:fix": "prettier . --write"
   },
   "dependencies": {
-    "@fontsource-variable/inter": "^5.0.18",
     "@hookform/resolvers": "^3.4.0",
     "@payloadcms/db-mongodb": "beta",
     "@payloadcms/email-resend": "beta",
@@ -24,7 +23,6 @@
     "@payloadcms/next": "beta",
     "@payloadcms/plugin-nested-docs": "beta",
     "@payloadcms/plugin-seo": "beta",
-    "@payloadcms/richtext-lexical": "beta",
     "@payloadcms/richtext-slate": "beta",
     "@payloadcms/storage-s3": "beta",
     "@payloadcms/translations": "beta",
@@ -38,7 +36,6 @@
     "@trpc/next": "next",
     "@trpc/react-query": "next",
     "@trpc/server": "next",
-    "@types/nprogress": "^0.2.3",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "cross-env": "^7.0.3",
@@ -55,7 +52,6 @@
     "react-hook-form": "^7.52.0",
     "react-icons": "^5.2.1",
     "react-json-tree": "^0.19.0",
-    "reading-time": "^1.5.0",
     "resend": "^3.2.0",
     "sharp": "0.32.6",
     "sonner": "^1.5.0",
@@ -65,6 +61,7 @@
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.13",
+    "@types/nprogress": "^0.2.3",
     "@types/node": "^20.14.9",
     "@types/react": "npm:types-react@19.0.0-rc.0",
     "@types/react-dom": "npm:types-react-dom@19.0.0-rc.0",
