@@ -1,6 +1,6 @@
 import { Block } from 'payload'
 
-export const Test_Block: Block = {
+const TestConfig: Block = {
   slug: 'Test',
   // imageURL: '',
   interfaceName: 'TestType',
@@ -21,3 +21,5 @@ export const Test_Block: Block = {
     },
   ],
 }
+
+export default TestConfig

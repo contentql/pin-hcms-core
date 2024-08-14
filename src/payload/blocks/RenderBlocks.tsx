@@ -44,7 +44,7 @@ const RenderBlocks: React.FC<RenderBlocksProps> = ({
         if (Block) {
           return (
             <div key={index} className='bg-base-100 text-base-content'>
-              <Block params={params} {...block} />
+              <Block {...block} params={params} />
             </div>
           )
         }

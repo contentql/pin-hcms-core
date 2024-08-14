@@ -1,6 +1,6 @@
 import { Block } from 'payload'
 
-export const List_Block: Block = {
+const ListConfig: Block = {
   slug: 'List',
   // imageURL: '',
   interfaceName: 'List_type',
@@ -35,3 +35,5 @@ export const List_Block: Block = {
     },
   ],
 }
+
+export default ListConfig

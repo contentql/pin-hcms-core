@@ -1,7 +1,8 @@
 'use client'
 
-import { Params } from '../../types'
+import { Params } from '../types'
 import { Blog, DynamicContentTypes, Tag } from '@payload-types'
+import React from 'react'
 
 import AuthorsListView from '@/components/marketing/author'
 import BlogPostsView from '@/components/marketing/blog'
@@ -12,7 +13,7 @@ interface Props extends DynamicContentTypes {
   params: Params
 }
 
-export const List = ({ params, ...block }: Props) => {
+const List: React.FC<Props> = ({ params, ...block }) => {
   switch (block?.collection_slug) {
     case 'blogs': {
       const { data: blogs } = trpc.blog.getAllBlogs.useQuery()
@@ -31,3 +32,5 @@ export const List = ({ params, ...block }: Props) => {
     }
   }
 }
+
+export default List
