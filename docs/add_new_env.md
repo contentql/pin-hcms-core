@@ -80,7 +80,6 @@ export const env = createEnv({
     NEW_SERVER_VARIABLE: z.string().min(1),
   },
   client: {
-    NEXT_PUBLIC_IS_LIVE: z.boolean().default(false),
     NEXT_PUBLIC_PUBLIC_URL: z.string().url(),
     // Add new variables here
     NEXT_PUBLIC_NEW_CLIENT_VARIABLE: z.string().min(1),

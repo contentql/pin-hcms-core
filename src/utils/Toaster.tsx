@@ -1,9 +1,13 @@
 'use client'
 
+import React from 'react'
 import { IoIosCloseCircle } from 'react-icons/io'
 import { TiTick } from 'react-icons/ti'
 import { Toaster } from 'sonner'
 
+/**
+ * Configuration options for toasts, including custom class names for different toast types.
+ */
 export const toastOptions = {
   classNames: {
     title: 'text-base-content',
@@ -12,12 +16,15 @@ export const toastOptions = {
   },
 }
 
+/**
+ * Custom icons used for different types of toasts.
+ */
 export const icons = {
   success: (
     <div>
       <TiTick
         size={16}
-        className='text-base-100 rounded-full bg-green-300 text-sm'
+        className='rounded-full bg-green-300 text-sm text-base-100'
       />
     </div>
   ),
@@ -32,10 +39,23 @@ export const icons = {
   ),
 }
 
-export default function ToastProvider() {
+/**
+ * A component that provides toast notifications with custom icons and options.
+ *
+ * @returns {React.FC} - The rendered `Toaster` component from the `sonner` library with custom configurations.
+ *
+ * @example
+ * ```
+ * <ToastProvider />
+ * // This will render the `Toaster` with custom icons and toast options.
+ * ```
+ */
+const ToastProvider: React.FC = () => {
   return (
     <>
       <Toaster icons={icons} toastOptions={toastOptions} richColors />
     </>
   )
 }
+
+export default ToastProvider

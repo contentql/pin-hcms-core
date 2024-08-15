@@ -4,14 +4,32 @@ import nProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 import { useEffect } from 'react'
 
-// Import nProgress default styles
-
-const PageLoader = () => {
+/**
+ * `PageLoader` is a React component that automatically displays a progress bar when navigating between pages.
+ * It utilizes nProgress to display the progress bar and handles both anchor clicks and history state changes.
+ *
+ * @returns {null} This component does not render anything visible to the DOM.
+ *
+ * @example
+ * ```tsx
+ * import { PageLoader } from './PageLoader'
+ *
+ * function MyApp() {
+ *   return (
+ *     <>
+ *       <PageLoader />
+ *       <MyComponent />
+ *     </>
+ *   )
+ * }
+ * ```
+ */
+export const PageLoader = (): null => {
   useEffect(() => {
     nProgress.configure({ showSpinner: false })
-    //@ts-ignore
-    const handleAnchorClick = event => {
-      const targetUrl = event.currentTarget.href
+
+    const handleAnchorClick = (event: Event) => {
+      const targetUrl = (event.currentTarget as HTMLAnchorElement).href
       const currentUrl = window.location.href
       if (targetUrl !== currentUrl) {
         nProgress.start()
@@ -35,17 +53,23 @@ const PageLoader = () => {
     window.addEventListener('popstate', handlePopState)
 
     const originalPushState = window.history.pushState
-    window.history.pushState = function () {
+    window.history.pushState = function (
+      data: any,
+      title: string,
+      url?: string | URL | null,
+    ): void {
       nProgress.done()
-      //@ts-ignore
-      return originalPushState.apply(window.history, arguments)
+      return originalPushState.apply(window.history, [data, title, url])
     }
 
     const originalReplaceState = window.history.replaceState
-    window.history.replaceState = function () {
+    window.history.replaceState = function (
+      data: any,
+      title: string,
+      url?: string | URL | null,
+    ): void {
       nProgress.done()
-      //@ts-ignore
-      return originalReplaceState.apply(window.history, arguments)
+      return originalReplaceState.apply(window.history, [data, title, url])
     }
 
     return () => {
@@ -54,7 +78,5 @@ const PageLoader = () => {
     }
   }, [])
 
-  return null // No need for a visible div for the progress bar
+  return null
 }
-
-export default PageLoader

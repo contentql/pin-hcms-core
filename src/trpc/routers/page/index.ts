@@ -5,7 +5,7 @@ import { z } from 'zod'
 
 import { COLLECTION_SLUG_PAGE } from '@/payload/collections/constants'
 import { publicProcedure, router } from '@/trpc'
-import ensurePath from '@/utils/ensurePath'
+import { ensurePath } from '@/utils/ensurePath'
 import { matchNextJsPath } from '@/utils/matchNextJsPath'
 
 const payload = await getPayloadHMR({
