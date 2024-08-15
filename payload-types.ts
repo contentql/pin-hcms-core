@@ -173,7 +173,7 @@ export interface Page {
   title: string;
   isHome?: boolean | null;
   isDynamic?: boolean | null;
-  layout?: (TestType | DynamicContentTypes | ListType)[] | null;
+  layout?: (TestType | DetailsType | ListType)[] | null;
   slug?: string | null;
   pathMode?: ('generate' | 'custom') | null;
   path?: string | null;
@@ -203,13 +203,13 @@ export interface TestType {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "DynamicContentTypes".
+ * via the `definition` "DetailsType".
  */
-export interface DynamicContentTypes {
+export interface DetailsType {
   collection_slug?: ('blogs' | 'tags' | 'users') | null;
   id?: string | null;
   blockName?: string | null;
-  blockType: 'DynamicContent';
+  blockType: 'Details';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
