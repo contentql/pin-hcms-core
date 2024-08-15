@@ -10,7 +10,7 @@ import React, {
   useState,
 } from 'react'
 
-import ensurePath from '@/utils/ensurePath'
+import { ensurePath } from '@/utils/ensurePath'
 
 import {
   IS_BOLD,

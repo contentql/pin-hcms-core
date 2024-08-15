@@ -28,10 +28,10 @@
  * matchNextJsPath('/docs', '/docs/[[...slug]]') // true
  * matchNextJsPath('/docs/nextjs/getting-started', '/docs/[[...slug]]') // true
  */
-export function matchNextJsPath(
+export const matchNextJsPath = (
   inputPath: string,
   patternPath: string,
-): boolean {
+): boolean => {
   const inputSegments = inputPath.split('/').filter(Boolean)
   const patternSegments = patternPath.split('/').filter(Boolean)
 

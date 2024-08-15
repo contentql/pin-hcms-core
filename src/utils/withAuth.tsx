@@ -1,7 +1,7 @@
 import { User } from '@payload-types'
 import { headers } from 'next/headers'
 import { redirect } from 'next/navigation'
-import { ComponentType, ReactNode } from 'react'
+import { ComponentType, ReactElement } from 'react'
 
 import { getCurrentUser } from '@/utils/getCurrentUser'
 
@@ -10,7 +10,7 @@ interface UserProps {
 }
 
 /**
- * Higher-order component to restrict access to authenticated users.
+ * Higher-order component to restrict access to unauthenticated users.
  * If a user is not authenticated, they will be redirected to the specified path.
  * If the user is authenticated, they can access the wrapped component.
  *
@@ -21,22 +21,29 @@ interface UserProps {
  *
  * @example
  * ```tsx
- * const ProtectedPage = withAuth(MyPageComponent, '/custom-redirect')
+ * const ProtectedPage = withAuth(MyPageComponent, '/custom-redirect');
  * ```
  */
 const withAuth = <P extends object>(
   WrappedComponent: ComponentType<P & UserProps>,
   redirectPath: string = '/sign-in',
 ): ComponentType<P> => {
-  const ComponentWithAuth = async (props: P): Promise<ReactNode> => {
-    const headersList = headers()
-    const user = await getCurrentUser(headersList)
+  const ComponentWithAuth = async (props: P): Promise<ReactElement | null> => {
+    try {
+      const headersList = headers()
+      const user = await getCurrentUser(headersList)
 
-    if (!user) {
-      redirect(redirectPath)
+      if (!user) {
+        redirect(redirectPath)
+        return null // Ensure no component is rendered if redirect is triggered
+      }
+
+      return <WrappedComponent user={user} {...props} />
+    } catch (error) {
+      console.error('Error in authentication check:', error)
+      // Optionally handle the error more gracefully
+      return null // Optionally render a fallback UI or redirect on error
     }
-
-    return <WrappedComponent user={user} {...props} />
   }
 
   return ComponentWithAuth as ComponentType<P>

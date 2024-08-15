@@ -12,7 +12,35 @@ interface Cookies {
   [key: string]: CookieAttributes
 }
 
-export default function parseCookieString(cookieString: string): Cookies {
+/**
+ * Parses a cookie string into a structured object of cookies.
+ * The function handles the parsing of cookie attributes such as `expires`, `path`, `domain`, `httponly`, `secure`, and `samesite`.
+ *
+ * @param {string} cookieString - The cookie string to parse. It should be a semi-colon-separated list of cookies with their attributes.
+ * @returns {Cookies} - An object where each key is a cookie name and its value is an object containing its attributes.
+ *
+ * @example
+ * ```
+ * const cookieString = 'session=abc123; expires=Wed, 21 Aug 2024 07:28:00 GMT; path=/; httponly; secure, theme=dark; samesite=Lax';
+ * const cookies = parseCookieString(cookieString);
+ *
+ * // Example output:
+ * // {
+ * //   session: {
+ * //     value: 'abc123',
+ * //     expires: '2024-08-21T07:28:00.000Z',
+ * //     path: '/',
+ * //     httponly: true,
+ * //     secure: true,
+ * //   },
+ * //   theme: {
+ * //     value: 'dark',
+ * //     samesite: 'Lax'
+ * //   }
+ * // }
+ * ```
+ */
+export const parseCookieString = (cookieString: string): Cookies => {
   const cookieParts = cookieString.split(/,(?=\s*[^\s=;]+=[^;]*)/)
   const cookies: Cookies = {}
 
