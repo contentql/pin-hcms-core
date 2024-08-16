@@ -1,6 +1,6 @@
 import { Blog } from '@payload-types'
 
-export const blogPosts: Omit<Blog, 'id' | 'createdAt' | 'updatedAt'>[] = [
+export const blogs: Omit<Blog, 'id' | 'createdAt' | 'updatedAt'>[] = [
   {
     select_blog_size: '1',
     title: 'Will AI-Enabled Processors Spark a PC Supercycle This Year?',

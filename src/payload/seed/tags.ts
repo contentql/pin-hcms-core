@@ -1,6 +1,6 @@
 import { Tag } from 'payload-types'
 
-export const Tags: Omit<Tag, 'id' | 'createdAt' | 'updatedAt'>[] = [
+export const tags: Omit<Tag, 'id' | 'createdAt' | 'updatedAt'>[] = [
   {
     title: 'Welcome',
     color: 'blue',
