@@ -1,8 +1,8 @@
-import SignInForm from '@/components/auth/SignInForm'
+import { SignInView } from '@/components/auth/sign-in'
 import withNoAuth from '@/utils/withNoAuth'
 
 const SignInPage = async () => {
-  return <SignInForm />
+  return <SignInView />
 }
 
 export default withNoAuth(SignInPage)
