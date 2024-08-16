@@ -6,17 +6,6 @@ import { TiTick } from 'react-icons/ti'
 import { Toaster } from 'sonner'
 
 /**
- * Configuration options for toasts, including custom class names for different toast types.
- */
-export const toastOptions = {
-  classNames: {
-    title: 'text-base-content',
-    error: 'bg-red-300',
-    success: 'bg-green-300',
-  },
-}
-
-/**
  * Custom icons used for different types of toasts.
  */
 export const icons = {
@@ -24,7 +13,7 @@ export const icons = {
     <div>
       <TiTick
         size={16}
-        className='rounded-full bg-green-300 text-sm text-base-100'
+        className='rounded-full bg-success text-sm text-success'
       />
     </div>
   ),
@@ -33,7 +22,7 @@ export const icons = {
     <div>
       <IoIosCloseCircle
         size={16}
-        className='text-error-content rounded-full bg-red-300 text-sm'
+        className='rounded-full bg-error text-sm text-error'
       />
     </div>
   ),
@@ -53,7 +42,7 @@ export const icons = {
 const ToastProvider: React.FC = () => {
   return (
     <>
-      <Toaster icons={icons} toastOptions={toastOptions} richColors />
+      <Toaster icons={icons} />
     </>
   )
 }

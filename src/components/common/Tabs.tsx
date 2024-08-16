@@ -6,14 +6,14 @@ import { JSONTree } from 'react-json-tree'
 
 const tabVariant = {
   active: {
-    width: '55%',
+    width: '40%', // Allow dynamic width based on content
     transition: {
       type: 'tween',
       duration: 0.4,
     },
   },
   inactive: {
-    width: '20%',
+    width: '25%', // Keep a fixed width for inactive tabs
     transition: {
       type: 'tween',
       duration: 0.4,
@@ -90,7 +90,7 @@ const TabComponent = ({
               <a
                 href={`#${tab.id}`}
                 onClick={() => onTabClick(index)}
-                className={`flex items-center overflow-hidden px-6 py-3 text-2xl font-semibold no-underline transition-all duration-500 ${
+                className={`flex items-center overflow-hidden whitespace-nowrap px-6 py-3 text-2xl font-semibold no-underline transition-all duration-500 ${
                   activeTabIndex === index
                     ? 'bg-primary text-white'
                     : 'text-primary'
