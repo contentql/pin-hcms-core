@@ -4,8 +4,6 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { usePathname, useRouter } from 'next/navigation'
 import { useState } from 'react'
 
-import { trpc } from '@/trpc/client'
-
 const CLIENT_ID = '1'
 
 export function PageNotFound() {
@@ -22,7 +20,6 @@ export function PageNotFound() {
       const data = event.data && JSON.parse(event?.data)
 
       if (data.started) {
-        seedMutate()
         return
       }
 
@@ -42,17 +39,6 @@ export function PageNotFound() {
       eventSource.close()
     }
   }
-
-  const { mutate: seedMutate } = trpc.seed.startSeeding.useMutation({
-    onSettled: async () => {
-      setTimeout(() => {
-        setSeedingStatus(prev => [...prev, 'Refreshing current page'])
-        setTimeout(() => {
-          window.location.reload()
-        }, 1000)
-      }, 1000)
-    },
-  })
 
   const seedData = () => {
     setLoading(true)
@@ -330,7 +316,7 @@ export function PageNotFound() {
             <>
               <div className='absolute left-0 top-0 w-full'>
                 <div className='h-1.5 w-full overflow-hidden bg-pink-100'>
-                  <div className='h-full w-full origin-left-right animate-progress bg-[#45a6e9]'></div>
+                  <div className='origin-left-right animate-progress h-full w-full bg-[#45a6e9]'></div>
                 </div>
               </div>
               <motion.div
