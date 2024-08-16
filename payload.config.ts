@@ -18,8 +18,6 @@ import { Tags } from '@/payload/collections/Tags'
 import { Users } from '@/payload/collections/Users'
 import { COLLECTION_SLUG_PAGE } from '@/payload/collections/constants'
 import { siteSettings } from '@/payload/globals/SiteSettings'
-import Icon from '@/payload/style/icons/Icon'
-import Logo from '@/payload/style/icons/Logo'
 import { generateBreadcrumbsUrl } from '@/utils/generateBreadcrumbsUrl'
 import {
   generateDescription,
@@ -36,13 +34,11 @@ export default buildConfig({
     user: Users.slug,
     meta: {
       titleSuffix: '- ContentQL',
-      // favicon: '/images/favicon.ico',
-      // defaultOGImage: '/images/favicon.ico',
     },
     components: {
       graphics: {
-        Logo,
-        Icon,
+        Logo: '/src/payload/style/icons/Logo.tsx',
+        Icon: '/src/payload/style/icons/Icon.tsx',
       },
     },
     livePreview: {
