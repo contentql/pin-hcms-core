@@ -6,14 +6,14 @@ import { JSONTree } from 'react-json-tree'
 
 const tabVariant = {
   active: {
-    width: '40%', // Allow dynamic width based on content
+    width: '45%',
     transition: {
       type: 'tween',
       duration: 0.4,
     },
   },
   inactive: {
-    width: '25%', // Keep a fixed width for inactive tabs
+    width: 'auto', // Keep a fixed width for inactive tabs
     transition: {
       type: 'tween',
       duration: 0.4,

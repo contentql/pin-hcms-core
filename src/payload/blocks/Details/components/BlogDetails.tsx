@@ -12,6 +12,7 @@ interface BlogDetailsProps {
 }
 
 const BlogDetails: React.FC<BlogDetailsProps> = ({ blog, blogsData }) => {
+  console.log('blogs', blogsData)
   const tabs = [
     {
       title: 'Blog Data',
