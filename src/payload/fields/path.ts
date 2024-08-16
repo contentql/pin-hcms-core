@@ -6,8 +6,6 @@ import { APIError } from 'payload'
 import { COLLECTION_SLUG_PAGE } from '@/payload/collections/constants'
 import { generateBreadcrumbsUrl } from '@/utils/generateBreadcrumbsUrl'
 
-import CustomPathField from './CustomPathField'
-
 export const willPathConflict = async ({
   payload,
   path,
@@ -124,7 +122,7 @@ const pathField = (overrides?: Partial<Field>): Field =>
       admin: {
         position: 'sidebar',
         components: {
-          Field: CustomPathField,
+          Field: '/src/payload/fields/CustomPathField.tsx',
         },
       },
     },
