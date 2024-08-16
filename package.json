@@ -12,6 +12,7 @@
     "lint": "cross-env NODE_OPTIONS=--no-deprecation next lint",
     "ci": "payload migrate && yarn build",
     "generate:types": "payload generate:types",
+    "generate:importMap": "payload generate:importMap",
     "format": "prettier . --check",
     "format:fix": "prettier . --write"
   },
@@ -44,7 +45,7 @@
     "graphql": "^16.8.2",
     "next": "15.0.0-canary.104",
     "nprogress": "^0.2.0",
-    "payload": "beta",
+    "payload": "3.0.0-beta.82",
     "prettier": "^3.3.2",
     "prettier-plugin-tailwindcss": "^0.5.14",
     "react": "^19.0.0-rc-06d0b89e-20240801",
@@ -61,8 +62,8 @@
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.13",
-    "@types/nprogress": "^0.2.3",
     "@types/node": "^20.14.9",
+    "@types/nprogress": "^0.2.3",
     "@types/react": "npm:types-react@19.0.0-rc.0",
     "@types/react-dom": "npm:types-react-dom@19.0.0-rc.0",
     "dotenv": "^16.4.5",
