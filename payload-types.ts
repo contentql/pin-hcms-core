@@ -173,7 +173,7 @@ export interface Page {
   title: string;
   isHome?: boolean | null;
   isDynamic?: boolean | null;
-  layout?: (TestType | DetailsType | ListType)[] | null;
+  layout?: (HomeType | DetailsType | ListType)[] | null;
   slug?: string | null;
   pathMode?: ('generate' | 'custom') | null;
   path?: string | null;
@@ -192,14 +192,14 @@ export interface Page {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "TestType".
+ * via the `definition` "HomeType".
  */
-export interface TestType {
+export interface HomeType {
   heading?: string | null;
   sub_heading?: string | null;
   id?: string | null;
   blockName?: string | null;
-  blockType: 'Test';
+  blockType: 'Home';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

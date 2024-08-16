@@ -1,12 +1,12 @@
 import { Block } from 'payload'
 
-const TestConfig: Block = {
-  slug: 'Test',
+const HomeConfig: Block = {
+  slug: 'Home',
   // imageURL: '',
-  interfaceName: 'TestType',
+  interfaceName: 'HomeType',
   labels: {
-    singular: 'Test Block',
-    plural: 'Test Blocks',
+    singular: 'Home Block',
+    plural: 'Home Blocks',
   },
   fields: [
     {
@@ -22,4 +22,4 @@ const TestConfig: Block = {
   ],
 }
 
-export default TestConfig
+export default HomeConfig
