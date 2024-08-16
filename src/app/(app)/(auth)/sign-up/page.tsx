@@ -1,4 +1,4 @@
-import SignUpForm from '@/components/auth/SignUpForm'
+import SignUpForm from '@/components/auth/sign-up/SignUpForm'
 import withNoAuth from '@/utils/withNoAuth'
 
 const SignUpPage = async () => {

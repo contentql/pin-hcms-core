@@ -4,7 +4,7 @@ import { getPayloadHMR } from '@payloadcms/next/utilities'
 import { TRPCError } from '@trpc/server'
 import { cookies } from 'next/headers'
 
-import { sendResetPasswordEmail } from '@/components/auth/ResetPasswordForm/sendResetPasswordEmail'
+import { sendResetPasswordEmail } from '@/components/auth/reset-password/ResetPasswordForm/sendResetPasswordEmail'
 import { publicProcedure, router } from '@/trpc'
 
 import {

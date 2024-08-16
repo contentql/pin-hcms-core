@@ -9,6 +9,10 @@ interface UserProps {
   user: User
 }
 
+interface WithAuthOptions {
+  redirectPath: string
+}
+
 /**
  * Higher-order component to restrict access to unauthenticated users.
  * If a user is not authenticated, they will be redirected to the specified path.
@@ -16,34 +20,28 @@ interface UserProps {
  *
  * @template P - Props type of the wrapped component
  * @param {ComponentType<P & UserProps>} WrappedComponent - The component to wrap, which requires user authentication
- * @param {string} [redirectPath='/sign-in'] - The path to redirect to if the user is not authenticated (defaults to '/sign-in')
+ * @param {WithAuthOptions} [options] - Options to configure the HOC (e.g., redirect path)
  * @returns {ComponentType<P>} - The wrapped component with authentication logic applied
  *
  * @example
  * ```tsx
- * const ProtectedPage = withAuth(MyPageComponent, '/custom-redirect');
+ * const ProtectedPage = withAuth(MyPageComponent, { redirectPath: '/custom-redirect' })
  * ```
  */
 const withAuth = <P extends object>(
   WrappedComponent: ComponentType<P & UserProps>,
-  redirectPath: string = '/sign-in',
+  options: WithAuthOptions = { redirectPath: '/sign-in' },
 ): ComponentType<P> => {
   const ComponentWithAuth = async (props: P): Promise<ReactElement | null> => {
-    try {
-      const headersList = headers()
-      const user = await getCurrentUser(headersList)
+    const headersList = headers()
+    const user = await getCurrentUser(headersList)
 
-      if (!user) {
-        redirect(redirectPath)
-        return null // Ensure no component is rendered if redirect is triggered
-      }
-
-      return <WrappedComponent user={user} {...props} />
-    } catch (error) {
-      console.error('Error in authentication check:', error)
-      // Optionally handle the error more gracefully
-      return null // Optionally render a fallback UI or redirect on error
+    if (!user) {
+      redirect(options.redirectPath)
+      return null
     }
+
+    return <WrappedComponent user={user} {...props} />
   }
 
   return ComponentWithAuth as ComponentType<P>
