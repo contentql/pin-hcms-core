@@ -14,7 +14,7 @@ interface WithAuthOptions {
 }
 
 /**
- * Higher-order component to restrict access to authenticated users.
+ * Higher-order component to restrict access to unauthenticated users.
  * If a user is not authenticated, they will be redirected to the specified path.
  * If the user is authenticated, they can access the wrapped component.
  *

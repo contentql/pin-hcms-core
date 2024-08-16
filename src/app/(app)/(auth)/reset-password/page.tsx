@@ -1,24 +1,23 @@
-import { unstable_noStore as noStore } from 'next/cache'
+import { NextPage } from 'next'
+import { redirect } from 'next/navigation'
+import { toast } from 'sonner'
 
-import {
-  GenerateResetTokenForm,
-  ResetPasswordForm,
-} from '@/components/auth/ResetPasswordForm'
+import { ResetPasswordView } from '@/components/auth/reset-password'
+import withNoAuth from '@/utils/withNoAuth'
 
-export const dynamic = 'force-dynamic'
-export const revalidate = 0
-
-export default async function ResetPasswordPage({
-  searchParams,
-}: {
+interface PageProps {
   searchParams: Record<string, string>
-}) {
-  noStore()
+}
+
+const ResetPasswordPage: NextPage<PageProps> = ({ searchParams }) => {
   const token = searchParams?.token || null
 
-  return (
-    <div>
-      {token ? <ResetPasswordForm token={token} /> : <GenerateResetTokenForm />}
-    </div>
-  )
+  if (!token) {
+    toast.error('Reset password token is missing. Please try again.')
+    redirect('/sign-in')
+  }
+
+  return <ResetPasswordView token={token} />
 }
+
+export default withNoAuth(ResetPasswordPage)

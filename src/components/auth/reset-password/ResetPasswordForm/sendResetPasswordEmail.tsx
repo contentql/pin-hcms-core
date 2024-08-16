@@ -17,7 +17,7 @@ export const sendResetPasswordEmail = async (
     react: (
       <ResetPasswordEmailTemplate
         appName='Payload'
-        userFirstname={username}
+        userFirstName={username}
         resetPasswordLink={`${env.PAYLOAD_URL}/reset-password?token=${token}`}
       />
     ),

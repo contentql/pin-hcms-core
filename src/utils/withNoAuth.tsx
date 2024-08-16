@@ -30,7 +30,7 @@ interface WithNoAuthOptions {
  */
 const withNoAuth = <P extends object>(
   WrappedComponent: ComponentType<P & UserProps>,
-  options: WithNoAuthOptions = { redirectPath: '/dashboard' },
+  options: WithNoAuthOptions = { redirectPath: '/profile' },
 ): ComponentType<P> => {
   const ComponentWithNoAuth = async (
     props: P,
