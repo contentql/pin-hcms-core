@@ -8,10 +8,20 @@ import { tagsData } from './data'
 
 const payload = await getPayloadHMR({ config: configPromise })
 
-const seed = async (): Promise<(Tag | string)[]> => {
-  const result = bulkSeed<Tag>(payload, 'tags', tagsData)
+const seed = async (): Promise<void> => {
+  try {
+    const result = await bulkSeed<Tag>(payload, 'tags', tagsData)
 
-  return result
+    const errors = result.filter(item => typeof item === 'string')
+
+    if (errors.length > 0) {
+      throw new Error(
+        `Seeding failed with the following errors:\n${errors.join('\n')}`,
+      )
+    }
+  } catch (error) {
+    throw error
+  }
 }
 
 export default seed
