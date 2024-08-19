@@ -4,45 +4,30 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { usePathname, useRouter } from 'next/navigation'
 import { useState } from 'react'
 
-const CLIENT_ID = '1'
+import { trpc } from '@/trpc/client'
 
 export function PageNotFound() {
-  const [seedingStatus, setSeedingStatus] = useState<string[]>([])
   const [loading, setLoading] = useState(false)
 
   const pathname = usePathname()
   const router = useRouter()
 
-  const startSSE = () => {
-    const eventSource = new EventSource(`/api/sse/${CLIENT_ID}`)
+  const { mutate: runSeedMutation } = trpc.seed.runSeed.useMutation({
+    onMutate: () => {
+      setLoading(true)
+    },
+    onSuccess: () => {
+      // ! router.refresh() is not working as expected.
+      window.location.reload()
+    },
+    onSettled: () => {
+      setLoading(false)
+    },
+  })
 
-    eventSource.onmessage = event => {
-      const data = event.data && JSON.parse(event?.data)
-
-      if (data.started) {
-        return
-      }
-
-      if (data.success) {
-        eventSource.close()
-        return
-      }
-
-      setSeedingStatus(prev => [...prev, data.message])
-    }
-
-    eventSource.onerror = () => {
-      eventSource.close()
-    }
-
-    return () => {
-      eventSource.close()
-    }
-  }
-
+  // ! Implement SSE to display messages related to seeding in the ui
   const seedData = () => {
-    setLoading(true)
-    startSSE()
+    runSeedMutation()
   }
 
   return (
@@ -333,9 +318,6 @@ export function PageNotFound() {
                     exit={{ opacity: 0, y: -10 }}
                     transition={{ duration: 0.5 }}
                     className='text-lg font-bold'>
-                    {seedingStatus.map((status, index) => (
-                      <p key={index}>{status}</p>
-                    ))}
                     <div
                       aria-label='Loading...'
                       role='status'
