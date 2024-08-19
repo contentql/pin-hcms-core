@@ -1,13 +1,12 @@
+import configPromise from '@payload-config'
 import { Page } from '@payload-types'
-import { Payload } from 'payload'
+import { getPayloadHMR } from '@payloadcms/next/utilities'
 
 import { authorDetailsPageData } from './data'
 
-export interface Args {
-  payload: Payload
-}
+const payload = await getPayloadHMR({ config: configPromise })
 
-const seed = async ({ payload }: Args): Promise<Page> => {
+const seed = async (): Promise<Page> => {
   try {
     const result = await payload.create({
       collection: 'pages',

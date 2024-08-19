@@ -4,4 +4,3 @@ export type { AuthorsPageDataType } from './data'
 
 // Exporting types and functions from seed.ts
 export { default as seedAuthorsPage } from './seed'
-export type { Args as SeedAuthorsPageArgs } from './seed'

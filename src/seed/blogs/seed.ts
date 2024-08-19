@@ -1,15 +1,14 @@
+import configPromise from '@payload-config'
 import { Blog } from '@payload-types'
-import { Payload } from 'payload'
+import { getPayloadHMR } from '@payloadcms/next/utilities'
 
 import { bulkSeed } from '@/utils/bulkSeed'
 
 import { blogsData } from './data'
 
-export interface Args {
-  payload: Payload
-}
+const payload = await getPayloadHMR({ config: configPromise })
 
-const seed = async ({ payload }: Args): Promise<(Blog | string)[]> => {
+const seed = async (): Promise<(Blog | string)[]> => {
   const result = bulkSeed<Blog>(payload, 'blogs', blogsData)
 
   return result

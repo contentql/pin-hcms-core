@@ -4,4 +4,3 @@ export type { TagDataType } from './data'
 
 // Exporting types and functions from seed.ts
 export { default as seedTags } from './seed'
-export type { Args as SeedTagsArgs } from './seed'
