@@ -2,6 +2,7 @@ import type { CollectionConfig } from 'payload'
 
 import { isAdmin, isAdminOrCurrentUser } from '@/payload/access'
 
+import { assignAdminRoleIfNoAdminsExist } from './hooks/assignAdminRoleIfNoAdminsExist'
 import { authorAccessAfterUpdate } from './hooks/authorAccessAfterUpdate'
 
 export const Users: CollectionConfig = {
@@ -17,37 +18,7 @@ export const Users: CollectionConfig = {
     },
   },
   hooks: {
-    beforeChange: [
-      authorAccessAfterUpdate,
-      async ({ data, req, operation, originalDoc }) => {
-        if (operation === 'create') {
-          const { payload, context } = req
-
-          // this is an aggregation background
-
-          const { totalDocs: totalUsers } = await payload.count({
-            collection: 'users',
-            where: {
-              role: {
-                equals: 'admin',
-              },
-            },
-          })
-
-          if (context.preventRoleOverride) {
-            return data
-          }
-
-          if (totalUsers === 0) {
-            return { ...data, role: 'admin' }
-          }
-
-          return data
-        }
-
-        return data
-      },
-    ],
+    beforeChange: [authorAccessAfterUpdate, assignAdminRoleIfNoAdminsExist],
   },
   access: {
     admin: async ({ req }) => {
@@ -59,14 +30,27 @@ export const Users: CollectionConfig = {
     delete: isAdminOrCurrentUser,
   },
   fields: [
-    { name: 'name', type: 'text', saveToJWT: true, unique: true },
+    {
+      name: 'displayName',
+      label: 'Display Name',
+      type: 'text',
+      saveToJWT: true,
+    },
+    {
+      name: 'username',
+      label: 'Username',
+      type: 'text',
+      saveToJWT: true,
+      required: true,
+      unique: true,
+    },
     { name: 'imageUrl', type: 'text', saveToJWT: true },
     {
       name: 'role',
       type: 'select',
       options: ['admin', 'user', 'author'],
-      defaultValue: 'user',
       saveToJWT: true,
+      defaultValue: 'user',
     },
     { name: 'emailVerified', type: 'date' },
   ],
