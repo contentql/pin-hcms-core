@@ -45,10 +45,6 @@ const seed = async (): Promise<(string | Blog)[]> => {
         getRandomInt(0, formattedImagesResult.length - 1),
       )?.id
 
-      console.log('Tag Id: ', tagId)
-      console.log('Author Id: ', authorId)
-      console.log('Image Id: ', blogImageId)
-
       return {
         ...blogData,
         blog_image: blogImageId!,
