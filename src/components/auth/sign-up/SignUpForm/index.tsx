@@ -4,26 +4,25 @@ import { Input, LabelInputContainer } from '../../common/fields'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
+import slugify from 'slugify'
 import { toast } from 'sonner'
-import { z } from 'zod'
 
 import { Alert, AlertDescription } from '@/components/common/Alert'
 import { trpc } from '@/trpc/client'
-import { SignUpSchema } from '@/trpc/routers/auth/validator'
 
-export type SignUpFormData = z.infer<typeof SignUpSchema>
+import { SignUpFormData, SignUpFormSchema } from './validator'
 
 const SignUpForm: React.FC = () => {
   const router = useRouter()
 
   const form = useForm<SignUpFormData>({
-    resolver: zodResolver(SignUpSchema),
+    resolver: zodResolver(SignUpFormSchema),
     mode: 'onBlur',
     defaultValues: {
-      firstName: '',
-      lastName: '',
+      username: '',
       email: '',
       password: '',
+      confirmPassword: '',
     },
   })
 
@@ -31,6 +30,7 @@ const SignUpForm: React.FC = () => {
     register,
     handleSubmit,
     formState: { errors },
+    setValue,
     reset,
   } = form
 
@@ -51,8 +51,14 @@ const SignUpForm: React.FC = () => {
   })
 
   const onSubmit = async (data: SignUpFormData) => {
+    const randomNum = Math.floor(Math.random() * (24 - 1 + 1)) + 1
+    const imageUrl = `/images/avatar/avatar_${randomNum}.jpg`
+
+    const { confirmPassword, ...userData } = data
+
     signUpMutation({
-      ...data,
+      ...userData,
+      imageUrl,
     })
   }
 
@@ -84,44 +90,32 @@ const SignUpForm: React.FC = () => {
             <LabelInputContainer className='mb-4'>
               <div className='inline-flex justify-between'>
                 <label
-                  htmlFor='firstName'
+                  htmlFor='username'
                   className='block text-sm font-medium text-base-content/70'>
-                  First Name
+                  Username
                 </label>
-                {errors?.firstName && (
+                {errors?.username && (
                   <p className='text-sm text-error'>
-                    {errors.firstName.message}
+                    {errors.username.message}
                   </p>
                 )}
               </div>
               <Input
-                {...register('firstName')}
+                {...register('username', {
+                  onChange: (event: React.ChangeEvent<HTMLInputElement>) => {
+                    const value = slugify(event.target.value, {
+                      remove: /[*+~.()'"!:@]/g,
+                      lower: true,
+                      strict: true,
+                      locale: 'en',
+                      trim: false,
+                    })
+                    setValue('username', value, { shouldValidate: true })
+                  },
+                })}
                 type='text'
-                id='firstName'
-                name='firstName'
-                placeholder='John'
-              />
-            </LabelInputContainer>
-          </div>
-          <div>
-            <LabelInputContainer className='mb-4'>
-              <div className='inline-flex justify-between'>
-                <label
-                  htmlFor='lastName'
-                  className='block text-sm font-medium text-base-content/70'>
-                  Last Name
-                </label>
-                {errors?.lastName && (
-                  <p className='text-sm text-error'>
-                    {errors.lastName.message}
-                  </p>
-                )}
-              </div>
-              <Input
-                {...register('lastName')}
-                type='text'
-                id='lastName'
-                name='lastName'
+                id='username'
+                name='username'
                 placeholder='Doe'
               />
             </LabelInputContainer>
@@ -167,6 +161,29 @@ const SignUpForm: React.FC = () => {
                 type='password'
                 id='password'
                 name='password'
+                placeholder='● ● ● ● ● ● ● ● ●'
+              />
+            </LabelInputContainer>
+          </div>
+          <div>
+            <LabelInputContainer className='mb-8'>
+              <div className='inline-flex justify-between'>
+                <label
+                  htmlFor='confirmPassword'
+                  className='block text-sm font-medium text-base-content/70'>
+                  Confirm Password
+                </label>
+                {errors?.confirmPassword && (
+                  <p className='text-sm text-error'>
+                    {errors.confirmPassword.message}
+                  </p>
+                )}
+              </div>
+              <Input
+                {...register('confirmPassword')}
+                type='password'
+                id='confirmPassword'
+                name='confirmPassword'
                 placeholder='● ● ● ● ● ● ● ● ●'
               />
             </LabelInputContainer>
