@@ -6,7 +6,7 @@ import { useState } from 'react'
 
 import { trpc } from '@/trpc/client'
 
-export function PageNotFound() {
+const PageNotFound: React.FC = () => {
   const [loading, setLoading] = useState(false)
 
   const pathname = usePathname()
@@ -414,3 +414,5 @@ export function PageNotFound() {
     </section>
   )
 }
+
+export default PageNotFound
