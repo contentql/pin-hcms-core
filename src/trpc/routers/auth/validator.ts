@@ -1,8 +1,7 @@
 import { z } from 'zod'
 
 export const SignUpSchema = z.object({
-  firstName: z.string().min(1, { message: 'First name is required' }),
-  lastName: z.string().min(1, { message: 'Last name is required' }),
+  username: z.string().min(1, { message: 'Username is required' }),
   email: z
     .string()
     .min(1, { message: 'E-mail is required' })
@@ -11,6 +10,7 @@ export const SignUpSchema = z.object({
     .string()
     .min(1, { message: 'Password is required' })
     .min(6, { message: 'Password must be at least 6 characters long' }),
+  imageUrl: z.string().optional(),
 })
 
 export const SignInSchema = z.object({
