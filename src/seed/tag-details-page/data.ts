@@ -1,16 +1,18 @@
 import { Page } from 'payload-types'
 
-export const authorDetailsPageData: Omit<
+export type TagDetailsPageDataType = Omit<
   Page,
   'id' | 'createdAt' | 'updatedAt'
-> = {
-  title: 'Authors Details',
+>
+
+export const tagDetailsPageData: TagDetailsPageDataType = {
+  title: 'Tag Details',
   isHome: false,
   _status: 'published',
   layout: [
     {
       blockType: 'Details',
-      collection_slug: 'users',
+      collection_slug: 'tags',
     },
   ],
 }

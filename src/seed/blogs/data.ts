@@ -1,6 +1,13 @@
-import { Blog } from '@payload-types'
+import path from 'path'
+import { RequiredDataFromCollectionSlug } from 'payload'
 
-export const blogs: Omit<Blog, 'id' | 'createdAt' | 'updatedAt'>[] = [
+export type BlogDataType = RequiredDataFromCollectionSlug<'blogs'>
+export type BlogImageType = {
+  alt: string
+  filePath: string
+}
+
+export const blogsData: BlogDataType[] = [
   {
     select_blog_size: '1',
     title: 'Will AI-Enabled Processors Spark a PC Supercycle This Year?',
@@ -603,5 +610,31 @@ export const blogs: Omit<Blog, 'id' | 'createdAt' | 'updatedAt'>[] = [
         value: '',
       },
     ],
+  },
+]
+export const blogsImagesData: BlogImageType[] = [
+  {
+    alt: 'Blog 1',
+    filePath: path.join(process.cwd(), '/public/images/seed/blog-1.jpg'),
+  },
+  {
+    alt: 'Blog 2',
+    filePath: path.join(process.cwd(), '/public/images/seed/blog-1.jpg'),
+  },
+  {
+    alt: 'Blog 3',
+    filePath: path.join(process.cwd(), '/public/images/seed/blog-1.jpg'),
+  },
+  {
+    alt: 'Blog 4',
+    filePath: path.join(process.cwd(), '/public/images/seed/blog-1.jpg'),
+  },
+  {
+    alt: 'Blog 5',
+    filePath: path.join(process.cwd(), '/public/images/seed/blog-1.jpg'),
+  },
+  {
+    alt: 'Blog 6',
+    filePath: path.join(process.cwd(), '/public/images/seed/blog-1.jpg'),
   },
 ]

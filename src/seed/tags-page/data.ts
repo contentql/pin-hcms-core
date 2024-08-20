@@ -1,6 +1,8 @@
 import { Page } from 'payload-types'
 
-export const tagPageData: Omit<Page, 'id' | 'createdAt' | 'updatedAt'> = {
+export type TagsPageDataType = Omit<Page, 'id' | 'createdAt' | 'updatedAt'>
+
+export const tagsPageData: TagsPageDataType = {
   title: 'Tags',
   isHome: false,
   _status: 'published',
