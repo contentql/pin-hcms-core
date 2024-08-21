@@ -67,7 +67,7 @@ const Profile = ({ initialUser }: { initialUser: User | undefined }) => {
         <a
           href='#'
           className='text-xl font-medium leading-none text-base-content transition duration-500 ease-in-out hover:text-primary'>
-          {capitalizeWords(user?.name!)}
+          {capitalizeWords(user?.username!)}
         </a>
         {user?.role === 'author' && (
           <p className='mt-2 text-base-content'>Author</p>

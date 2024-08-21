@@ -19,7 +19,7 @@ type ProfileFormDataType = z.infer<typeof ProfileFormSchema>
 
 const ProfileForm = ({ user }: { user: User }) => {
   const [formData, setFormData] = useState<ProfileFormDataType>({
-    name: user?.name,
+    name: user?.username,
     password: '',
     confirmPassword: '',
   })
@@ -87,7 +87,7 @@ const ProfileForm = ({ user }: { user: User }) => {
                 id='name'
                 name='name'
                 placeholder='John'
-                value={user?.name || ''}
+                value={user?.username || ''}
                 onChange={handleOnChange}
                 className='mt-1 w-full rounded-md bg-base-200 p-2 text-base-content transition-colors duration-300 focus:border-base-content/40 focus:outline-none focus:ring-1 focus:ring-base-content/40 focus:ring-offset-1'
               />

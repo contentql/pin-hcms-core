@@ -272,7 +272,7 @@ export function SidebarView({ user }: { user: User }) {
           <div>
             <SidebarLink
               link={{
-                label: user.name || '',
+                label: user.username || '',
                 href: '#',
                 icon: (
                   <Image

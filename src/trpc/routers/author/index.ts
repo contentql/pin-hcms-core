@@ -60,7 +60,7 @@ export const authorRouter = router({
 
         const blogsRelatedWithAuthor = blogs.filter(blog =>
           blog.author?.find(
-            blogAuthor => (blogAuthor.value as User).name === authorName,
+            blogAuthor => (blogAuthor.value as User).username === authorName,
           ),
         )
 
