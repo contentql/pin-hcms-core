@@ -15,7 +15,7 @@ const HomeConfig: Block = {
       label: 'Heading',
     },
     {
-      name: 'sub_heading',
+      name: 'subHeading',
       type: 'text',
       label: 'Sub Heading',
     },

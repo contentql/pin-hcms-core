@@ -11,7 +11,7 @@ const DetailsConfig: Block = {
   fields: [
     {
       type: 'select',
-      name: 'collection_slug',
+      name: 'collectionSlug',
       label: 'Collection Slug',
       options: [
         {
