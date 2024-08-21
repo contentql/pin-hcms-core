@@ -197,7 +197,7 @@ export interface Page {
  */
 export interface HomeType {
   heading?: string | null;
-  sub_heading?: string | null;
+  subHeading?: string | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'Home';
@@ -207,18 +207,18 @@ export interface HomeType {
  * via the `definition` "DetailsType".
  */
 export interface DetailsType {
-  collection_slug?: ('blogs' | 'tags' | 'users') | null;
+  collectionSlug?: ('blogs' | 'tags' | 'users') | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'Details';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "List_type".
+ * via the `definition` "ListType".
  */
 export interface ListType {
   title?: string | null;
-  collection_slug?: ('blogs' | 'tags' | 'users') | null;
+  collectionSlug?: ('blogs' | 'tags' | 'users') | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'List';
