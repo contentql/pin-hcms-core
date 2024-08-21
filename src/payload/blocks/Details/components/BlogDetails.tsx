@@ -4,7 +4,7 @@ import { Blog } from '@payload-types'
 import Link from 'next/link'
 import { LiaBlogSolid } from 'react-icons/lia'
 
-import TabComponent, { TabContent } from '@/components/common/Tabs'
+import TabComponent, { TabContent } from '@/payload/blocks/common/Tabs'
 
 interface BlogDetailsProps {
   blog: Blog
