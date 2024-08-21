@@ -12,7 +12,7 @@ export const tagDetailsPageData: TagDetailsPageDataType = {
   layout: [
     {
       blockType: 'Details',
-      collection_slug: 'tags',
+      collectionSlug: 'tags',
     },
   ],
 }

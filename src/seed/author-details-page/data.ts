@@ -12,7 +12,7 @@ export const authorDetailsPageData: authorDetailsPageDataType = {
   layout: [
     {
       blockType: 'Details',
-      collection_slug: 'users',
+      collectionSlug: 'users',
     },
   ],
 }

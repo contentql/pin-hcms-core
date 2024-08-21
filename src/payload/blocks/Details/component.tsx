@@ -14,7 +14,7 @@ interface DetailsProps extends DetailsType {
 }
 
 const Details: React.FC<DetailsProps> = ({ params, ...block }) => {
-  switch (block?.collection_slug) {
+  switch (block?.collectionSlug) {
     case 'blogs': {
       const { data: blog } = trpc.blog.getBlogBySlug.useQuery({
         slug: params?.route.at(-1),

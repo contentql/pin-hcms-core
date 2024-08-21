@@ -10,7 +10,7 @@ export const homePageData: HomePageDataType = {
     {
       blockType: 'Home',
       heading: 'Develop your own',
-      sub_heading: 'Theme With Cql',
+      subHeading: 'Theme With Cql',
     },
   ],
 }

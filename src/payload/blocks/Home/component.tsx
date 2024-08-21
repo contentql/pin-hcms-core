@@ -31,7 +31,7 @@ const Home: React.FC<HomeProps> = ({ params, ...block }) => {
             {block?.heading}
           </h1>
           <h1 className='mt-3 w-full max-w-2xl text-center text-3xl font-bold text-base-content md:text-4xl lg:text-7xl'>
-            {block?.sub_heading}
+            {block?.subHeading}
           </h1>
         </div>
         <div className='flex flex-wrap items-center justify-center gap-8'>

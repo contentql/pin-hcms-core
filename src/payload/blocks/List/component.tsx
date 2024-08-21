@@ -15,7 +15,7 @@ interface ListProps extends DetailsType {
 }
 
 const List: React.FC<ListProps> = ({ params, ...block }) => {
-  switch (block?.collection_slug) {
+  switch (block?.collectionSlug) {
     case 'blogs': {
       const { data: blogs } = trpc.blog.getAllBlogs.useQuery()
       return <BlogsList blogs={blogs as Blog[]} />

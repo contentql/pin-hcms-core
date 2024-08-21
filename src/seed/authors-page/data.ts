@@ -10,7 +10,7 @@ export const authorsPageData: AuthorsPageDataType = {
     {
       blockType: 'List',
       title: 'Discover Authors',
-      collection_slug: 'users',
+      collectionSlug: 'users',
     },
   ],
 }
