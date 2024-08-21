@@ -97,7 +97,7 @@ export interface Media {
       filesize?: number | null;
       filename?: string | null;
     };
-    blog_image_size2?: {
+    blogImageSize2?: {
       url?: string | null;
       width?: number | null;
       height?: number | null;
@@ -105,7 +105,7 @@ export interface Media {
       filesize?: number | null;
       filename?: string | null;
     };
-    blog_image_size3?: {
+    blogImageSize3?: {
       url?: string | null;
       width?: number | null;
       height?: number | null;
@@ -142,7 +142,7 @@ export interface Blog {
         value: string | User;
       }[]
     | null;
-  select_blog_size?: ('1' | '2') | null;
+  selectBlogSize?: ('1' | '2') | null;
   title: string;
   slug?: string | null;
   tags?:
@@ -151,8 +151,8 @@ export interface Blog {
         value: string | Tag;
       }[]
     | null;
-  sub_title: string;
-  blog_image: string | Media;
+  subTitle: string;
+  blogImage: string | Media;
   content: {
     [k: string]: unknown;
   }[];

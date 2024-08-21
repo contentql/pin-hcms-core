@@ -4,8 +4,6 @@ import { slugField } from '@/payload/fields'
 
 import { assignUserId } from './field-level-hooks/assignUserId'
 
-// import { CustomSlugComponent } from '@/payload/fields/custom-slug-component'
-
 export const Blogs: CollectionConfig = {
   slug: 'blogs',
   labels: {
@@ -17,11 +15,6 @@ export const Blogs: CollectionConfig = {
   },
   admin: {
     useAsTitle: 'title',
-    // preview: doc => {
-    //   return `${env.PAYLOAD_URL}/next/preview?url=${encodeURIComponent(
-    //     `${env.PAYLOAD_URL}/blog/${doc.slug}`,
-    //   )}&secret=${env.PAYLOAD_PUBLIC_DRAFT_SECRET}`
-    // },
   },
   versions: {
     drafts: true,
@@ -33,11 +26,6 @@ export const Blogs: CollectionConfig = {
       label: 'Author',
       relationTo: ['users'],
       hasMany: true,
-      // defaultValue: ({ user }: { user: User }) => {
-      //   if (!user) return undefined
-
-      //   return { relationTo: 'users', value: user?.id }
-      // },
       hooks: {
         beforeChange: [assignUserId],
       },
@@ -54,7 +42,7 @@ export const Blogs: CollectionConfig = {
       },
     },
     {
-      name: 'select_blog_size',
+      name: 'selectBlogSize',
       type: 'select',
       admin: {
         isClearable: true,
@@ -70,10 +58,6 @@ export const Blogs: CollectionConfig = {
           label: 'Two',
           value: '2',
         },
-        // {
-        //   label: 'Three',
-        //   value: '3',
-        // },
       ],
     },
 
@@ -84,24 +68,6 @@ export const Blogs: CollectionConfig = {
       required: true,
     },
     slugField(),
-    // It will directly use title field to add slug
-    // {
-    //   name: 'slug',
-    //   label: 'Slug',
-    //   type: 'text',
-    //   index: true,
-    //   required: false, // Need to be false so that we can use beforeValidate hook to set slug.
-    //   admin: {
-    //     position: 'sidebar',
-    //     description: 'keep slug empty if you want this page as homepage',
-    //     condition: data => {
-    //       return !data?.isHome
-    //     },
-    //     components: {
-    //       Field: CustomSlugComponent,
-    //     },
-    //   },
-    // },
     {
       name: 'tags',
       label: 'Tags',
@@ -110,13 +76,13 @@ export const Blogs: CollectionConfig = {
       hasMany: true,
     },
     {
-      name: 'sub_title',
+      name: 'subTitle',
       label: 'Sub Title',
       type: 'text',
       required: true,
     },
     {
-      name: 'blog_image',
+      name: 'blogImage',
       label: 'Blog Image',
       type: 'upload',
       relationTo: 'media',
@@ -125,37 +91,15 @@ export const Blogs: CollectionConfig = {
         description: 'upload blog image',
       },
     },
-    // {
-    //   name: 'description',
-    //   type: 'richText',
-    //   label: 'Content',
-    //   required: true,
-    //   editor: env.SUBSCRIPTION_PLAN
-    //     ? lexicalEditor({
-    //         features: ({ defaultFeatures }) => [
-    //           ...defaultFeatures,
-    //           FixedToolbarFeature(),
-    //           HTMLConverterFeature({}),
-    //         ],
-    //       })
-    //     : slateEditor({}),
-    //   admin: {
-    //     description:
-    //       'Main content of the blog post. Use the rich text editor for formatting.',
-    //   },
-    // },
     {
       name: 'content',
       type: 'richText',
       label: 'Content',
       required: true,
-      // editor: slateEditor({}),
       admin: {
         description:
           'Main content of the blog post. Use the rich text editor for formatting.',
       },
     },
-
-    // slugField(),
   ],
 }
