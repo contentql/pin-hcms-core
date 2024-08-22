@@ -175,6 +175,7 @@ export interface Page {
   isHome?: boolean | null;
   isDynamic?: boolean | null;
   layout?: (HomeType | DetailsType | ListType)[] | null;
+  slugMode?: ('generate' | 'custom') | null;
   slug?: string | null;
   pathMode?: ('generate' | 'custom') | null;
   path?: string | null;
