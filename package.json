@@ -72,6 +72,7 @@
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.13",
     "@types/node": "^20.14.9",
+    "@types/node-schedule": "^2.1.7",
     "@types/nprogress": "^0.2.3",
     "@types/react": "npm:types-react@19.0.0-rc.0",
     "@types/react-dom": "npm:types-react-dom@19.0.0-rc.0",
