@@ -17,7 +17,7 @@ export const SignUpFormSchema = z
       .string()
       .min(6, { message: 'Password must be at least 6 characters long' }),
     confirmPassword: z.string().min(6, {
-      message: 'Confirm Password must be at least 8 characters long',
+      message: 'Confirm Password must be at least 6 characters long',
     }),
     imageUrl: z.string().optional(),
   })
