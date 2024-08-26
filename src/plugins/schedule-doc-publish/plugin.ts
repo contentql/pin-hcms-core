@@ -4,10 +4,40 @@ import { publishOnField } from './fields/PublishOn'
 import { triggerScheduleAfterChange } from './hooks'
 import { PluginTypes } from './types'
 
+/**
+ * Creates a Payload CMS plugin to add a "Publish On" field to specified collections and handle scheduling jobs.
+ *
+ * @param {boolean} [options.enable=true] - Flag to enable or disable the plugin. Defaults to `true`.
+ * @param {CollectionSlug[]} options.collections - An array of collection slugs to which the "Publish On" field will be added.
+ * @param {Position} [options.position='sidebar'] - Position of the "Publish On" field in the admin UI. Accepted values are 'sidebar', 'start', or 'end'. Defaults to 'sidebar'.
+ *
+ * @returns {Plugin} A Payload CMS plugin configuration function that modifies the incoming configuration.
+ *
+ * @description
+ * This plugin modifies the Payload CMS configuration to:
+ * - Add a "Publish On" field to the specified collections. The field can be placed at the 'start', 'sidebar', or 'end' of the collection fields.
+ * - Hook into the `afterChange` event of these collections to schedule or reschedule jobs based on the value of the "Publish On" field.
+ *
+ * @example
+ * // Example usage of the plugin in `payload.config.ts`
+ *
+ * export default buildConfig({
+ *   collections: [Articles, News],
+ *   plugins: [
+ *     scheduleDocPublish({
+ *       enable: true,
+ *       collections: ['articles', 'news'],
+ *       position: 'sidebar',
+ *     }),
+ *   ],
+ *   secret: env.PAYLOAD_SECRET,
+ *   db: mongooseAdapter({ url: env.DATABASE_URI }),
+ * })
+ */
 const plugin =
-  (PluginOptions: PluginTypes): Plugin =>
+  (options: PluginTypes): Plugin =>
   (incomingConfig: Config): Config => {
-    const { enable = true, collections, position = 'sidebar' } = PluginOptions
+    const { enable = true, collections, position = 'sidebar' } = options
 
     if (!enable) {
       return incomingConfig
