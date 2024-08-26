@@ -7,7 +7,7 @@ import { PluginTypes } from './types'
 /**
  * Creates a Payload CMS plugin to add a "Publish On" field to specified collections and handle scheduling jobs.
  *
- * @param {boolean} [options.enable=true] - Flag to enable or disable the plugin. Defaults to `true`.
+ * @param {boolean} [options.enabled=true] - Flag to enable or disable the plugin. Defaults to `true`.
  * @param {CollectionSlug[]} options.collections - An array of collection slugs to which the "Publish On" field will be added.
  * @param {Position} [options.position='sidebar'] - Position of the "Publish On" field in the admin UI. Accepted values are 'sidebar', 'start', or 'end'. Defaults to 'sidebar'.
  *
@@ -37,9 +37,9 @@ import { PluginTypes } from './types'
 const plugin =
   (options: PluginTypes): Plugin =>
   (incomingConfig: Config): Config => {
-    const { enable = true, collections, position = 'sidebar' } = options
+    const { enabled = true, collections, position = 'sidebar' } = options
 
-    if (!enable) {
+    if (!enabled) {
       return incomingConfig
     }
 
