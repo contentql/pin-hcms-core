@@ -159,8 +159,9 @@ export interface Blog {
   meta?: {
     title?: string | null;
     description?: string | null;
-    image?: string | Media | null;
+    image?: (string | null) | Media;
   };
+  publishOn?: string | null;
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -267,7 +268,7 @@ export interface SiteSetting {
   appName?: string | null;
   appDescription?: string | null;
   header?: {
-    logo_image?: string | Media | null;
+    logo_image?: (string | null) | Media;
     primary_button_text?: string | null;
     primary_button_path?: string | null;
     secondary_button_text?: string | null;
@@ -2980,7 +2981,7 @@ export interface SiteSetting {
       | null;
   };
   footer?: {
-    logo_image?: string | Media | null;
+    logo_image?: (string | null) | Media;
     logo?: string | null;
     copyright?: string | null;
     menuItems?:
