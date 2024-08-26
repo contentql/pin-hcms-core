@@ -106,7 +106,7 @@ export default buildConfig({
       generateURL,
     }),
     scheduleDocPublish({
-      enable: true,
+      enabled: true,
       collections: ['blogs'],
       position: 'sidebar',
     }),
