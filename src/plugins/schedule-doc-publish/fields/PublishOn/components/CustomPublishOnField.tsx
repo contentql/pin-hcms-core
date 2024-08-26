@@ -15,37 +15,51 @@ const CustomPublishOnField: React.FC<DateFieldProps> = props => {
   const publishOn = fields?.publishOn?.value
 
   const [timeRemaining, setTimeRemaining] = useState<string | null>(null)
+  const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
-    if (publishOn && status !== 'published') {
+    if (publishOn) {
       const targetDate = new Date(String(publishOn)).getTime()
+      const now = new Date().getTime()
 
-      const updateTimeRemaining = () => {
-        const now = new Date().getTime()
-        const timeDifference = targetDate - now
+      if (targetDate < now) {
+        setError('The publish date must be in the future.')
+        setTimeRemaining(null)
+      } else {
+        setError(null)
 
-        if (timeDifference <= 0) {
-          setTimeRemaining('Published')
-        } else {
-          const hours = Math.floor(
-            (timeDifference % (1000 * 3600 * 24)) / (1000 * 3600),
-          )
-          const minutes = Math.floor(
-            (timeDifference % (1000 * 3600)) / (1000 * 60),
-          )
-          const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000)
-          setTimeRemaining(`${hours}h ${minutes}m ${seconds}s`)
+        const updateTimeRemaining = () => {
+          const now = new Date().getTime()
+          const timeDifference = targetDate - now
+
+          if (timeDifference <= 0) {
+            setTimeRemaining('Published')
+          } else {
+            const hours = Math.floor(
+              (timeDifference % (1000 * 3600 * 24)) / (1000 * 3600),
+            )
+            const minutes = Math.floor(
+              (timeDifference % (1000 * 3600)) / (1000 * 60),
+            )
+            const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000)
+            setTimeRemaining(`${hours}h ${minutes}m ${seconds}s`)
+          }
         }
+
+        // Initial call to set the time remaining
+        updateTimeRemaining()
+
+        // Update every second
+        const interval = setInterval(updateTimeRemaining, 1000)
+
+        // Clear interval on component unmount or dependencies change
+        return () => clearInterval(interval)
       }
-
-      updateTimeRemaining()
-      const interval = setInterval(updateTimeRemaining, 1000)
-
-      return () => clearInterval(interval)
     } else {
       setTimeRemaining(null)
+      setError(null)
     }
-  }, [publishOn, status])
+  }, [isFormModified, publishOn, status])
 
   return (
     <div>
@@ -55,7 +69,14 @@ const CustomPublishOnField: React.FC<DateFieldProps> = props => {
           Boolean(publishOn) && status === 'published' && !isFormModified
         }
       />
-      {timeRemaining && (
+      {error && (
+        <div
+          className='error-message'
+          style={{ color: 'red', paddingTop: '3px' }}>
+          {error}
+        </div>
+      )}
+      {timeRemaining && !error && (
         <div className='time-remaining' style={{ paddingTop: '3px' }}>
           Time Remaining: {timeRemaining}
         </div>
