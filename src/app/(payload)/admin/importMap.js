@@ -1,4 +1,4 @@
-import { default as default_0 } from 'src/payload/fields/CustomSlugField.tsx'
+import { default as default_0 } from 'src/payload/fields/slug/components/CustomSlugField.tsx'
 import { RichTextCell as RichTextCell_1 } from '@payloadcms/richtext-slate/client'
 import { RichTextField as RichTextField_2 } from '@payloadcms/richtext-slate/client'
 import { getGenerateComponentMap as getGenerateComponentMap_3 } from '@payloadcms/richtext-slate/generateComponentMap'
@@ -54,7 +54,7 @@ import { default as default_52 } from 'src/payload/style/icons/Icon.tsx'
 import { default as default_53 } from 'src/payload/style/icons/Logo.tsx'
 
 export const importMap = {
-  "/src/payload/fields/CustomSlugField.tsx#default": default_0,
+  "/src/payload/fields/slug/components/CustomSlugField.tsx#default": default_0,
   "@payloadcms/richtext-slate/client#RichTextCell": RichTextCell_1,
   "@payloadcms/richtext-slate/client#RichTextField": RichTextField_2,
   "@payloadcms/richtext-slate/generateComponentMap#getGenerateComponentMap": getGenerateComponentMap_3,
