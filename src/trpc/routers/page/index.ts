@@ -35,9 +35,11 @@ export const pageRouter = router({
           throw new TRPCError({ code: 'NOT_FOUND', message: 'Page not found' })
         }
 
-        const matchingPage = allPages.find(page =>
-          matchNextJsPath(path, page.path!),
-        )
+        const correctMatching = allPages.find(page => page.path === path)
+
+        const matchingPage =
+          correctMatching ??
+          allPages.find(page => matchNextJsPath(path, page.path!))
 
         if (!matchingPage) {
           throw new TRPCError({ code: 'NOT_FOUND', message: 'Page not found' })

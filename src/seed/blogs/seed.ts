@@ -47,7 +47,7 @@ const seed = async (): Promise<(string | Blog)[]> => {
 
       return {
         ...blogData,
-        blog_image: blogImageId!,
+        blogImage: blogImageId!,
         author: [
           {
             relationTo: 'users',
