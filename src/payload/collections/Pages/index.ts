@@ -1,9 +1,9 @@
 import type { CollectionConfig } from 'payload'
 
 import { COLLECTION_SLUG_PAGE } from '@/payload/collections/constants'
-import { pathField, pathModeField, slugField } from '@/payload/fields'
+import { pathField, pathModeField } from '@/payload/fields'
 import { layoutField } from '@/payload/fields/layout'
-import { slugModeField } from '@/payload/fields/slug'
+import { slugField, slugModeField } from '@/payload/fields/slug'
 
 export const Pages: CollectionConfig = {
   slug: COLLECTION_SLUG_PAGE,
@@ -53,7 +53,7 @@ export const Pages: CollectionConfig = {
     },
     layoutField(),
     slugModeField(),
-    slugField(),
+    slugField('title'),
     pathModeField(),
     pathField(),
   ],

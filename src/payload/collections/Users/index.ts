@@ -1,6 +1,7 @@
 import type { CollectionConfig } from 'payload'
 
 import { isAdmin, isAdminOrCurrentUser } from '@/payload/access'
+import { slugField } from '@/payload/fields/slug'
 
 import { assignAdminRoleIfNoAdminsExist } from './hooks/assignAdminRoleIfNoAdminsExist'
 import { authorAccessAfterUpdate } from './hooks/authorAccessAfterUpdate'
@@ -36,14 +37,18 @@ export const Users: CollectionConfig = {
       type: 'text',
       saveToJWT: true,
     },
-    {
+    slugField('username', {
       name: 'username',
       label: 'Username',
       type: 'text',
       saveToJWT: true,
       required: true,
       unique: true,
-    },
+      admin: {
+        readOnly: false,
+        position: undefined,
+      },
+    }),
     { name: 'imageUrl', type: 'text', saveToJWT: true },
     {
       name: 'role',

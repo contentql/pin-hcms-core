@@ -55,7 +55,7 @@ export interface UserAuthOperations {
 export interface User {
   id: string;
   displayName?: string | null;
-  username: string;
+  username?: string | null;
   imageUrl?: string | null;
   role?: ('admin' | 'user' | 'author') | null;
   emailVerified?: string | null;

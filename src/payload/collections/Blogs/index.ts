@@ -1,6 +1,6 @@
 import type { CollectionConfig } from 'payload'
 
-import { slugField } from '@/payload/fields'
+import { slugField } from '@/payload/fields/slug'
 
 import { assignUserId } from './field-level-hooks/assignUserId'
 
@@ -67,7 +67,7 @@ export const Blogs: CollectionConfig = {
       type: 'text',
       required: true,
     },
-    slugField(),
+    slugField('title'),
     {
       name: 'tags',
       label: 'Tags',
