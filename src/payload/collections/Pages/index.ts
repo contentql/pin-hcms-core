@@ -1,8 +1,8 @@
 import type { CollectionConfig } from 'payload'
 
 import { COLLECTION_SLUG_PAGE } from '@/payload/collections/constants'
-import { pathField, pathModeField } from '@/payload/fields'
 import { layoutField } from '@/payload/fields/layout'
+import { pathField, pathModeField } from '@/payload/fields/path'
 import { slugField, slugModeField } from '@/payload/fields/slug'
 
 export const Pages: CollectionConfig = {
