@@ -1,4 +1,4 @@
-import { default as default_0 } from 'src/payload/fields/CustomSlugField.tsx'
+import { default as default_0 } from 'src/payload/fields/slug/components/CustomSlugField.tsx'
 import { RichTextCell as RichTextCell_1 } from '@payloadcms/richtext-slate/client'
 import { RichTextField as RichTextField_2 } from '@payloadcms/richtext-slate/client'
 import { getGenerateComponentMap as getGenerateComponentMap_3 } from '@payloadcms/richtext-slate/generateComponentMap'
@@ -49,12 +49,12 @@ import { MetaDescriptionComponent as MetaDescriptionComponent_47 } from '@payloa
 import { MetaImageComponent as MetaImageComponent_48 } from '@payloadcms/plugin-seo/client'
 import { PreviewComponent as PreviewComponent_49 } from '@payloadcms/plugin-seo/client'
 import { default as default_50 } from 'src/plugins/schedule-doc-publish/fields/PublishOn/components/CustomPublishOnField.tsx'
-import { default as default_51 } from 'src/payload/fields/CustomPathField.tsx'
+import { default as default_51 } from 'src/payload/fields/path/components/CustomPathField.tsx'
 import { default as default_52 } from 'src/payload/style/icons/Icon.tsx'
 import { default as default_53 } from 'src/payload/style/icons/Logo.tsx'
 
 export const importMap = {
-  "/src/payload/fields/CustomSlugField.tsx#default": default_0,
+  "/src/payload/fields/slug/components/CustomSlugField.tsx#default": default_0,
   "@payloadcms/richtext-slate/client#RichTextCell": RichTextCell_1,
   "@payloadcms/richtext-slate/client#RichTextField": RichTextField_2,
   "@payloadcms/richtext-slate/generateComponentMap#getGenerateComponentMap": getGenerateComponentMap_3,
@@ -105,7 +105,7 @@ export const importMap = {
   "@payloadcms/plugin-seo/client#MetaImageComponent": MetaImageComponent_48,
   "@payloadcms/plugin-seo/client#PreviewComponent": PreviewComponent_49,
   "/src/plugins/schedule-doc-publish/fields/PublishOn/components/CustomPublishOnField.tsx#default": default_50,
-  "/src/payload/fields/CustomPathField.tsx#default": default_51,
+  "/src/payload/fields/path/components/CustomPathField.tsx#default": default_51,
   "/src/payload/style/icons/Icon.tsx#default": default_52,
   "/src/payload/style/icons/Logo.tsx#default": default_53
 }

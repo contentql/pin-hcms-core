@@ -1,5 +1,5 @@
 import { Job, scheduledJobs } from 'node-schedule'
-import { CollectionAfterChangeHook, CollectionSlug } from 'payload'
+import { APIError, CollectionAfterChangeHook, CollectionSlug } from 'payload'
 
 const triggerScheduleAfterChange: CollectionAfterChangeHook = async ({
   req,
@@ -15,10 +15,25 @@ const triggerScheduleAfterChange: CollectionAfterChangeHook = async ({
   const slug = collection.slug as CollectionSlug
 
   // If `publishOn` is in the past, throw an error
-  if (publishOn && new Date(publishOn) < new Date()) {
+  if (
+    publishOn &&
+    new Date(publishOn) < new Date() &&
+    (operation === 'create' || doc?.publishOn !== previousDoc?.publishOn)
+  ) {
     const errorMessage = `Cannot schedule job: ${jobId} in collection: ${slug} because the publish date is in the past (${publishOn}).`
+    const error = new APIError(
+      errorMessage,
+      400,
+      [
+        {
+          field: 'path',
+          message: errorMessage,
+        },
+      ],
+      false,
+    )
     payload.logger.error(errorMessage)
-    throw new Error(errorMessage)
+    throw error
   }
 
   // If the status is already published, no further action is needed

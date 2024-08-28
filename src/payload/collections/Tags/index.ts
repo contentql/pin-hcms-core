@@ -1,6 +1,6 @@
 import type { CollectionConfig } from 'payload'
 
-import { slugField } from '@/payload/fields'
+import { slugField } from '@/payload/fields/slug'
 
 export const Tags: CollectionConfig = {
   slug: 'tags',
@@ -45,7 +45,7 @@ export const Tags: CollectionConfig = {
         description: 'upload tag image',
       },
     },
-    slugField(),
+    slugField('title'),
     {
       name: 'color',
       label: 'Tag Color',
