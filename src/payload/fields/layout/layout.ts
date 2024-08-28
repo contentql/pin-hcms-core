@@ -3,7 +3,9 @@ import { type Field } from 'payload'
 
 import { blocks } from '@/payload/blocks'
 
-const layoutField = (overrides?: Partial<Field>): Field => {
+import { LayoutField } from './types'
+
+const layoutField: LayoutField = (overrides = {}) => {
   return deepMerge<Field, Partial<Field>>(
     {
       name: 'layout',
@@ -12,7 +14,7 @@ const layoutField = (overrides?: Partial<Field>): Field => {
       minRows: 1,
       blocks,
     },
-    overrides || {},
+    overrides,
   )
 }
 

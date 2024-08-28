@@ -2,7 +2,7 @@ import deepMerge from 'deepmerge'
 import type { Field } from 'payload'
 
 import { formatSlug } from './hooks/formatSlug'
-import { SlugFieldProps } from './types'
+import { SlugField } from './types'
 
 /**
  * Creates a configuration object for a "slug" field in Payload CMS with optional overrides.
@@ -34,7 +34,7 @@ import { SlugFieldProps } from './types'
  * // with the base "slug" field settings and the provided overrides,
  * // including a custom name, label, and additional properties.
  */
-const slugField: SlugFieldProps = (fieldToUse, overrides = {}) => {
+const slugField: SlugField = (fieldToUse, overrides = {}) => {
   return deepMerge<Field, Partial<Field>>(
     {
       name: 'slug',

@@ -1,6 +1,8 @@
 import deepMerge from 'deepmerge'
 import type { Field } from 'payload'
 
+import { SlugModeField } from './types'
+
 /**
  * Creates a configuration object for a "slugMode" field in Payload CMS with optional overrides.
  *
@@ -27,7 +29,7 @@ import type { Field } from 'payload'
  * // with the base "slugMode" field settings and the provided overrides,
  * // including a custom label and admin layout, but keeping the default 'name' and 'options' settings.
  */
-const slugModeField = (overrides?: Partial<Field>): Field =>
+const slugModeField: SlugModeField = (overrides = {}) =>
   deepMerge<Field, Partial<Field>>(
     {
       name: 'slugMode',
@@ -52,7 +54,7 @@ const slugModeField = (overrides?: Partial<Field>): Field =>
         },
       },
     },
-    overrides || {},
+    overrides,
   )
 
 export default slugModeField

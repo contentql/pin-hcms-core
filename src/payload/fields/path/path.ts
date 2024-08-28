@@ -2,8 +2,9 @@ import deepmerge from 'deepmerge'
 import type { Field } from 'payload'
 
 import { generateAndValidatePath } from './hooks/generateAndValidatePath'
+import { PathField } from './types'
 
-const pathField = (overrides?: Partial<Field>): Field =>
+const pathField: PathField = (overrides = {}) =>
   deepmerge<Field, Partial<Field>>(
     {
       type: 'text',
@@ -21,7 +22,7 @@ const pathField = (overrides?: Partial<Field>): Field =>
         },
       },
     },
-    overrides || {},
+    overrides,
   )
 
 export default pathField

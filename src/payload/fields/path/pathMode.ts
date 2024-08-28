@@ -1,7 +1,9 @@
 import deepmerge from 'deepmerge'
 import type { Field } from 'payload'
 
-const pathModeField = (overrides?: Partial<Field>): Field =>
+import { PathModeField } from './types'
+
+const pathModeField: PathModeField = (overrides = {}) =>
   deepmerge<Field, Partial<Field>>(
     {
       name: 'pathMode',
@@ -23,7 +25,7 @@ const pathModeField = (overrides?: Partial<Field>): Field =>
         layout: 'horizontal',
       },
     },
-    overrides || {},
+    overrides,
   )
 
 export default pathModeField

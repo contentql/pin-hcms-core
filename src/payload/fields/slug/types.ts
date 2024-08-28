@@ -1,15 +1,8 @@
 import { Field } from 'payload'
 
-export type SlugFieldProps = (
+export type SlugField = (
   fieldToUse?: string,
   overrides?: Partial<Field>,
 ) => Field
 
-export type FormatStringProps = {
-  value: string
-  options?: {
-    trim?: boolean
-  }
-}
-
-export type FormatStringResult = string
+export type SlugModeField = (overrides?: Partial<Field>) => Field
