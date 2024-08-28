@@ -2,7 +2,7 @@ import { revalidateTag } from 'next/cache'
 import type { Field, GlobalConfig } from 'payload'
 
 import { COLLECTION_SLUG_PAGE } from '@/payload/collections/constants'
-import iconField from '@/payload/fields/icon'
+import { iconField } from '@/payload/fields/icon'
 
 export const GLOBAL_SETTINGS_SLUG = 'site-settings'
 
