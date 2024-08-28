@@ -4,8 +4,6 @@ import { z } from 'zod'
 
 import { COLLECTION_SLUG_PAGE } from '@/payload/collections/constants'
 
-// import iconField from '@/payload/fields/icon'
-
 export const GLOBAL_SETTINGS_SLUG = 'site-settings'
 
 const validateURL = z
@@ -20,7 +18,7 @@ const menuItem: Field[] = [
     type: 'row',
     fields: [
       {
-        name: 'external_link',
+        name: 'externalLink',
         type: 'checkbox',
         label: 'External Link',
         defaultValue: false,
@@ -29,7 +27,7 @@ const menuItem: Field[] = [
         },
       },
       {
-        name: 'new_page',
+        name: 'newPage',
         type: 'checkbox',
         label: 'New Page',
         defaultValue: true,
@@ -77,18 +75,18 @@ const menuItem: Field[] = [
 
 const menuGroupItem: Field = {
   type: 'group',
-  name: 'menu_link_group',
+  name: 'menuLinkGroup',
   label: 'Link Group',
   fields: [
     {
       type: 'text',
-      name: 'group_title',
+      name: 'groupTitle',
       label: 'Group Title',
       required: true,
     },
     {
       type: 'array',
-      name: 'group_links',
+      name: 'groupLinks',
       label: 'Links',
       fields: menuItem,
     },
@@ -109,7 +107,7 @@ const menuField: Field[] = [
     },
   },
   {
-    name: 'menu_link',
+    name: 'menuLink',
     type: 'group',
     label: 'Link',
     fields: menuItem,
@@ -122,7 +120,7 @@ const menuField: Field[] = [
 
 const logoField: Field[] = [
   {
-    name: 'image_url',
+    name: 'imageUrl',
     type: 'upload',
     required: true,
     relationTo: 'media',
@@ -263,7 +261,7 @@ export const siteSettings: GlobalConfig = {
               required: true,
             },
             {
-              name: 'favicon_url',
+              name: 'faviconUrl',
               type: 'upload',
               required: true,
               relationTo: 'media',
@@ -273,7 +271,7 @@ export const siteSettings: GlobalConfig = {
               },
             },
             {
-              name: 'og_image_url',
+              name: 'ogImageUrl',
               type: 'upload',
               required: true,
               relationTo: 'media',
@@ -297,7 +295,7 @@ export const siteSettings: GlobalConfig = {
               fields: logoField,
             },
             {
-              name: 'menu_links',
+              name: 'menuLinks',
               label: 'Menu Links',
               type: 'array',
               fields: menuField,
@@ -325,14 +323,14 @@ export const siteSettings: GlobalConfig = {
               ],
             },
             {
-              name: 'footer_links',
+              name: 'footerLinks',
               type: 'array',
               label: 'Footer Links',
               fields: menuField,
             },
             {
               type: 'array',
-              name: 'social_links',
+              name: 'socialLinks',
               label: 'Social Links',
               fields: [socialLinksField],
             },
