@@ -17,7 +17,7 @@ import { SlugModeField } from './types'
  *
  * @example
  * // Example with custom field settings and overrides, but not altering 'name' or 'options'
- * const customSlugModeField = slugModeField({
+ * slugModeField({
  *   label: 'Custom Slug Mode Label',
  *   defaultValue: 'custom',
  *   admin: {

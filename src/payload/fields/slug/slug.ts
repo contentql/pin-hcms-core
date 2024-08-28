@@ -17,7 +17,7 @@ import { SlugField } from './types'
  *
  * @example
  * // Example with custom field settings and overrides
- * const customSlugField = slugField('username', {
+ * slugField('username', {
  *   name: 'username',
  *   label: 'Username',
  *   type: 'text',
