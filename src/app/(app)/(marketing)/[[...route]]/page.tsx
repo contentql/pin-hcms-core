@@ -1,25 +1,26 @@
-import { Page as PageType } from '@payload-types'
-import { notFound } from 'next/navigation'
-
-import RenderBlocks from '@/payload/blocks/RenderBlocks'
-import { serverClient } from '@/trpc/serverClient'
-
-export const dynamic = 'force-dynamic'
-export const revalidate = 0
+// import { Page as PageType } from '@payload-types'
+// import { notFound } from 'next/navigation'
+// import RenderBlocks from '@/payload/blocks/RenderBlocks'
+// import { serverClient } from '@/trpc/serverClient'
+// export const dynamic = 'force-dynamic'
+// export const revalidate = 0
+import RenderBlocks from '@/contentql/RenderBlocks'
 
 const Page = async ({ params }: { params: { route: string[] } }) => {
-  try {
-    const pageData = await serverClient.page.getPageData({
-      path: params?.route,
-    })
+  return RenderBlocks({ route: params.route })
 
-    return (
-      <RenderBlocks pageInitialData={pageData as PageType} params={params} />
-    )
-  } catch (error) {
-    console.error('Error: Page not found')
-    notFound()
-  }
+  // try {
+  //   const pageData = await serverClient.page.getPageData({
+  //     path: params?.route,
+  //   })
+
+  //   return (
+  //     <RenderBlocks pageInitialData={pageData as PageType} params={params} />
+  //   )
+  // } catch (error) {
+  //   console.error('Error: Page not found')
+  //   notFound()
+  // }
 }
 
 export default Page

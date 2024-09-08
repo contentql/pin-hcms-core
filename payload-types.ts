@@ -267,17 +267,17 @@ export interface SiteSetting {
   id: string;
   title: string;
   description: string;
-  favicon_url: string | Media;
-  og_image_url: string | Media;
+  faviconUrl: string | Media;
+  ogImageUrl: string | Media;
   keywords?: string[] | null;
   header: {
     logo: BrandLogo;
-    menu_links?:
+    menuLinks?:
       | {
           group?: boolean | null;
-          menu_link?: {
-            external_link?: boolean | null;
-            new_page?: boolean | null;
+          menuLink?: {
+            externalLink?: boolean | null;
+            newPage?: boolean | null;
             page?: {
               relationTo: 'pages';
               value: string | Page;
@@ -286,12 +286,12 @@ export interface SiteSetting {
             link?: string | null;
             id?: string | null;
           };
-          menu_link_group?: {
-            group_title: string;
-            group_links?:
+          menuLinkGroup?: {
+            groupTitle: string;
+            groupLinks?:
               | {
-                  external_link?: boolean | null;
-                  new_page?: boolean | null;
+                  externalLink?: boolean | null;
+                  newPage?: boolean | null;
                   page?: {
                     relationTo: 'pages';
                     value: string | Page;
@@ -308,12 +308,12 @@ export interface SiteSetting {
   };
   footer: {
     logo: BrandLogo;
-    footer_links?:
+    footerLinks?:
       | {
           group?: boolean | null;
-          menu_link?: {
-            external_link?: boolean | null;
-            new_page?: boolean | null;
+          menuLink?: {
+            externalLink?: boolean | null;
+            newPage?: boolean | null;
             page?: {
               relationTo: 'pages';
               value: string | Page;
@@ -322,12 +322,12 @@ export interface SiteSetting {
             link?: string | null;
             id?: string | null;
           };
-          menu_link_group?: {
-            group_title: string;
-            group_links?:
+          menuLinkGroup?: {
+            groupTitle: string;
+            groupLinks?:
               | {
-                  external_link?: boolean | null;
-                  new_page?: boolean | null;
+                  externalLink?: boolean | null;
+                  newPage?: boolean | null;
                   page?: {
                     relationTo: 'pages';
                     value: string | Page;
@@ -341,7 +341,7 @@ export interface SiteSetting {
           id?: string | null;
         }[]
       | null;
-    social_links?:
+    socialLinks?:
       | {
           platform:
             | 'facebook'
@@ -373,7 +373,7 @@ export interface SiteSetting {
  * via the `definition` "BrandLogo".
  */
 export interface BrandLogo {
-  image_url: string | Media;
+  imageUrl: string | Media;
   height?: number | null;
   width?: number | null;
   description?: string | null;
