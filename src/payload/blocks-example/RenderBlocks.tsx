@@ -3,9 +3,9 @@
 import { env } from '@env'
 import { Page } from '@payload-types'
 import { useLivePreview } from '@payloadcms/live-preview-react'
+import config from 'cql.config'
 import React from 'react'
 
-import { blocksJSX } from '@/payload/blocks'
 import { trpc } from '@/trpc/client'
 
 import { Params } from './types'
@@ -19,6 +19,8 @@ const RenderBlocks: React.FC<RenderBlocksProps> = ({
   pageInitialData,
   params,
 }) => {
+  const Blocks = config.blockComponents
+
   // Fetch the page data using path
   const { data: pageData, isLoading: isPageLoading } =
     trpc.page.getPageData.useQuery(
@@ -40,14 +42,10 @@ const RenderBlocks: React.FC<RenderBlocksProps> = ({
     <div>
       {dataToUse?.map((block, index) => {
         // Casting to 'React.FC<any>' to bypass TypeScript error related to 'Params' type incompatibility.
-        const Block = blocksJSX[block.blockType] as React.FC<any>
+        const Block = Blocks[block.blockType]
 
         if (Block) {
-          return (
-            <div key={index} className='bg-base-100 text-base-content'>
-              <Block {...block} params={params} />
-            </div>
-          )
+          return <Block {...block} params={params} key={block.blockName} />
         }
 
         return <h3 key={block.id}>Block does not exist </h3>

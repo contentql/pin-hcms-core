@@ -1,7 +1,6 @@
+import config from 'cql.config'
 import deepMerge from 'deepmerge'
 import { type Field } from 'payload'
-
-import { blocks } from '@/payload/blocks'
 
 import { LayoutField } from './types'
 
@@ -30,6 +29,8 @@ import { LayoutField } from './types'
  * // including a custom label, minimum rows, and admin layout.
  */
 const layoutField: LayoutField = (overrides = {}) => {
+  const blocks = config.blockConfigurations
+
   return deepMerge<Field, Partial<Field>>(
     {
       name: 'layout',

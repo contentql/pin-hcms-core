@@ -13,7 +13,7 @@ const Home: React.FC<HomeProps> = ({ params, ...block }) => {
     <div className='mx-auto max-w-7xl'>
       <section className='relative flex min-h-screen flex-col items-center justify-between py-10'>
         <div className=' hidden w-full items-center justify-between md:flex'>
-          <p className='rounded-rounded-box border-2 border-base-content/10 bg-base-content/20 px-4 py-2'>
+          <p className='rounded-rounded-box border-2 border-base-content/10  px-4 py-2'>
             Get Started with src/payload/blocks
           </p>
           <p className='inline-flex items-center gap-x-2 text-lg font-semibold'>
@@ -27,7 +27,8 @@ const Home: React.FC<HomeProps> = ({ params, ...block }) => {
         </div>
         <div>
           <div className='absolute left-[50%] top-[40%] h-[10%] w-[20%] -translate-x-1/2 rounded-full bg-primary blur-[110px]'></div>
-          <h1 className='w-full max-w-2xl text-center text-3xl font-bold text-gray-900 md:text-4xl lg:text-7xl'>
+
+          <h1 className='w-full max-w-2xl text-center text-3xl font-bold md:text-4xl lg:text-7xl'>
             {`${block?.heading}`}
           </h1>
           <h1 className='mt-3 w-full max-w-2xl text-center text-3xl font-bold text-base-content md:text-4xl lg:text-7xl'>

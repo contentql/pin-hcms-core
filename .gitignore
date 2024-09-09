@@ -35,3 +35,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# remove these things while creating a theme
+cql.config.ts
+/src/payload/blocks

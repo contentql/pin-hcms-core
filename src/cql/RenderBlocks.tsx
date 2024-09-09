@@ -1,9 +1,9 @@
-import config from 'contentql.config'
+import config from 'cql.config'
 
 import { serverClient } from '@/trpc/serverClient'
 
 export default async function RenderBlocks({ route }: { route: string[] }) {
-  const renderBlocks = config.blockElement
+  const renderBlocks = config.blockComponents
 
   const pageData = await serverClient.page.getPageData({
     path: route,
