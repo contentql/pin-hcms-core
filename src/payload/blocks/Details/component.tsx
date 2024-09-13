@@ -3,6 +3,7 @@
 import { Params } from '../types'
 import { Blog, DetailsType } from '@payload-types'
 
+import Comments from '@/components/common/Comments'
 import { trpc } from '@/trpc/client'
 
 import AuthorDetails from './components/AuthorDetails'
@@ -20,7 +21,14 @@ const Details: React.FC<DetailsProps> = ({ params, ...block }) => {
         slug: params?.route.at(-1),
       })
       const { data: blogs } = trpc.blog.getAllBlogs.useQuery()
-      return <BlogDetails blog={blog as Blog} blogsData={blogs as Blog[]} />
+      return (
+        <>
+          <BlogDetails blog={blog as Blog} blogsData={blogs as Blog[]} />
+          <div className='mx-auto max-w-7xl'>
+            {blog?.disqusComments && <Comments page={blog as Blog} />}
+          </div>
+        </>
+      )
     }
 
     case 'tags': {

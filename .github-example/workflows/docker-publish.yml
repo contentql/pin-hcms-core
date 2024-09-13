@@ -91,3 +91,4 @@ jobs:
             RESEND_SENDER_EMAIL=${{ secrets.RESEND_SENDER_EMAIL }}
             RESEND_SENDER_NAME=${{ secrets.RESEND_SENDER_NAME }}
             SUBSCRIPTION_PLAN=${{secrets.SUBSCRIPTION_PLAN}}
+            DISQUS_SHORTNAME=${{secrets.DISQUS_SHORTNAME}}

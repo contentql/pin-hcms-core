@@ -18,6 +18,7 @@ import { Tags } from '@/payload/collections/Tags'
 import { Users } from '@/payload/collections/Users'
 import { COLLECTION_SLUG_PAGE } from '@/payload/collections/constants'
 import { siteSettings } from '@/payload/globals/SiteSettings'
+import { disqus } from '@/plugins/disqus'
 import { scheduleDocPublish } from '@/plugins/schedule-doc-publish'
 import { generateBreadcrumbsUrl } from '@/utils/generateBreadcrumbsUrl'
 import {
@@ -109,6 +110,10 @@ export default buildConfig({
       enabled: true,
       collections: ['blogs'],
       position: 'sidebar',
+    }),
+    disqus({
+      enabled: true,
+      collections: ['blogs'],
     }),
   ],
 
