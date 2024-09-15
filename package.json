@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "@clack/prompts": "^0.7.0",
+    "@contentql/core": "^0.1.4",
     "@hookform/resolvers": "^3.4.0",
     "@payloadcms/db-mongodb": "beta",
     "@payloadcms/email-resend": "beta",
