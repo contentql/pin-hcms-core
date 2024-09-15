@@ -27,8 +27,8 @@ const Home: React.FC<HomeProps> = ({ params, ...block }) => {
         </div>
         <div>
           <div className='absolute left-[50%] top-[40%] h-[10%] w-[20%] -translate-x-1/2 rounded-full bg-primary blur-[110px]'></div>
-          <h1 className='w-full max-w-2xl text-center text-3xl font-bold text-gray-900 md:text-4xl lg:text-7xl'>
-            {`${block?.heading}`}
+          <h1 className='w-full max-w-2xl text-center text-3xl font-bold md:text-4xl lg:text-7xl'>
+            {block?.heading}
           </h1>
           <h1 className='mt-3 w-full max-w-2xl text-center text-3xl font-bold text-base-content md:text-4xl lg:text-7xl'>
             {block?.subHeading}

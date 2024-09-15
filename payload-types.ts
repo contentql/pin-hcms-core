@@ -12,9 +12,9 @@ export interface Config {
   };
   collections: {
     users: User;
-    media: Media;
     tags: Tag;
     blogs: Blog;
+    media: Media;
     pages: Page;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -72,6 +72,21 @@ export interface User {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tags".
+ */
+export interface Tag {
+  id: string;
+  title: string;
+  description: string;
+  tagImage: string | Media;
+  slug?: string | null;
+  color?: ('blue' | 'gray' | 'red' | 'green' | 'yellow' | 'indigo' | 'purple' | 'pink') | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "media".
  */
 export interface Media {
@@ -114,21 +129,6 @@ export interface Media {
       filename?: string | null;
     };
   };
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "tags".
- */
-export interface Tag {
-  id: string;
-  title: string;
-  description: string;
-  tagImage: string | Media;
-  slug?: string | null;
-  color?: ('blue' | 'gray' | 'red' | 'green' | 'yellow' | 'indigo' | 'purple' | 'pink') | null;
-  updatedAt: string;
-  createdAt: string;
-  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
