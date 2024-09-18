@@ -156,11 +156,6 @@ export interface Blog {
   content: {
     [k: string]: unknown;
   }[];
-  meta?: {
-    title?: string | null;
-    description?: string | null;
-    image?: (string | null) | Media;
-  };
   publishOn?: string | null;
   updatedAt: string;
   createdAt: string;
@@ -189,6 +184,11 @@ export interface Page {
         id?: string | null;
       }[]
     | null;
+  meta?: {
+    title?: string | null;
+    description?: string | null;
+    image?: (string | null) | Media;
+  };
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -265,39 +265,41 @@ export interface PayloadMigration {
  */
 export interface SiteSetting {
   id: string;
-  title: string;
-  description: string;
-  faviconUrl: string | Media;
-  ogImageUrl: string | Media;
-  keywords?: string[] | null;
-  header: {
+  general: {
+    title: string;
+    description: string;
+    faviconUrl: string | Media;
+    ogImageUrl: string | Media;
+    keywords?: string[] | null;
+  };
+  navbar: {
     logo: BrandLogo;
     menuLinks?:
       | {
           group?: boolean | null;
           menuLink?: {
-            externalLink?: boolean | null;
-            newPage?: boolean | null;
+            type?: ('reference' | 'custom') | null;
+            newTab?: boolean | null;
+            label: string;
             page?: {
               relationTo: 'pages';
               value: string | Page;
             } | null;
-            label?: string | null;
-            link?: string | null;
+            url?: string | null;
             id?: string | null;
           };
           menuLinkGroup?: {
             groupTitle: string;
             groupLinks?:
               | {
-                  externalLink?: boolean | null;
-                  newPage?: boolean | null;
+                  type?: ('reference' | 'custom') | null;
+                  newTab?: boolean | null;
+                  label: string;
                   page?: {
                     relationTo: 'pages';
                     value: string | Page;
                   } | null;
-                  label?: string | null;
-                  link?: string | null;
+                  url?: string | null;
                   id?: string | null;
                 }[]
               | null;
@@ -312,28 +314,28 @@ export interface SiteSetting {
       | {
           group?: boolean | null;
           menuLink?: {
-            externalLink?: boolean | null;
-            newPage?: boolean | null;
+            type?: ('reference' | 'custom') | null;
+            newTab?: boolean | null;
+            label: string;
             page?: {
               relationTo: 'pages';
               value: string | Page;
             } | null;
-            label?: string | null;
-            link?: string | null;
+            url?: string | null;
             id?: string | null;
           };
           menuLinkGroup?: {
             groupTitle: string;
             groupLinks?:
               | {
-                  externalLink?: boolean | null;
-                  newPage?: boolean | null;
+                  type?: ('reference' | 'custom') | null;
+                  newTab?: boolean | null;
+                  label: string;
                   page?: {
                     relationTo: 'pages';
                     value: string | Page;
                   } | null;
-                  label?: string | null;
-                  link?: string | null;
+                  url?: string | null;
                   id?: string | null;
                 }[]
               | null;
@@ -358,7 +360,8 @@ export interface SiteSetting {
             | 'telegram'
             | 'github'
             | 'medium'
-            | 'quora';
+            | 'quora'
+            | 'discord';
           value: string;
           id?: string | null;
         }[]
