@@ -31,7 +31,7 @@ const SocialIcons: { [key in SocialLinksType['platform']]: IconType | null } = {
 
 const Footer = ({ metadata }: { metadata: SiteSetting }) => {
   const { footer } = metadata
-  const { logo, socialLinks } = footer
+  const { logo, socialLinks, footerLinks } = footer
 
   let logoDetails = {
     url: '',
@@ -45,9 +45,18 @@ const Footer = ({ metadata }: { metadata: SiteSetting }) => {
     }
   } else if (Object.keys(logo).length && typeof logo?.imageUrl !== 'string') {
     logoDetails = {
-      url: logo.imageUrl.sizes?.blogImageSize2?.url!,
+      url: logo.imageUrl?.url!,
       alt: logo.imageUrl?.alt || `${metadata.general?.title} logo`,
     }
+  }
+
+  // if in case image or nav-links are not specified hiding the footer
+  if (
+    !logoDetails.url &&
+    footerLinks?.length === 0 &&
+    socialLinks?.length === 0
+  ) {
+    return null
   }
 
   return (

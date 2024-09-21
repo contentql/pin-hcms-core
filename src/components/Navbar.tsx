@@ -4,6 +4,8 @@ import { HiChevronDown } from 'react-icons/hi'
 
 import { generateMenuLinks } from '@/utils/generateMenuLinks'
 
+import CommandBar from './CommandBar'
+
 const Navbar = ({ metadata }: { metadata: SiteSetting }) => {
   const { navbar } = metadata
   const { logo, menuLinks } = navbar
@@ -13,6 +15,8 @@ const Navbar = ({ metadata }: { metadata: SiteSetting }) => {
     alt: '',
   }
 
+  const navLinks = menuLinks?.length ? generateMenuLinks(menuLinks) : []
+
   if (Object.keys(logo).length && logo?.imageUrl === 'string') {
     logoDetails = {
       url: logo?.imageUrl,
@@ -20,12 +24,15 @@ const Navbar = ({ metadata }: { metadata: SiteSetting }) => {
     }
   } else if (Object.keys(logo).length && typeof logo?.imageUrl !== 'string') {
     logoDetails = {
-      url: logo.imageUrl.sizes?.blogImageSize2?.url!,
+      url: logo.imageUrl?.url!,
       alt: logo.imageUrl?.alt || `${metadata.general?.title} logo`,
     }
   }
 
-  const navLinks = menuLinks?.length ? generateMenuLinks(menuLinks) : []
+  // if in case image or nav-links are not specified hiding the navbar
+  if (!logoDetails.url && navLinks?.length === 0) {
+    return null
+  }
 
   return (
     <header className='fixed left-0 top-0 z-10 w-full bg-slate-700/50 backdrop-blur-lg'>
@@ -34,25 +41,29 @@ const Navbar = ({ metadata }: { metadata: SiteSetting }) => {
           <Image
             src={logoDetails.url}
             alt={logoDetails.alt}
-            width={40}
-            height={40}
+            width={24}
+            height={24}
           />
         )}
 
-        {navLinks?.length > 0 && (
-          <nav>
-            <ul className='flex gap-8'>
-              {navLinks.map(({ label, children, href, newTab, type }) => (
-                <li className='flex list-none items-center gap-1' key={label}>
-                  {label}{' '}
-                  {children && (
-                    <HiChevronDown className='size-4 text-slate-100' />
-                  )}
-                </li>
-              ))}
-            </ul>
-          </nav>
-        )}
+        <div className='flex items-center gap-8'>
+          {navLinks?.length > 0 && (
+            <nav>
+              <ul className='flex gap-8'>
+                {navLinks.map(({ label, children, href, newTab, type }) => (
+                  <li className='flex list-none items-center gap-1' key={label}>
+                    {label}{' '}
+                    {children && (
+                      <HiChevronDown className='size-4 text-slate-100' />
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          )}
+
+          <CommandBar />
+        </div>
       </div>
     </header>
   )

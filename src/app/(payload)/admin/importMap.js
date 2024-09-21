@@ -50,8 +50,9 @@ import { MetaTitleComponent as MetaTitleComponent_48 } from '@payloadcms/plugin-
 import { MetaDescriptionComponent as MetaDescriptionComponent_49 } from '@payloadcms/plugin-seo/client'
 import { MetaImageComponent as MetaImageComponent_50 } from '@payloadcms/plugin-seo/client'
 import { PreviewComponent as PreviewComponent_51 } from '@payloadcms/plugin-seo/client'
-import { default as default_52 } from 'src/payload/style/icons/Icon.tsx'
-import { default as default_53 } from 'src/payload/style/icons/Logo.tsx'
+import { LinkToDoc as LinkToDoc_52 } from '@payloadcms/plugin-search/client'
+import { default as default_53 } from 'src/payload/style/icons/Icon.tsx'
+import { default as default_54 } from 'src/payload/style/icons/Logo.tsx'
 
 export const importMap = {
   "@contentql/core/client#CustomSlugField": CustomSlugField_0,
@@ -106,6 +107,7 @@ export const importMap = {
   "@payloadcms/plugin-seo/client#MetaDescriptionComponent": MetaDescriptionComponent_49,
   "@payloadcms/plugin-seo/client#MetaImageComponent": MetaImageComponent_50,
   "@payloadcms/plugin-seo/client#PreviewComponent": PreviewComponent_51,
-  "/src/payload/style/icons/Icon.tsx#default": default_52,
-  "/src/payload/style/icons/Logo.tsx#default": default_53
+  "@payloadcms/plugin-search/client#LinkToDoc": LinkToDoc_52,
+  "/src/payload/style/icons/Icon.tsx#default": default_53,
+  "/src/payload/style/icons/Logo.tsx#default": default_54
 }
