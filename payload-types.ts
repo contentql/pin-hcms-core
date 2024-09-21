@@ -16,6 +16,7 @@ export interface Config {
     blogs: Blog;
     media: Media;
     pages: Page;
+    search: Search;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
@@ -56,8 +57,8 @@ export interface User {
   id: string;
   displayName?: string | null;
   username?: string | null;
-  imageUrl?: string | null;
-  role?: ('admin' | 'user' | 'author') | null;
+  imageUrl?: (string | null) | Media;
+  role: 'admin' | 'user' | 'author';
   emailVerified?: string | null;
   updatedAt: string;
   createdAt: string;
@@ -69,21 +70,6 @@ export interface User {
   loginAttempts?: number | null;
   lockUntil?: string | null;
   password?: string | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "tags".
- */
-export interface Tag {
-  id: string;
-  title: string;
-  description: string;
-  tagImage: string | Media;
-  slug?: string | null;
-  color?: ('blue' | 'gray' | 'red' | 'green' | 'yellow' | 'indigo' | 'purple' | 'pink') | null;
-  updatedAt: string;
-  createdAt: string;
-  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -132,35 +118,44 @@ export interface Media {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tags".
+ */
+export interface Tag {
+  id: string;
+  tagImage: string | Media;
+  title: string;
+  description: string;
+  slug?: string | null;
+  color?: ('blue' | 'gray' | 'red' | 'green' | 'yellow' | 'indigo' | 'purple' | 'pink') | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "blogs".
  */
 export interface Blog {
   id: string;
-  author?:
-    | {
-        relationTo: 'users';
-        value: string | User;
-      }[]
-    | null;
-  selectBlogSize?: ('1' | '2') | null;
+  blogImage: string | Media;
   title: string;
-  slug?: string | null;
+  description: string;
   tags?:
     | {
         relationTo: 'tags';
         value: string | Tag;
       }[]
     | null;
-  subTitle: string;
-  blogImage: string | Media;
+  author?:
+    | {
+        relationTo: 'users';
+        value: string | User;
+      }[]
+    | null;
   content: {
     [k: string]: unknown;
   }[];
-  meta?: {
-    title?: string | null;
-    description?: string | null;
-    image?: (string | null) | Media;
-  };
+  slug?: string | null;
   publishOn?: string | null;
   updatedAt: string;
   createdAt: string;
@@ -189,6 +184,11 @@ export interface Page {
         id?: string | null;
       }[]
     | null;
+  meta?: {
+    title?: string | null;
+    description?: string | null;
+    image?: (string | null) | Media;
+  };
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -224,6 +224,30 @@ export interface ListType {
   id?: string | null;
   blockName?: string | null;
   blockType: 'List';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "search".
+ */
+export interface Search {
+  id: string;
+  title?: string | null;
+  priority?: number | null;
+  doc:
+    | {
+        relationTo: 'blogs';
+        value: string | Blog;
+      }
+    | {
+        relationTo: 'tags';
+        value: string | Tag;
+      }
+    | {
+        relationTo: 'users';
+        value: string | User;
+      };
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -265,39 +289,41 @@ export interface PayloadMigration {
  */
 export interface SiteSetting {
   id: string;
-  title: string;
-  description: string;
-  faviconUrl: string | Media;
-  ogImageUrl: string | Media;
-  keywords?: string[] | null;
-  header: {
+  general: {
+    title: string;
+    description: string;
+    faviconUrl: string | Media;
+    ogImageUrl: string | Media;
+    keywords?: string[] | null;
+  };
+  navbar: {
     logo: BrandLogo;
     menuLinks?:
       | {
           group?: boolean | null;
           menuLink?: {
-            externalLink?: boolean | null;
-            newPage?: boolean | null;
+            type?: ('reference' | 'custom') | null;
+            newTab?: boolean | null;
+            label: string;
             page?: {
               relationTo: 'pages';
               value: string | Page;
             } | null;
-            label?: string | null;
-            link?: string | null;
+            url?: string | null;
             id?: string | null;
           };
           menuLinkGroup?: {
             groupTitle: string;
             groupLinks?:
               | {
-                  externalLink?: boolean | null;
-                  newPage?: boolean | null;
+                  type?: ('reference' | 'custom') | null;
+                  newTab?: boolean | null;
+                  label: string;
                   page?: {
                     relationTo: 'pages';
                     value: string | Page;
                   } | null;
-                  label?: string | null;
-                  link?: string | null;
+                  url?: string | null;
                   id?: string | null;
                 }[]
               | null;
@@ -312,28 +338,28 @@ export interface SiteSetting {
       | {
           group?: boolean | null;
           menuLink?: {
-            externalLink?: boolean | null;
-            newPage?: boolean | null;
+            type?: ('reference' | 'custom') | null;
+            newTab?: boolean | null;
+            label: string;
             page?: {
               relationTo: 'pages';
               value: string | Page;
             } | null;
-            label?: string | null;
-            link?: string | null;
+            url?: string | null;
             id?: string | null;
           };
           menuLinkGroup?: {
             groupTitle: string;
             groupLinks?:
               | {
-                  externalLink?: boolean | null;
-                  newPage?: boolean | null;
+                  type?: ('reference' | 'custom') | null;
+                  newTab?: boolean | null;
+                  label: string;
                   page?: {
                     relationTo: 'pages';
                     value: string | Page;
                   } | null;
-                  label?: string | null;
-                  link?: string | null;
+                  url?: string | null;
                   id?: string | null;
                 }[]
               | null;
@@ -358,7 +384,8 @@ export interface SiteSetting {
             | 'telegram'
             | 'github'
             | 'medium'
-            | 'quora';
+            | 'quora'
+            | 'discord';
           value: string;
           id?: string | null;
         }[]

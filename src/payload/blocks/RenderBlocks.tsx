@@ -37,17 +37,13 @@ const RenderBlocks: React.FC<RenderBlocksProps> = ({
   const dataToUse = livePreviewData?.layout || pageData?.layout
 
   return (
-    <div>
+    <div className='space-y-20'>
       {dataToUse?.map((block, index) => {
         // Casting to 'React.FC<any>' to bypass TypeScript error related to 'Params' type incompatibility.
         const Block = blocksJSX[block.blockType] as React.FC<any>
 
         if (Block) {
-          return (
-            <div key={index} className='bg-base-100 text-base-content'>
-              <Block {...block} params={params} />
-            </div>
-          )
+          return <Block {...block} params={params} key={index} />
         }
 
         return <h3 key={block.id}>Block does not exist </h3>
