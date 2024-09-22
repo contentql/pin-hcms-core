@@ -58,7 +58,7 @@ export interface User {
   displayName?: string | null;
   username?: string | null;
   imageUrl?: (string | null) | Media;
-  role: 'admin' | 'user' | 'author';
+  role: 'admin' | 'author' | 'user';
   emailVerified?: string | null;
   updatedAt: string;
   createdAt: string;
