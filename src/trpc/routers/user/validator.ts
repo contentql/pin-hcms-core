@@ -1,7 +1,7 @@
 import { z } from 'zod'
 
 export const UpdateProfileImageSchema = z.object({
-  imageUrl: z.string(),
+  avatar: z.string(),
 })
 
 export const UpdateUserSchema = z.object({

@@ -2,12 +2,11 @@ import configPromise from '@payload-config'
 import { getPayloadHMR } from '@payloadcms/next/utilities'
 import { TRPCError } from '@trpc/server'
 import { cookies } from 'next/headers'
-import { z } from 'zod'
 
 import { COLLECTION_SLUG_USER } from '@/payload/collections/constants'
 import { router, userProcedure } from '@/trpc/'
 
-import { UpdateUserSchema } from './validator'
+import { UpdateProfileImageSchema, UpdateUserSchema } from './validator'
 
 const payload = await getPayloadHMR({ config: configPromise })
 
@@ -19,7 +18,7 @@ export const userRouter = router({
   }),
 
   updateUserAvatar: userProcedure
-    .input(z.object({ avatar: z.string() }))
+    .input(UpdateProfileImageSchema)
     .mutation(async ({ input, ctx }) => {
       try {
         const { avatar } = input
