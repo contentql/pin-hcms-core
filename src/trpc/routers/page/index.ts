@@ -1,9 +1,9 @@
+import { collectionSlug } from '@contentql/core'
 import configPromise from '@payload-config'
 import { getPayloadHMR } from '@payloadcms/next/utilities'
 import { TRPCError } from '@trpc/server'
 import { z } from 'zod'
 
-import { COLLECTION_SLUG_PAGE } from '@/payload/collections/constants'
 import { publicProcedure, router } from '@/trpc'
 import { ensurePath } from '@/utils/ensurePath'
 import { matchNextJsPath } from '@/utils/matchNextJsPath'
@@ -27,7 +27,7 @@ export const pageRouter = router({
         if (path !== '/') path = ensurePath(path).replace(/\/$/, '')
 
         const { docs: allPages } = await payload.find({
-          collection: COLLECTION_SLUG_PAGE,
+          collection: collectionSlug.pages,
           depth: 3,
         })
 
