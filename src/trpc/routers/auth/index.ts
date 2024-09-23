@@ -12,6 +12,7 @@ import {
   ResetPasswordSchema,
   SignInSchema,
   SignUpSchema,
+  VerifyEmailSchema,
 } from './validator'
 
 const payload = await getPayloadHMR({
@@ -65,33 +66,13 @@ export const authRouter = router({
             username,
             email,
             password,
+            role: 'user',
           },
           locale: undefined,
           fallbackLocale: undefined,
           overrideAccess: true,
-          disableVerificationEmail: true, // Set to false if you want to enable verification email
+          disableVerificationEmail: false, // Set to true if you want to disable verification email
         })
-
-        const loginResult = await payload.login({
-          collection: 'users',
-          data: {
-            email,
-            password,
-          },
-          depth: 2,
-          locale: undefined,
-          fallbackLocale: undefined,
-          overrideAccess: false,
-          showHiddenFields: true,
-        })
-        const cookieStore = cookies()
-        cookieStore.set('payload-token', loginResult.token || '', {
-          httpOnly: true,
-          secure: process.env.NODE_ENV !== 'development',
-          maxAge: 60 * 60 * 24 * 7,
-          path: '/',
-        })
-
         return result
       } catch (error: any) {
         console.error('Error signing up:', error)
@@ -250,4 +231,33 @@ export const authRouter = router({
   //         })
   //       }
   //     }),
+
+  verifyEmail: publicProcedure
+    .input(VerifyEmailSchema)
+    .query(async ({ input }) => {
+      const { token, userId } = input
+
+      try {
+        const result = await payload.verifyEmail({
+          collection: 'users',
+          token,
+        })
+
+        await payload.update({
+          collection: 'users',
+          id: userId,
+          data: {
+            emailVerified: new Date().toDateString(),
+          },
+        })
+
+        return { success: result }
+      } catch (error: any) {
+        console.error('Error verifying email:', error)
+        throw new TRPCError({
+          code: 'INTERNAL_SERVER_ERROR',
+          message: error.message,
+        })
+      }
+    }),
 })
