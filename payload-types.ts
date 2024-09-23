@@ -58,9 +58,32 @@ export interface User {
   displayName?: string | null;
   username?: string | null;
   imageUrl?: (string | null) | Media;
-  role: 'admin' | 'author' | 'user';
+  role: ('admin' | 'author' | 'user')[];
   emailVerified?: string | null;
   avatar?: string | null;
+  socialLinks?:
+    | {
+        platform:
+          | 'facebook'
+          | 'instagram'
+          | 'twitter'
+          | 'linkedin'
+          | 'youtube'
+          | 'tiktok'
+          | 'pinterest'
+          | 'snapchat'
+          | 'reddit'
+          | 'tumblr'
+          | 'whatsapp'
+          | 'telegram'
+          | 'github'
+          | 'medium'
+          | 'quora'
+          | 'discord';
+        value: string;
+        id?: string | null;
+      }[]
+    | null;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -171,9 +194,9 @@ export interface Blog {
 export interface Page {
   id: string;
   title: string;
+  layout?: (HomeType | DetailsType | ListType)[] | null;
   isHome?: boolean | null;
   isDynamic?: boolean | null;
-  layout?: (HomeType | DetailsType | ListType)[] | null;
   slugMode?: ('generate' | 'custom') | null;
   slug?: string | null;
   pathMode?: ('generate' | 'custom') | null;
