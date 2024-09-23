@@ -1,9 +1,9 @@
+import { collectionSlug } from '@contentql/core'
 import configPromise from '@payload-config'
 import { getPayloadHMR } from '@payloadcms/next/utilities'
 import { TRPCError } from '@trpc/server'
 import { cookies } from 'next/headers'
 
-import { COLLECTION_SLUG_USER } from '@/payload/collections/constants'
 import { router, userProcedure } from '@/trpc/'
 
 import { UpdateProfileImageSchema, UpdateUserSchema } from './validator'
@@ -25,7 +25,7 @@ export const userRouter = router({
 
       try {
         await payload.update({
-          collection: COLLECTION_SLUG_USER,
+          collection: collectionSlug.users,
           id: user.id,
           data: {
             imageUrl: imageUrl,
@@ -57,7 +57,7 @@ export const userRouter = router({
 
       try {
         const updatedUser = await payload.update({
-          collection: COLLECTION_SLUG_USER,
+          collection: collectionSlug.users,
           id: user.id,
           data,
         })
@@ -77,7 +77,7 @@ export const userRouter = router({
 
     try {
       await payload.delete({
-        collection: COLLECTION_SLUG_USER,
+        collection: collectionSlug.users,
         id: user.id,
       })
       const cookieStore = cookies()
