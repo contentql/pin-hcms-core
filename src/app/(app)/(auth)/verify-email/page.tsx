@@ -1,6 +1,7 @@
 import { Metadata } from 'next'
 
 import EmailVerificationView from '@/components/auth/verify-email'
+import withNoAuth from '@/utils/withNoAuth'
 
 interface PageProps {
   searchParams: {
@@ -17,4 +18,4 @@ const VerifyEmail = ({ searchParams }: PageProps) => {
   return <EmailVerificationView searchParams={searchParams} />
 }
 
-export default VerifyEmail
+export default withNoAuth(VerifyEmail)

@@ -21,7 +21,13 @@ export default cqlConfig({
   collections: [
     {
       slug: collectionSlug['users'],
-      fields: [],
+      fields: [
+        {
+          name: 'avatar',
+          type: 'text',
+          label: 'Avatar',
+        },
+      ],
       auth: {
         verify: {
           generateEmailHTML: ({ token, user }) => {
@@ -29,7 +35,7 @@ export default cqlConfig({
               actionLabel: 'verify your account',
               buttonText: 'Verify Account',
               userName: user.username,
-              image: user.imageUrl,
+              image: user.avatar,
               href: `${env.PAYLOAD_URL}/verify-email?token=${token}&id=${user.id}`,
             })
           },

@@ -21,41 +21,37 @@ const Profile = ({ initialUser }: { initialUser: User | undefined }) => {
       ?.join(' ')
   }
 
-  const { mutate: updateProfileMutation } =
-    trpc.user.updateProfileImage.useMutation({
-      onMutate: async data => {
-        // const userQueryKey = getQueryKey(trpc.user.getUser, undefined, 'query')
-        trpcUtils.user.getUser.setData(undefined, oldUser => {
-          if (oldUser) {
-            return { ...oldUser, imageUrl: data.imageUrl }
-          }
-          return oldUser
-        })
-      },
-      onSuccess: async () => {
-        toast.success('Avatar updated successfully!')
-      },
-      onError: async () => {
-        trpcUtils.user.invalidate()
-        toast.error('Avatar failed to update!')
-      },
-      onSettled: async () => {
-        setIsSpinning(false)
-      },
-    })
-
+  const { mutate: updateAvatar } = trpc?.user?.updateUserAvatar.useMutation({
+    onMutate: async data => {
+      trpcUtils.user.getUser.setData(undefined, oldUser => {
+        if (oldUser) {
+          return { ...oldUser, avatar: data.avatar }
+        }
+        return oldUser
+      })
+    },
+    onSuccess: () => {
+      toast.success(`success`)
+    },
+    onError: () => {
+      toast.error(`error`)
+    },
+    onSettled: () => {
+      setIsSpinning(false)
+    },
+  })
   function updateImage() {
     setIsSpinning(true)
     const randomNum = Math.floor(Math.random() * (24 - 1 + 1)) + 1
-    const imageUrl = `/images/avatar/avatar_${randomNum}.jpg`
-    updateProfileMutation({ imageUrl })
+    const avatar = `/images/avatar/avatar_${randomNum}.jpg`
+    updateAvatar({ avatar })
   }
 
   return (
     <div className='max-w-sm rounded p-5 text-center text-base-content/70'>
       <div className='group relative z-0 mx-auto h-[141px] w-[141px]'>
         <div
-          style={{ backgroundImage: `url(${user?.imageUrl})` }}
+          style={{ backgroundImage: `url(${user?.avatar})` }}
           className='z-0 h-full w-full rounded-full bg-base-200 bg-cover bg-center bg-no-repeat transition duration-700 ease-in-out group-hover:blur-sm'></div>
         <button
           onClick={updateImage}

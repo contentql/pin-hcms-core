@@ -2,11 +2,12 @@ import configPromise from '@payload-config'
 import { getPayloadHMR } from '@payloadcms/next/utilities'
 import { TRPCError } from '@trpc/server'
 import { cookies } from 'next/headers'
+import { z } from 'zod'
 
 import { COLLECTION_SLUG_USER } from '@/payload/collections/constants'
 import { router, userProcedure } from '@/trpc/'
 
-import { UpdateProfileImageSchema, UpdateUserSchema } from './validator'
+import { UpdateUserSchema } from './validator'
 
 const payload = await getPayloadHMR({ config: configPromise })
 
@@ -17,28 +18,22 @@ export const userRouter = router({
     return user
   }),
 
-  updateProfileImage: userProcedure
-    .input(UpdateProfileImageSchema)
+  updateUserAvatar: userProcedure
+    .input(z.object({ avatar: z.string() }))
     .mutation(async ({ input, ctx }) => {
-      const { imageUrl } = input
-      const { user } = ctx
-
       try {
+        const { avatar } = input
+        const { user } = ctx
         await payload.update({
-          collection: COLLECTION_SLUG_USER,
+          collection: 'users',
           id: user.id,
           data: {
-            imageUrl: imageUrl,
+            avatar,
           },
         })
-
         return { success: true }
-      } catch (error: any) {
-        console.error('Error updating imageUrl:', error)
-        throw new TRPCError({
-          code: 'INTERNAL_SERVER_ERROR',
-          message: error.message,
-        })
+      } catch (error) {
+        console.log('error while updating avatar', error)
       }
     }),
 

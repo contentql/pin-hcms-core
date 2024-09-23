@@ -55,13 +55,13 @@ const SignUpForm: React.FC = () => {
 
   const onSubmit = async (data: SignUpFormData) => {
     const randomNum = Math.floor(Math.random() * (24 - 1 + 1)) + 1
-    const imageUrl = `/images/avatar/avatar_${randomNum}.jpg`
+    const avatar = `/images/avatar/avatar_${randomNum}.jpg`
 
     const { confirmPassword, ...userData } = data
 
     signUpMutation({
       ...userData,
-      imageUrl,
+      avatar,
     })
   }
 
