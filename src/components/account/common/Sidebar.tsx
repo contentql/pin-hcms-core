@@ -276,7 +276,7 @@ export function SidebarView({ user }: { user: User }) {
                 href: '#',
                 icon: (
                   <Image
-                    src={user?.imageUrl || ''}
+                    src={user?.avatar || ''}
                     className='h-7 w-7 flex-shrink-0 rounded-full'
                     width={50}
                     height={50}

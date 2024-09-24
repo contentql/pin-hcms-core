@@ -17,28 +17,22 @@ export const userRouter = router({
     return user
   }),
 
-  updateProfileImage: userProcedure
+  updateUserAvatar: userProcedure
     .input(UpdateProfileImageSchema)
     .mutation(async ({ input, ctx }) => {
-      const { imageUrl } = input
-      const { user } = ctx
-
       try {
+        const { avatar } = input
+        const { user } = ctx
         await payload.update({
           collection: collectionSlug.users,
           id: user.id,
           data: {
-            imageUrl: imageUrl,
+            avatar,
           },
         })
-
         return { success: true }
-      } catch (error: any) {
-        console.error('Error updating imageUrl:', error)
-        throw new TRPCError({
-          code: 'INTERNAL_SERVER_ERROR',
-          message: error.message,
-        })
+      } catch (error) {
+        console.log('error while updating avatar', error)
       }
     }),
 

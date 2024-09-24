@@ -19,7 +19,7 @@ export const SignUpFormSchema = z
     confirmPassword: z.string().min(6, {
       message: 'Confirm Password must be at least 6 characters long',
     }),
-    imageUrl: z.string().optional(),
+    avatar: z.string().optional(),
   })
   .refine(data => data.password === data.confirmPassword, {
     message: 'Passwords do not match',
