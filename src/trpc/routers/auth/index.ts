@@ -67,7 +67,6 @@ export const authRouter = router({
             email,
             password,
             role: ['user'],
-            avatar,
           },
           locale: undefined,
           fallbackLocale: undefined,

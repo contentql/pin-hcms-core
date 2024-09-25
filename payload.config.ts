@@ -21,13 +21,7 @@ export default cqlConfig({
   collections: [
     {
       slug: collectionSlug['users'],
-      fields: [
-        {
-          name: 'avatar',
-          type: 'text',
-          label: 'Avatar',
-        },
-      ],
+      fields: [],
       auth: {
         verify: {
           generateEmailHTML: ({ token, user }) => {
