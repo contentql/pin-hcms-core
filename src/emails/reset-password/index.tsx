@@ -4,73 +4,62 @@ import {
   Button,
   Column,
   Container,
-  Font,
   Head,
-  Heading,
+  Hr,
+  Html,
   Img,
   Preview,
   Row,
   Section,
-  Tailwind,
   Text,
+  render,
 } from '@react-email/components'
 
 interface ResetPasswordEmailProps {
-  appName?: string
   userFirstName: string
   resetPasswordLink: string
 }
 
 const baseUrl = env.PAYLOAD_URL
 
-const ResetPassword = ({
-  appName = 'Payload',
+const ResetPasswordTemplate = ({
   userFirstName,
   resetPasswordLink,
 }: ResetPasswordEmailProps) => {
   return (
-    <Tailwind>
-      <Head>
-        <Font
-          fontFamily='Inter'
-          fallbackFontFamily='Verdana'
-          webFont={{
-            url: 'https://fonts.gstatic.com/s/inter/v13/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hiJ-Ek-_EeA.woff2',
-            format: 'woff2',
-          }}
-          fontWeight={400}
-          fontStyle='normal'
-        />
-      </Head>
-      <Preview>{appName} Reset your password</Preview>
-      <Body className='bg-zinc-900 text-zinc-300'>
-        <Container className='rounded-lg border border-solid border-white/[0.03] bg-zinc-800 p-12'>
-          <Row>
-            <Column className='w-[80px]'>
-              <Img
-                src={`${baseUrl}/icon.png`}
-                width='60'
-                height='60'
-                alt={`${appName} logo`}
-              />
-            </Column>
-            <Column>
-              <Heading as='h2' className='text-2xl font-bold text-white'>
-                Reset Password
-              </Heading>
-            </Column>
-          </Row>
+    <Html>
+      <Head />
+      <Preview>Reset your password</Preview>
+      <Body style={main}>
+        <Container style={container}>
           <Section>
-            <Text className='dark:text-zinc-300'>Hi {userFirstName},</Text>
-            <Text className='dark:text-zinc-300'>
-              Someone recently requested a password change for your {appName}{' '}
-              account. If this was you, you can set a new password here:
+            <Row style={header}>
+              <Column>
+                <Img
+                  src={`${env.PAYLOAD_URL}/favicon.ico`}
+                  width='40'
+                  height='40'
+                  alt='ContentQL'
+                />
+              </Column>
+              <Column>
+                <Text style={title}>ContentQL</Text>
+              </Column>
+            </Row>
+            <Hr style={hr} />
+          </Section>
+          <Section style={infoSection}>
+            <Text style={infoText}>Hello, {userFirstName}</Text>
+
+            <Text style={infoText}>
+              Someone recently requested a password change for your account. If
+              this was you, you can set a new password here:
             </Text>
-            <Button
-              className='cursor-pointer rounded-md border border-solid border-blue-700 bg-blue-600 px-4 py-2 text-white'
-              href={resetPasswordLink}>
-              Reset password
+
+            <Button href={resetPasswordLink} style={button}>
+              Rest password
             </Button>
+
             <Text className='dark:text-zinc-300'>
               If you don&apos;t want to change your password or didn&apos;t
               request this, just ignore and delete this message.
@@ -78,8 +67,68 @@ const ResetPassword = ({
           </Section>
         </Container>
       </Body>
-    </Tailwind>
+    </Html>
   )
 }
 
-export default ResetPassword
+export default ResetPasswordTemplate
+
+export const ResetPassword = (props: ResetPasswordEmailProps) =>
+  render(<ResetPasswordTemplate {...props} />, { pretty: true })
+
+const infoSection = {
+  marginBottom: '24px',
+}
+
+const header = {
+  display: 'flex',
+  alignItems: 'center',
+  paddingTop: '10px',
+}
+
+const title = {
+  fontSize: '24px',
+  fontWeight: 'bold',
+  color: '#f1f5f9',
+  marginLeft: '10px',
+}
+
+const main = {
+  backgroundColor: '#fff',
+  color: '#f1f5f9',
+  margin: 'auto',
+  padding: '10px 0px',
+  fontFamily:
+    '-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji"',
+}
+
+const container = {
+  maxWidth: '600px',
+  backgroundColor: '#0f172a',
+  margin: 'auto',
+  padding: '24px',
+}
+
+const hr = {
+  borderColor: '#334155',
+  margin: '20px 0',
+}
+
+const infoText = {
+  margin: '0 0 10px 0',
+  fontSize: '14px',
+  color: '#f1f5f9',
+  textAlign: 'left' as const,
+}
+
+const button = {
+  fontSize: '16px',
+  backgroundColor: '#8b5cf6',
+  color: '#f1f5f9',
+  lineHeight: 1.5,
+  borderRadius: '8px',
+  padding: '12px 24px',
+  transition: 'background-color 0.2s ease-in-out',
+  marginTop: '8px',
+  marginBottom: '8px',
+}

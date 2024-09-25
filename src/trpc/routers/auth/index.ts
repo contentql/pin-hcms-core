@@ -1,10 +1,8 @@
-import { env } from '@env'
 import configPromise from '@payload-config'
 import { getPayloadHMR } from '@payloadcms/next/utilities'
 import { TRPCError } from '@trpc/server'
 import { cookies } from 'next/headers'
 
-import { sendResetPasswordEmail } from '@/components/auth/reset-password/ResetPasswordForm/sendResetPasswordEmail'
 import { publicProcedure, router } from '@/trpc'
 
 import {
@@ -147,13 +145,6 @@ export const authRouter = router({
             message: 'User not found',
           })
         }
-
-        const user = users.at(0)
-
-        if (env.RESEND_SENDER_EMAIL && user?.username) {
-          await sendResetPasswordEmail(email, user?.username, token)
-        }
-
         return { success: true, token }
       } catch (error: any) {
         console.error('Error during forgot password:', error)

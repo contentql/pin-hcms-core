@@ -52,7 +52,7 @@ const GenerateResetTokenForm: React.FC = () => {
           {isGeneratePasswordSuccess ? (
             <Alert variant='success' className='mb-12'>
               <AlertDescription>
-                An email verification has been successfully sent.
+                An reset email has been successfully sent.
               </AlertDescription>
             </Alert>
           ) : isGeneratePasswordError ? (

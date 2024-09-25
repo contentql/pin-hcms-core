@@ -3,6 +3,7 @@ import { env } from '@env'
 import path from 'path'
 import { fileURLToPath } from 'url'
 
+import { ResetPassword } from '@/emails/reset-password'
 import { UserAccountVerification } from '@/emails/verify-email'
 import { blocks } from '@/payload/blocks/index'
 
@@ -31,6 +32,14 @@ export default cqlConfig({
               userName: user.username,
               image: user.avatar,
               href: `${env.PAYLOAD_URL}/verify-email?token=${token}&id=${user.id}`,
+            })
+          },
+        },
+        forgotPassword: {
+          generateEmailHTML: args => {
+            return ResetPassword({
+              resetPasswordLink: `${env.PAYLOAD_URL}/reset-password?token=${args?.token}`,
+              userFirstName: args?.user.username,
             })
           },
         },
