@@ -1,6 +1,6 @@
 'use client'
 
-import { User } from '@payload-types'
+import { Media, User } from '@payload-types'
 import { AnimatePresence, motion } from 'framer-motion'
 import Image from 'next/image'
 import Link, { LinkProps } from 'next/link'
@@ -276,7 +276,7 @@ export function SidebarView({ user }: { user: User }) {
                 href: '#',
                 icon: (
                   <Image
-                    src={user?.avatar || ''}
+                    src={(user?.imageUrl as Media)?.url || ''}
                     className='h-7 w-7 flex-shrink-0 rounded-full'
                     width={50}
                     height={50}

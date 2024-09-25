@@ -56,7 +56,9 @@ const ResetPasswordForm: React.FC<Props> = ({ token }) => {
         <div className='text-center'>
           {isResetPasswordSuccess ? (
             <Alert variant='success' className='mb-12'>
-              <AlertDescription>Updated Password ✅</AlertDescription>
+              <AlertDescription>
+                Password Updated✅ redirecting to sign in page
+              </AlertDescription>
             </Alert>
           ) : isResetPasswordError ? (
             <Alert variant='danger' className='mb-12'>
@@ -83,9 +85,7 @@ const ResetPasswordForm: React.FC<Props> = ({ token }) => {
                       Enter password
                     </label>
                     {errors.password && (
-                      <p
-                        className='mt-2 hidden text-xs text-error'
-                        id='email-error'>
+                      <p className='mt-2 text-xs text-error' id='email-error'>
                         {errors.password.message}
                       </p>
                     )}

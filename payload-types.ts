@@ -60,7 +60,6 @@ export interface User {
   imageUrl?: (string | null) | Media;
   role: ('admin' | 'author' | 'user')[];
   emailVerified?: string | null;
-  avatar?: string | null;
   socialLinks?:
     | {
         platform:
