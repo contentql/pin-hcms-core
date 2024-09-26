@@ -9,10 +9,9 @@ export type BlogImageType = {
 
 export const blogsData: BlogDataType[] = [
   {
-    selectBlogSize: '1',
     title: 'Will AI-Enabled Processors Spark a PC Supercycle This Year?',
     slug: 'will-ai-enabled-processors-spark-a-pc-supercycle-this-year',
-    subTitle:
+    description:
       'AI-enabled processors could drive a PC supercycle this year by significantly boosting performance and enabling advanced applications. This innovation is expected to stimulate demand in both consumer and enterprise markets',
     blogImage: '',
     content: [
@@ -184,11 +183,10 @@ export const blogsData: BlogDataType[] = [
     ],
   },
   {
-    selectBlogSize: '2',
     title:
       'I Created a Viral Tech Blog from Scratch and Sold It for Six Figures: My Journey',
     slug: 'i-created-a-viral-tech-blog-from-scratch-and-sold-it-for-six-figures-my-journey',
-    subTitle:
+    description:
       'Creating a viral tech blog from scratch and selling it for six figures involved identifying trending tech topics, producing engaging content, and leveraging SEO and social media strategies to grow the audience.',
     blogImage: '',
     content: [
@@ -310,10 +308,9 @@ export const blogsData: BlogDataType[] = [
     ],
   },
   {
-    selectBlogSize: '1',
     title: 'Standout Tech Products of 2023',
     slug: 'standout-tech-products-of-2023',
-    subTitle:
+    description:
       'Standout tech products of 2023 include the Apple Vision Pro, a cutting-edge mixed reality headset; the Tesla Model S Plaid, featuring advanced autonomous driving capabilities; the Nvidia RTX 4090 GPU, delivering unprecedented graphics performance.',
     blogImage: '',
     content: [
@@ -474,10 +471,9 @@ export const blogsData: BlogDataType[] = [
     ],
   },
   {
-    selectBlogSize: '1',
     title: 'CoordinateHQ Takes the Noise Out of Project Management Systems',
     slug: 'coordinatehq-takes-the-noise-out-of-project-management-systems',
-    subTitle:
+    description:
       'CoordinateHQ streamlines project management by reducing clutter and enhancing focus through intuitive interfaces and intelligent task prioritization. By integrating seamlessly with existing tools and employing AI-driven insights, it simplifies collaboration and boosts team productivity',
     blogImage: '',
     content: [
