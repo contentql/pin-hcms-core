@@ -43,16 +43,17 @@ import { UnorderedListElement as UnorderedListElement_41 } from '@payloadcms/ric
 import { UploadElementButton as UploadElementButton_42 } from '@payloadcms/richtext-slate/client'
 import { UploadElement as UploadElement_43 } from '@payloadcms/richtext-slate/client'
 import { WithUpload as WithUpload_44 } from '@payloadcms/richtext-slate/client'
-import { CustomPublishOnField as CustomPublishOnField_45 } from '@contentql/core/client'
-import { CustomPathField as CustomPathField_46 } from '@contentql/core/client'
+import { CustomPublishOnFieldLabel as CustomPublishOnFieldLabel_45 } from '@contentql/core/client'
+import { CustomPublishOnField as CustomPublishOnField_46 } from '@contentql/core/client'
 import { OverviewComponent as OverviewComponent_47 } from '@payloadcms/plugin-seo/client'
 import { MetaTitleComponent as MetaTitleComponent_48 } from '@payloadcms/plugin-seo/client'
 import { MetaDescriptionComponent as MetaDescriptionComponent_49 } from '@payloadcms/plugin-seo/client'
 import { MetaImageComponent as MetaImageComponent_50 } from '@payloadcms/plugin-seo/client'
 import { PreviewComponent as PreviewComponent_51 } from '@payloadcms/plugin-seo/client'
-import { LinkToDoc as LinkToDoc_52 } from '@payloadcms/plugin-search/client'
-import { default as default_53 } from 'src/payload/style/icons/Icon.tsx'
-import { default as default_54 } from 'src/payload/style/icons/Logo.tsx'
+import { CustomPathField as CustomPathField_52 } from '@contentql/core/client'
+import { LinkToDoc as LinkToDoc_53 } from '@payloadcms/plugin-search/client'
+import { default as default_54 } from 'src/payload/style/icons/Icon.tsx'
+import { default as default_55 } from 'src/payload/style/icons/Logo.tsx'
 
 export const importMap = {
   "@contentql/core/client#CustomSlugField": CustomSlugField_0,
@@ -100,14 +101,15 @@ export const importMap = {
   "@payloadcms/richtext-slate/client#UploadElementButton": UploadElementButton_42,
   "@payloadcms/richtext-slate/client#UploadElement": UploadElement_43,
   "@payloadcms/richtext-slate/client#WithUpload": WithUpload_44,
-  "@contentql/core/client#CustomPublishOnField": CustomPublishOnField_45,
-  "@contentql/core/client#CustomPathField": CustomPathField_46,
+  "@contentql/core/client#CustomPublishOnFieldLabel": CustomPublishOnFieldLabel_45,
+  "@contentql/core/client#CustomPublishOnField": CustomPublishOnField_46,
   "@payloadcms/plugin-seo/client#OverviewComponent": OverviewComponent_47,
   "@payloadcms/plugin-seo/client#MetaTitleComponent": MetaTitleComponent_48,
   "@payloadcms/plugin-seo/client#MetaDescriptionComponent": MetaDescriptionComponent_49,
   "@payloadcms/plugin-seo/client#MetaImageComponent": MetaImageComponent_50,
   "@payloadcms/plugin-seo/client#PreviewComponent": PreviewComponent_51,
-  "@payloadcms/plugin-search/client#LinkToDoc": LinkToDoc_52,
-  "/src/payload/style/icons/Icon.tsx#default": default_53,
-  "/src/payload/style/icons/Logo.tsx#default": default_54
+  "@contentql/core/client#CustomPathField": CustomPathField_52,
+  "@payloadcms/plugin-search/client#LinkToDoc": LinkToDoc_53,
+  "/src/payload/style/icons/Icon.tsx#default": default_54,
+  "/src/payload/style/icons/Logo.tsx#default": default_55
 }
