@@ -1,7 +1,7 @@
 'use client'
 
-import { Params } from '../types'
 import { Blog, DetailsType } from '@payload-types'
+import { Params } from '../types'
 
 import { trpc } from '@/trpc/client'
 
