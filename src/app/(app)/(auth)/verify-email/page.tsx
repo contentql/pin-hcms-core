@@ -4,9 +4,9 @@ import EmailVerificationView from '@/components/auth/verify-email'
 import withNoAuth from '@/utils/withNoAuth'
 
 interface PageProps {
-  searchParams: {
+  searchParams: Promise<{
     [key: string]: string | string[] | undefined
-  }
+  }>
 }
 
 export const metadata: Metadata = {
@@ -14,8 +14,10 @@ export const metadata: Metadata = {
   description: 'This is a verify page',
 }
 
-const VerifyEmail = ({ searchParams }: PageProps) => {
-  return <EmailVerificationView searchParams={searchParams} />
+const VerifyEmail = async ({ searchParams }: PageProps) => {
+  const syncSearchParams = await searchParams
+
+  return <EmailVerificationView searchParams={syncSearchParams} />
 }
 
 export default withNoAuth(VerifyEmail)

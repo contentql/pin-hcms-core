@@ -27,6 +27,7 @@ const SocialIcons: { [key in SocialLinksType['platform']]: IconType | null } = {
   whatsapp: null,
   youtube: FaYoutube,
   discord: null,
+  website: null,
 }
 
 const Footer = ({ metadata }: { metadata: SiteSetting }) => {

@@ -16,7 +16,7 @@ const AccountLayout: React.FC<LayoutProps> = async ({ children }) => {
     draft: false,
   })
 
-  const headersList = headers()
+  const headersList = await headers()
   const user = await getCurrentUser(headersList)
 
   return (
