@@ -12,6 +12,13 @@ table > tbody > tr > td > span {
   max-height: 10px;
 }
 
+.table td {
+  border: none;
+}
+.table th:first-child {
+  padding-bottom: 28px;
+}
+
 html[data-theme='dark'] {
   table > tbody > tr {
     background-color: var(--dr-table-alternative-dark-color);
