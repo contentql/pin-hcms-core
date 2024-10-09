@@ -2,10 +2,11 @@
   position: relative;
   max-width: 100%;
 
-  &__wrap {
-    background: var(--theme-elevation-50);
-    padding: base(1);
-  }
+  //Theme updates
+  // &__wrap {
+  //   background: var(--theme-elevation-50);
+  //   padding: base(1);
+  // }
 
   &__buttons {
     margin: base(-0.25);
@@ -63,4 +64,21 @@ html[data-theme='dark'] {
       }
     }
   }
+}
+.upload-field-card {
+  border-radius: var(--style-radius-m);
+}
+
+.dropzone {
+  border-radius: var(--style-radius-m);
+  padding: calc(var(--base) * 0.5);
+}
+.dropzone .btn {
+  background-color: var(--dr-table-alternative-light-color);
+  border-radius: var(--style-radius-m);
+}
+
+.upload__dropzoneContent__buttons .btn__label {
+  font-weight: 400;
+  color: #808080;
 }
