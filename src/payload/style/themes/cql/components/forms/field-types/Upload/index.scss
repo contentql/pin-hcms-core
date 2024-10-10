@@ -74,11 +74,11 @@ html[data-theme='dark'] {
   padding: calc(var(--base) * 0.5);
 }
 .dropzone .btn {
-  background-color: var(--dr-table-alternative-light-color);
+  background-color: var(--theme-elevation-150);
   border-radius: var(--style-radius-m);
 }
 
 .upload__dropzoneContent__buttons .btn__label {
   font-weight: 400;
-  color: #808080;
+  color: var(--theme-elevation-800);
 }
