@@ -57,7 +57,7 @@ export interface UserAuthOperations {
 export interface Page {
   id: string;
   title: string;
-  layout?: (HomeType | DetailsType | ListType)[] | null;
+  layout?: (HomeType | DetailsType | ListType | DisqusCommentsType)[] | null;
   meta?: {
     title?: string | null;
     description?: string | null;
@@ -113,6 +113,17 @@ export interface ListType {
   id?: string | null;
   blockName?: string | null;
   blockType: 'List';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "DisqusCommentsType".
+ */
+export interface DisqusCommentsType {
+  title?: string | null;
+  shortName: string;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'DisqusComments';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

@@ -16,8 +16,8 @@ importers:
         specifier: ^0.7.0
         version: 0.7.0
       '@contentql/core':
-        specifier: ^0.2.5
-        version: 0.2.5(@aws-sdk/client-sso-oidc@3.666.0(@aws-sdk/client-sts@3.666.0))(graphql@16.9.0)(monaco-editor@0.52.0)(next@15.0.0-canary.173(react-dom@19.0.0-rc-3edc000d-20240926(react@19.0.0-rc-3edc000d-20240926))(react@19.0.0-rc-3edc000d-20240926)(sass@1.77.4))(payload@3.0.0-beta.111(graphql@16.9.0)(monaco-editor@0.52.0)(react-dom@19.0.0-rc-3edc000d-20240926(react@19.0.0-rc-3edc000d-20240926))(react@19.0.0-rc-3edc000d-20240926)(typescript@5.6.2))(react-dom@19.0.0-rc-3edc000d-20240926(react@19.0.0-rc-3edc000d-20240926))(react@19.0.0-rc-3edc000d-20240926)(sharp@0.33.5)(types-react@19.0.0-rc.1)(typescript@5.6.2)
+        specifier: 0.2.6
+        version: 0.2.6(@aws-sdk/client-sso-oidc@3.666.0(@aws-sdk/client-sts@3.666.0))(graphql@16.9.0)(monaco-editor@0.52.0)(next@15.0.0-canary.173(react-dom@19.0.0-rc-3edc000d-20240926(react@19.0.0-rc-3edc000d-20240926))(react@19.0.0-rc-3edc000d-20240926)(sass@1.77.4))(payload@3.0.0-beta.111(graphql@16.9.0)(monaco-editor@0.52.0)(react-dom@19.0.0-rc-3edc000d-20240926(react@19.0.0-rc-3edc000d-20240926))(react@19.0.0-rc-3edc000d-20240926)(typescript@5.6.2))(react-dom@19.0.0-rc-3edc000d-20240926(react@19.0.0-rc-3edc000d-20240926))(react@19.0.0-rc-3edc000d-20240926)(sharp@0.33.5)(types-react@19.0.0-rc.1)(typescript@5.6.2)
       '@hookform/resolvers':
         specifier: ^3.4.0
         version: 3.9.0(react-hook-form@7.53.0(react@19.0.0-rc-3edc000d-20240926))
@@ -44,10 +44,10 @@ importers:
         version: 0.10.1(typescript@5.6.2)(zod@3.23.8)
       '@tanstack/react-query':
         specifier: ^5.32.0
-        version: 5.59.0(react@19.0.0-rc-3edc000d-20240926)
+        version: 5.56.2(react@19.0.0-rc-3edc000d-20240926)
       '@tanstack/react-query-devtools':
         specifier: ^5.32.0
-        version: 5.59.0(@tanstack/react-query@5.59.0(react@19.0.0-rc-3edc000d-20240926))(react@19.0.0-rc-3edc000d-20240926)
+        version: 5.58.0(@tanstack/react-query@5.56.2(react@19.0.0-rc-3edc000d-20240926))(react@19.0.0-rc-3edc000d-20240926)
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^4.3.0
         version: 4.3.0(prettier@3.3.3)
@@ -56,10 +56,10 @@ importers:
         version: 11.0.0-rc.566(@trpc/server@11.0.0-rc.566)
       '@trpc/next':
         specifier: next
-        version: 11.0.0-rc.566(@tanstack/react-query@5.59.0(react@19.0.0-rc-3edc000d-20240926))(@trpc/client@11.0.0-rc.566(@trpc/server@11.0.0-rc.566))(@trpc/react-query@11.0.0-rc.566(@tanstack/react-query@5.59.0(react@19.0.0-rc-3edc000d-20240926))(@trpc/client@11.0.0-rc.566(@trpc/server@11.0.0-rc.566))(@trpc/server@11.0.0-rc.566)(react-dom@19.0.0-rc-3edc000d-20240926(react@19.0.0-rc-3edc000d-20240926))(react@19.0.0-rc-3edc000d-20240926))(@trpc/server@11.0.0-rc.566)(next@15.0.0-canary.173(react-dom@19.0.0-rc-3edc000d-20240926(react@19.0.0-rc-3edc000d-20240926))(react@19.0.0-rc-3edc000d-20240926)(sass@1.77.4))(react-dom@19.0.0-rc-3edc000d-20240926(react@19.0.0-rc-3edc000d-20240926))(react@19.0.0-rc-3edc000d-20240926)
+        version: 11.0.0-rc.566(@tanstack/react-query@5.56.2(react@19.0.0-rc-3edc000d-20240926))(@trpc/client@11.0.0-rc.566(@trpc/server@11.0.0-rc.566))(@trpc/react-query@11.0.0-rc.566(@tanstack/react-query@5.56.2(react@19.0.0-rc-3edc000d-20240926))(@trpc/client@11.0.0-rc.566(@trpc/server@11.0.0-rc.566))(@trpc/server@11.0.0-rc.566)(react-dom@19.0.0-rc-3edc000d-20240926(react@19.0.0-rc-3edc000d-20240926))(react@19.0.0-rc-3edc000d-20240926))(@trpc/server@11.0.0-rc.566)(next@15.0.0-canary.173(react-dom@19.0.0-rc-3edc000d-20240926(react@19.0.0-rc-3edc000d-20240926))(react@19.0.0-rc-3edc000d-20240926)(sass@1.77.4))(react-dom@19.0.0-rc-3edc000d-20240926(react@19.0.0-rc-3edc000d-20240926))(react@19.0.0-rc-3edc000d-20240926)
       '@trpc/react-query':
         specifier: next
-        version: 11.0.0-rc.566(@tanstack/react-query@5.59.0(react@19.0.0-rc-3edc000d-20240926))(@trpc/client@11.0.0-rc.566(@trpc/server@11.0.0-rc.566))(@trpc/server@11.0.0-rc.566)(react-dom@19.0.0-rc-3edc000d-20240926(react@19.0.0-rc-3edc000d-20240926))(react@19.0.0-rc-3edc000d-20240926)
+        version: 11.0.0-rc.566(@tanstack/react-query@5.56.2(react@19.0.0-rc-3edc000d-20240926))(@trpc/client@11.0.0-rc.566(@trpc/server@11.0.0-rc.566))(@trpc/server@11.0.0-rc.566)(react-dom@19.0.0-rc-3edc000d-20240926(react@19.0.0-rc-3edc000d-20240926))(react@19.0.0-rc-3edc000d-20240926)
       '@trpc/server':
         specifier: next
         version: 11.0.0-rc.566
@@ -75,6 +75,9 @@ importers:
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
+      disqus-react:
+        specifier: ^1.1.5
+        version: 1.1.5(react-dom@19.0.0-rc-3edc000d-20240926(react@19.0.0-rc-3edc000d-20240926))(react@19.0.0-rc-3edc000d-20240926)
       execa:
         specifier: ^9.3.1
         version: 9.4.0
@@ -457,8 +460,8 @@ packages:
     bundledDependencies:
       - is-unicode-supported
 
-  '@contentql/core@0.2.5':
-    resolution: {integrity: sha512-/K9z9gb4aVWSQjUDc2Qqfmbk04PtMejZsWUb9LJ8IIwnlIqtcVQ687q8DkBtD8WJzQdATS0fvAsOZI3EGqJtAQ==}
+  '@contentql/core@0.2.6':
+    resolution: {integrity: sha512-EnIxlKXwBCbXEwuq5xzoXBti9g+26Jil3xztSrb2eEnLXjd0YZNSWCRTZzl7apA0L5VRRdroOYjqAuzzPqmXgQ==}
     engines: {node: '>=20 <21'}
     peerDependencies:
       next: 15.0.0-canary.173
@@ -1101,8 +1104,8 @@ packages:
       '@types/react':
         optional: true
 
-  '@radix-ui/react-portal@1.1.2':
-    resolution: {integrity: sha512-WeDYLGPxJb/5EGBoedyJbT0MpoULmwnIPMJMSldkuiMsBAv7N1cRdsTWZWht9vpPOiN3qyiGAtbK2is47/uMFg==}
+  '@radix-ui/react-portal@1.1.1':
+    resolution: {integrity: sha512-A3UtLk85UtqhzFqtoC8Q0KvR2GbXF3mtPgACSazajqq6A41mEQgo53iPzY4i6BwDxlIFqWIhiQ2G729n+2aw/g==}
     peerDependencies:
       '@types/react': npm:types-react@19.0.0-rc.1
       '@types/react-dom': npm:types-react-dom@19.0.0-rc.1
@@ -1521,20 +1524,20 @@ packages:
     peerDependencies:
       tailwindcss: '>=3.0.0 || insiders || >=4.0.0-alpha.20'
 
-  '@tanstack/query-core@5.59.0':
-    resolution: {integrity: sha512-WGD8uIhX6/deH/tkZqPNcRyAhDUqs729bWKoByYHSogcshXfFbppOdTER5+qY7mFvu8KEFJwT0nxr8RfPTVh0Q==}
+  '@tanstack/query-core@5.56.2':
+    resolution: {integrity: sha512-gor0RI3/R5rVV3gXfddh1MM+hgl0Z4G7tj6Xxpq6p2I03NGPaJ8dITY9Gz05zYYb/EJq9vPas/T4wn9EaDPd4Q==}
 
   '@tanstack/query-devtools@5.58.0':
     resolution: {integrity: sha512-iFdQEFXaYYxqgrv63ots+65FGI+tNp5ZS5PdMU1DWisxk3fez5HG3FyVlbUva+RdYS5hSLbxZ9aw3yEs97GNTw==}
 
-  '@tanstack/react-query-devtools@5.59.0':
-    resolution: {integrity: sha512-Kz7577FQGU8qmJxROIT/aOwmkTcxfBqgTP6r1AIvuJxVMVHPkp8eQxWQ7BnfBsy/KTJHiV9vMtRVo1+R1tB3vg==}
+  '@tanstack/react-query-devtools@5.58.0':
+    resolution: {integrity: sha512-qF0xCyBeVuNLygTO1sAl1X4Gv52w52SeaDdbjYQmtTOooUJ3aAVlBEtiRJFfJblWQ9p/UQG8NIcC/65RjX8Jkw==}
     peerDependencies:
-      '@tanstack/react-query': ^5.59.0
+      '@tanstack/react-query': ^5.56.2
       react: ^18 || ^19
 
-  '@tanstack/react-query@5.59.0':
-    resolution: {integrity: sha512-YDXp3OORbYR+8HNQx+lf4F73NoiCmCcSvZvgxE29OifmQFk0sBlO26NWLHpcNERo92tVk3w+JQ53/vkcRUY1hA==}
+  '@tanstack/react-query@5.56.2':
+    resolution: {integrity: sha512-SR0GzHVo6yzhN72pnRhkEFRAHMsUo5ZPzAxfTMvUxFIDVS6W9LYUp6nXW3fcHVdg0ZJl8opSH85jqahvm6DSVg==}
     peerDependencies:
       react: ^18 || ^19
 
@@ -2054,6 +2057,12 @@ packages:
   direction@1.0.4:
     resolution: {integrity: sha512-GYqKi1aH7PJXxdhTeZBFrg8vUBeKXi+cNprXsC1kpJcbcVnV9wBsrOu1cQEdG0WeQwlfHiy3XvnKfIrJ2R0NzQ==}
     hasBin: true
+
+  disqus-react@1.1.5:
+    resolution: {integrity: sha512-9fdG5m6c3wJzlCDLaMheuUagMVj3s5qgUSXdekpCsvzYOKG21AiuOoqyDzA0oXrpPnYzgpnsvPYqZ+i0hJPGZw==}
+    peerDependencies:
+      react: ^15.6.1 || ^16.0.0 || ^17.0.0 || ^18.0.0
+      react-dom: ^15.6.1 || ^16.0.0 || ^17.0.0 || ^18.0.0
 
   dlv@1.1.3:
     resolution: {integrity: sha512-+HlytyjlPKnIG8XuRG8WvmBP8xs8P71y+SKKS6ZXWoEgLuePxtDoUEiH7WkdePWrQ5JBpE6aoVqfZfJUQkjXwA==}
@@ -4868,7 +4877,7 @@ snapshots:
       picocolors: 1.1.0
       sisteransi: 1.0.5
 
-  '@contentql/core@0.2.5(@aws-sdk/client-sso-oidc@3.666.0(@aws-sdk/client-sts@3.666.0))(graphql@16.9.0)(monaco-editor@0.52.0)(next@15.0.0-canary.173(react-dom@19.0.0-rc-3edc000d-20240926(react@19.0.0-rc-3edc000d-20240926))(react@19.0.0-rc-3edc000d-20240926)(sass@1.77.4))(payload@3.0.0-beta.111(graphql@16.9.0)(monaco-editor@0.52.0)(react-dom@19.0.0-rc-3edc000d-20240926(react@19.0.0-rc-3edc000d-20240926))(react@19.0.0-rc-3edc000d-20240926)(typescript@5.6.2))(react-dom@19.0.0-rc-3edc000d-20240926(react@19.0.0-rc-3edc000d-20240926))(react@19.0.0-rc-3edc000d-20240926)(sharp@0.33.5)(types-react@19.0.0-rc.1)(typescript@5.6.2)':
+  '@contentql/core@0.2.6(@aws-sdk/client-sso-oidc@3.666.0(@aws-sdk/client-sts@3.666.0))(graphql@16.9.0)(monaco-editor@0.52.0)(next@15.0.0-canary.173(react-dom@19.0.0-rc-3edc000d-20240926(react@19.0.0-rc-3edc000d-20240926))(react@19.0.0-rc-3edc000d-20240926)(sass@1.77.4))(payload@3.0.0-beta.111(graphql@16.9.0)(monaco-editor@0.52.0)(react-dom@19.0.0-rc-3edc000d-20240926(react@19.0.0-rc-3edc000d-20240926))(react@19.0.0-rc-3edc000d-20240926)(typescript@5.6.2))(react-dom@19.0.0-rc-3edc000d-20240926(react@19.0.0-rc-3edc000d-20240926))(react@19.0.0-rc-3edc000d-20240926)(sharp@0.33.5)(types-react@19.0.0-rc.1)(typescript@5.6.2)':
     dependencies:
       '@payloadcms/db-mongodb': 3.0.0-beta.111(@aws-sdk/client-sso-oidc@3.666.0(@aws-sdk/client-sts@3.666.0))(payload@3.0.0-beta.111(graphql@16.9.0)(monaco-editor@0.52.0)(react-dom@19.0.0-rc-3edc000d-20240926(react@19.0.0-rc-3edc000d-20240926))(react@19.0.0-rc-3edc000d-20240926)(typescript@5.6.2))
       '@payloadcms/email-resend': 3.0.0-beta.111(payload@3.0.0-beta.111(graphql@16.9.0)(monaco-editor@0.52.0)(react-dom@19.0.0-rc-3edc000d-20240926(react@19.0.0-rc-3edc000d-20240926))(react@19.0.0-rc-3edc000d-20240926)(typescript@5.6.2))
@@ -4881,6 +4890,7 @@ snapshots:
       '@payloadcms/ui': 3.0.0-beta.111(monaco-editor@0.52.0)(next@15.0.0-canary.173(react-dom@19.0.0-rc-3edc000d-20240926(react@19.0.0-rc-3edc000d-20240926))(react@19.0.0-rc-3edc000d-20240926)(sass@1.77.4))(payload@3.0.0-beta.111(graphql@16.9.0)(monaco-editor@0.52.0)(react-dom@19.0.0-rc-3edc000d-20240926(react@19.0.0-rc-3edc000d-20240926))(react@19.0.0-rc-3edc000d-20240926)(typescript@5.6.2))(react-dom@19.0.0-rc-3edc000d-20240926(react@19.0.0-rc-3edc000d-20240926))(react@19.0.0-rc-3edc000d-20240926)(types-react@19.0.0-rc.1)(typescript@5.6.2)
       '@trivago/prettier-plugin-sort-imports': 4.3.0(prettier@3.3.3)
       deepmerge: 4.3.1
+      disqus-react: 1.1.5(react-dom@19.0.0-rc-3edc000d-20240926(react@19.0.0-rc-3edc000d-20240926))(react@19.0.0-rc-3edc000d-20240926)
       lodash.uniq: 4.5.0
       next: 15.0.0-canary.173(react-dom@19.0.0-rc-3edc000d-20240926(react@19.0.0-rc-3edc000d-20240926))(react@19.0.0-rc-3edc000d-20240926)(sass@1.77.4)
       node-schedule: 2.1.1
@@ -5527,7 +5537,7 @@ snapshots:
     optionalDependencies:
       '@types/react': types-react@19.0.0-rc.1
 
-  '@radix-ui/react-portal@1.1.2(react-dom@19.0.0-rc-3edc000d-20240926(react@19.0.0-rc-3edc000d-20240926))(react@19.0.0-rc-3edc000d-20240926)(types-react-dom@19.0.0-rc.1)(types-react@19.0.0-rc.1)':
+  '@radix-ui/react-portal@1.1.1(react-dom@19.0.0-rc-3edc000d-20240926(react@19.0.0-rc-3edc000d-20240926))(react@19.0.0-rc-3edc000d-20240926)(types-react-dom@19.0.0-rc.1)(types-react@19.0.0-rc.1)':
     dependencies:
       '@radix-ui/react-primitive': 2.0.0(react-dom@19.0.0-rc-3edc000d-20240926(react@19.0.0-rc-3edc000d-20240926))(react@19.0.0-rc-3edc000d-20240926)(types-react-dom@19.0.0-rc.1)(types-react@19.0.0-rc.1)
       '@radix-ui/react-use-layout-effect': 1.1.0(react@19.0.0-rc-3edc000d-20240926)(types-react@19.0.0-rc.1)
@@ -6048,19 +6058,19 @@ snapshots:
       postcss-selector-parser: 6.0.10
       tailwindcss: 3.4.13
 
-  '@tanstack/query-core@5.59.0': {}
+  '@tanstack/query-core@5.56.2': {}
 
   '@tanstack/query-devtools@5.58.0': {}
 
-  '@tanstack/react-query-devtools@5.59.0(@tanstack/react-query@5.59.0(react@19.0.0-rc-3edc000d-20240926))(react@19.0.0-rc-3edc000d-20240926)':
+  '@tanstack/react-query-devtools@5.58.0(@tanstack/react-query@5.56.2(react@19.0.0-rc-3edc000d-20240926))(react@19.0.0-rc-3edc000d-20240926)':
     dependencies:
       '@tanstack/query-devtools': 5.58.0
-      '@tanstack/react-query': 5.59.0(react@19.0.0-rc-3edc000d-20240926)
+      '@tanstack/react-query': 5.56.2(react@19.0.0-rc-3edc000d-20240926)
       react: 19.0.0-rc-3edc000d-20240926
 
-  '@tanstack/react-query@5.59.0(react@19.0.0-rc-3edc000d-20240926)':
+  '@tanstack/react-query@5.56.2(react@19.0.0-rc-3edc000d-20240926)':
     dependencies:
-      '@tanstack/query-core': 5.59.0
+      '@tanstack/query-core': 5.56.2
       react: 19.0.0-rc-3edc000d-20240926
 
   '@tokenizer/token@0.3.0': {}
@@ -6081,7 +6091,7 @@ snapshots:
     dependencies:
       '@trpc/server': 11.0.0-rc.566
 
-  '@trpc/next@11.0.0-rc.566(@tanstack/react-query@5.59.0(react@19.0.0-rc-3edc000d-20240926))(@trpc/client@11.0.0-rc.566(@trpc/server@11.0.0-rc.566))(@trpc/react-query@11.0.0-rc.566(@tanstack/react-query@5.59.0(react@19.0.0-rc-3edc000d-20240926))(@trpc/client@11.0.0-rc.566(@trpc/server@11.0.0-rc.566))(@trpc/server@11.0.0-rc.566)(react-dom@19.0.0-rc-3edc000d-20240926(react@19.0.0-rc-3edc000d-20240926))(react@19.0.0-rc-3edc000d-20240926))(@trpc/server@11.0.0-rc.566)(next@15.0.0-canary.173(react-dom@19.0.0-rc-3edc000d-20240926(react@19.0.0-rc-3edc000d-20240926))(react@19.0.0-rc-3edc000d-20240926)(sass@1.77.4))(react-dom@19.0.0-rc-3edc000d-20240926(react@19.0.0-rc-3edc000d-20240926))(react@19.0.0-rc-3edc000d-20240926)':
+  '@trpc/next@11.0.0-rc.566(@tanstack/react-query@5.56.2(react@19.0.0-rc-3edc000d-20240926))(@trpc/client@11.0.0-rc.566(@trpc/server@11.0.0-rc.566))(@trpc/react-query@11.0.0-rc.566(@tanstack/react-query@5.56.2(react@19.0.0-rc-3edc000d-20240926))(@trpc/client@11.0.0-rc.566(@trpc/server@11.0.0-rc.566))(@trpc/server@11.0.0-rc.566)(react-dom@19.0.0-rc-3edc000d-20240926(react@19.0.0-rc-3edc000d-20240926))(react@19.0.0-rc-3edc000d-20240926))(@trpc/server@11.0.0-rc.566)(next@15.0.0-canary.173(react-dom@19.0.0-rc-3edc000d-20240926(react@19.0.0-rc-3edc000d-20240926))(react@19.0.0-rc-3edc000d-20240926)(sass@1.77.4))(react-dom@19.0.0-rc-3edc000d-20240926(react@19.0.0-rc-3edc000d-20240926))(react@19.0.0-rc-3edc000d-20240926)':
     dependencies:
       '@trpc/client': 11.0.0-rc.566(@trpc/server@11.0.0-rc.566)
       '@trpc/server': 11.0.0-rc.566
@@ -6089,12 +6099,12 @@ snapshots:
       react: 19.0.0-rc-3edc000d-20240926
       react-dom: 19.0.0-rc-3edc000d-20240926(react@19.0.0-rc-3edc000d-20240926)
     optionalDependencies:
-      '@tanstack/react-query': 5.59.0(react@19.0.0-rc-3edc000d-20240926)
-      '@trpc/react-query': 11.0.0-rc.566(@tanstack/react-query@5.59.0(react@19.0.0-rc-3edc000d-20240926))(@trpc/client@11.0.0-rc.566(@trpc/server@11.0.0-rc.566))(@trpc/server@11.0.0-rc.566)(react-dom@19.0.0-rc-3edc000d-20240926(react@19.0.0-rc-3edc000d-20240926))(react@19.0.0-rc-3edc000d-20240926)
+      '@tanstack/react-query': 5.56.2(react@19.0.0-rc-3edc000d-20240926)
+      '@trpc/react-query': 11.0.0-rc.566(@tanstack/react-query@5.56.2(react@19.0.0-rc-3edc000d-20240926))(@trpc/client@11.0.0-rc.566(@trpc/server@11.0.0-rc.566))(@trpc/server@11.0.0-rc.566)(react-dom@19.0.0-rc-3edc000d-20240926(react@19.0.0-rc-3edc000d-20240926))(react@19.0.0-rc-3edc000d-20240926)
 
-  '@trpc/react-query@11.0.0-rc.566(@tanstack/react-query@5.59.0(react@19.0.0-rc-3edc000d-20240926))(@trpc/client@11.0.0-rc.566(@trpc/server@11.0.0-rc.566))(@trpc/server@11.0.0-rc.566)(react-dom@19.0.0-rc-3edc000d-20240926(react@19.0.0-rc-3edc000d-20240926))(react@19.0.0-rc-3edc000d-20240926)':
+  '@trpc/react-query@11.0.0-rc.566(@tanstack/react-query@5.56.2(react@19.0.0-rc-3edc000d-20240926))(@trpc/client@11.0.0-rc.566(@trpc/server@11.0.0-rc.566))(@trpc/server@11.0.0-rc.566)(react-dom@19.0.0-rc-3edc000d-20240926(react@19.0.0-rc-3edc000d-20240926))(react@19.0.0-rc-3edc000d-20240926)':
     dependencies:
-      '@tanstack/react-query': 5.59.0(react@19.0.0-rc-3edc000d-20240926)
+      '@tanstack/react-query': 5.56.2(react@19.0.0-rc-3edc000d-20240926)
       '@trpc/client': 11.0.0-rc.566(@trpc/server@11.0.0-rc.566)
       '@trpc/server': 11.0.0-rc.566
       react: 19.0.0-rc-3edc000d-20240926
@@ -6594,6 +6604,11 @@ snapshots:
 
   direction@1.0.4: {}
 
+  disqus-react@1.1.5(react-dom@19.0.0-rc-3edc000d-20240926(react@19.0.0-rc-3edc000d-20240926))(react@19.0.0-rc-3edc000d-20240926):
+    dependencies:
+      react: 19.0.0-rc-3edc000d-20240926
+      react-dom: 19.0.0-rc-3edc000d-20240926(react@19.0.0-rc-3edc000d-20240926)
+
   dlv@1.1.3: {}
 
   doctrine@2.1.0:
@@ -6806,7 +6821,7 @@ snapshots:
       eslint: 8.57.1
       eslint-import-resolver-node: 0.3.9
       eslint-import-resolver-typescript: 3.6.3(@typescript-eslint/parser@7.2.0(eslint@8.57.1)(typescript@5.6.2))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.31.0(eslint@8.57.1))(eslint@8.57.1)
-      eslint-plugin-import: 2.31.0(@typescript-eslint/parser@7.2.0(eslint@8.57.1)(typescript@5.6.2))(eslint-import-resolver-typescript@3.6.3)(eslint@8.57.1)
+      eslint-plugin-import: 2.31.0(@typescript-eslint/parser@7.2.0(eslint@8.57.1)(typescript@5.6.2))(eslint-import-resolver-typescript@3.6.3(@typescript-eslint/parser@7.2.0(eslint@8.57.1)(typescript@5.6.2))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.31.0(eslint@8.57.1))(eslint@8.57.1))(eslint@8.57.1)
       eslint-plugin-jsx-a11y: 6.10.0(eslint@8.57.1)
       eslint-plugin-react: 7.37.1(eslint@8.57.1)
       eslint-plugin-react-hooks: 4.6.2(eslint@8.57.1)
@@ -6831,20 +6846,20 @@ snapshots:
       debug: 4.3.7
       enhanced-resolve: 5.17.1
       eslint: 8.57.1
-      eslint-module-utils: 2.12.0(@typescript-eslint/parser@7.2.0(eslint@8.57.1)(typescript@5.6.2))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.3)(eslint@8.57.1)
+      eslint-module-utils: 2.12.0(@typescript-eslint/parser@7.2.0(eslint@8.57.1)(typescript@5.6.2))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.3(@typescript-eslint/parser@7.2.0(eslint@8.57.1)(typescript@5.6.2))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.31.0(eslint@8.57.1))(eslint@8.57.1))(eslint@8.57.1)
       fast-glob: 3.3.2
       get-tsconfig: 4.8.1
       is-bun-module: 1.2.1
       is-glob: 4.0.3
     optionalDependencies:
-      eslint-plugin-import: 2.31.0(@typescript-eslint/parser@7.2.0(eslint@8.57.1)(typescript@5.6.2))(eslint-import-resolver-typescript@3.6.3)(eslint@8.57.1)
+      eslint-plugin-import: 2.31.0(@typescript-eslint/parser@7.2.0(eslint@8.57.1)(typescript@5.6.2))(eslint-import-resolver-typescript@3.6.3(@typescript-eslint/parser@7.2.0(eslint@8.57.1)(typescript@5.6.2))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.31.0(eslint@8.57.1))(eslint@8.57.1))(eslint@8.57.1)
     transitivePeerDependencies:
       - '@typescript-eslint/parser'
       - eslint-import-resolver-node
       - eslint-import-resolver-webpack
       - supports-color
 
-  eslint-module-utils@2.12.0(@typescript-eslint/parser@7.2.0(eslint@8.57.1)(typescript@5.6.2))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.3)(eslint@8.57.1):
+  eslint-module-utils@2.12.0(@typescript-eslint/parser@7.2.0(eslint@8.57.1)(typescript@5.6.2))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.3(@typescript-eslint/parser@7.2.0(eslint@8.57.1)(typescript@5.6.2))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.31.0(eslint@8.57.1))(eslint@8.57.1))(eslint@8.57.1):
     dependencies:
       debug: 3.2.7
     optionalDependencies:
@@ -6855,7 +6870,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-plugin-import@2.31.0(@typescript-eslint/parser@7.2.0(eslint@8.57.1)(typescript@5.6.2))(eslint-import-resolver-typescript@3.6.3)(eslint@8.57.1):
+  eslint-plugin-import@2.31.0(@typescript-eslint/parser@7.2.0(eslint@8.57.1)(typescript@5.6.2))(eslint-import-resolver-typescript@3.6.3(@typescript-eslint/parser@7.2.0(eslint@8.57.1)(typescript@5.6.2))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.31.0(eslint@8.57.1))(eslint@8.57.1))(eslint@8.57.1):
     dependencies:
       '@rtsao/scc': 1.1.0
       array-includes: 3.1.8
@@ -6866,7 +6881,7 @@ snapshots:
       doctrine: 2.1.0
       eslint: 8.57.1
       eslint-import-resolver-node: 0.3.9
-      eslint-module-utils: 2.12.0(@typescript-eslint/parser@7.2.0(eslint@8.57.1)(typescript@5.6.2))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.3)(eslint@8.57.1)
+      eslint-module-utils: 2.12.0(@typescript-eslint/parser@7.2.0(eslint@8.57.1)(typescript@5.6.2))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.3(@typescript-eslint/parser@7.2.0(eslint@8.57.1)(typescript@5.6.2))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.31.0(eslint@8.57.1))(eslint@8.57.1))(eslint@8.57.1)
       hasown: 2.0.2
       is-core-module: 2.15.1
       is-glob: 4.0.3
@@ -7589,7 +7604,7 @@ snapshots:
 
   kbar@0.1.0-beta.45(react-dom@19.0.0-rc-3edc000d-20240926(react@19.0.0-rc-3edc000d-20240926))(react@19.0.0-rc-3edc000d-20240926)(types-react-dom@19.0.0-rc.1)(types-react@19.0.0-rc.1):
     dependencies:
-      '@radix-ui/react-portal': 1.1.2(react-dom@19.0.0-rc-3edc000d-20240926(react@19.0.0-rc-3edc000d-20240926))(react@19.0.0-rc-3edc000d-20240926)(types-react-dom@19.0.0-rc.1)(types-react@19.0.0-rc.1)
+      '@radix-ui/react-portal': 1.1.1(react-dom@19.0.0-rc-3edc000d-20240926(react@19.0.0-rc-3edc000d-20240926))(react@19.0.0-rc-3edc000d-20240926)(types-react-dom@19.0.0-rc.1)(types-react@19.0.0-rc.1)
       fast-equals: 2.0.4
       fuse.js: 6.6.2
       react: 19.0.0-rc-3edc000d-20240926
