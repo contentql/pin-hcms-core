@@ -32,6 +32,14 @@ export const pageRouter = router({
         })
 
         if (!allPages?.length) {
+          throw new TRPCError({
+            code: 'NOT_FOUND',
+            message: 'Pages not found',
+            cause: 'INITIAL_SETUP',
+          })
+        }
+
+        if (!allPages?.length) {
           throw new TRPCError({ code: 'NOT_FOUND', message: 'Page not found' })
         }
 

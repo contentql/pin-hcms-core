@@ -31,7 +31,10 @@ const Page: NextPage<PageProps> = async ({ params }) => {
         params={syncParams}
       />
     )
-  } catch (error) {
+  } catch (error: any) {
+    if (error?.message === 'Pages not found') {
+      return <Welcome />
+    }
     console.error('Error: Page not found')
     notFound()
   }
