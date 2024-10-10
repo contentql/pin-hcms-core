@@ -5,6 +5,7 @@ import { getPayloadHMR } from '@payloadcms/next/utilities'
 import type { Metadata, NextPage } from 'next'
 import { notFound } from 'next/navigation'
 
+import Welcome from '@/components/Welcome'
 import RenderBlocks from '@/payload/blocks/RenderBlocks'
 import { serverClient } from '@/trpc/serverClient'
 
@@ -109,9 +110,12 @@ export async function generateMetadata({
     }
 
     return {}
-  } catch (error) {
-    // in error case returning empty object
-    return {}
+  } catch (error: any) {
+    if (error?.message === 'Pages not found') {
+      return <Welcome />
+    }
+    console.error('Error: Page not found')
+    notFound()
   }
 }
 
