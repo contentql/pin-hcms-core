@@ -2,26 +2,17 @@
 
 import { AnimatePresence, motion } from 'framer-motion'
 import { usePathname, useRouter } from 'next/navigation'
-import { useState } from 'react'
 
 import { trpc } from '@/trpc/client'
 
 const PageNotFound: React.FC = () => {
-  const [loading, setLoading] = useState(false)
-
   const pathname = usePathname()
   const router = useRouter()
 
-  const { mutate: runSeedMutation } = trpc.seed.runSeed.useMutation({
-    onMutate: () => {
-      setLoading(true)
-    },
+  const { mutate: runSeedMutation, isPending } = trpc.seed.runSeed.useMutation({
     onSuccess: () => {
       // ! router.refresh() is not working as expected.
       window.location.reload()
-    },
-    onSettled: () => {
-      setLoading(false)
     },
   })
 
@@ -297,7 +288,7 @@ const PageNotFound: React.FC = () => {
           The stuff you were looking for doesn&apos;t exist
         </p>
         {pathname === '/' ? (
-          loading ? (
+          isPending ? (
             <>
               <div className='absolute left-0 top-0 w-full'>
                 <div className='h-1.5 w-full overflow-hidden bg-pink-100'>

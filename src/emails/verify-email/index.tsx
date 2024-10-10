@@ -1,4 +1,3 @@
-import { env } from '@env'
 import {
   Body,
   Button,
@@ -41,7 +40,7 @@ export const VerifyEmailTemplate = ({
             <Row style={header}>
               <Column>
                 <Img
-                  src={`${env.PAYLOAD_URL}/favicon.ico`}
+                  src={`${process.env.PAYLOAD_URL}/favicon.ico`}
                   width='40'
                   height='40'
                   alt='ContentQL'

@@ -1,4 +1,3 @@
-import { env } from '@env'
 import {
   Body,
   Button,
@@ -20,8 +19,6 @@ interface ResetPasswordEmailProps {
   resetPasswordLink: string
 }
 
-const baseUrl = env.PAYLOAD_URL
-
 const ResetPasswordTemplate = ({
   userFirstName,
   resetPasswordLink,
@@ -36,7 +33,7 @@ const ResetPasswordTemplate = ({
             <Row style={header}>
               <Column>
                 <Img
-                  src={`${env.PAYLOAD_URL}/favicon.ico`}
+                  src={`${process.env.PAYLOAD_URL}/favicon.ico`}
                   width='40'
                   height='40'
                   alt='ContentQL'
