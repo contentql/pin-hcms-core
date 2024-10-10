@@ -480,6 +480,14 @@ export interface SiteSetting {
       | null;
     copyright?: string | null;
   };
+  redirectionLinks?: {
+    blogLink?: (string | null) | Page;
+    authorLink?: (string | null) | Page;
+    tagLink?: (string | null) | Page;
+  };
+  monetization?: {
+    adSenseId?: string | null;
+  };
   updatedAt?: string | null;
   createdAt?: string | null;
 }

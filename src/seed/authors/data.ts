@@ -1,42 +1,59 @@
+import path from 'path'
 import { RequiredDataFromCollectionSlug } from 'payload'
+import process from 'process'
 
 export type AuthorDataType = RequiredDataFromCollectionSlug<'users'>
 
+export const authorsImageList = [
+  {
+    name: 'bolt',
+    imageURL: path.join(process.cwd(), '/public/images/seed/bolt.jpg'),
+    alt: 'Bolt avatar image',
+  },
+  {
+    name: 'sona',
+    imageURL: path.join(process.cwd(), '/public/images/seed/sona.jpg'),
+    alt: 'Sona avatar image',
+  },
+  {
+    name: 'mimi-thian',
+    imageURL: path.join(process.cwd(), '/public/images/seed/mimi-thian.jpg'),
+    alt: 'Mimi thian avatar image',
+  },
+]
+
 export const authorsData: AuthorDataType[] = [
   {
-    username: 'author-1',
-    email: 'author.1@gmail.com',
+    username: 'bolt',
+    email: 'bolt@gmail.com',
     password: 'Welcome@123',
-    role: ['author'],
+    role: ['author', 'user'],
+    displayName: 'Bolt',
+    _verified: true,
+    emailVerified: new Date().toISOString(),
+    socialLinks: [
+      {
+        platform: 'youtube',
+        value: 'https://www.youtube.com/',
+      },
+    ],
   },
   {
-    username: 'author-2',
-    email: 'author.2@gmail.com',
+    username: 'sona',
+    email: 'sona@gmail.com',
     password: 'Welcome@123',
-    role: ['author'],
+    role: ['author', 'user'],
+    displayName: 'Sona',
+    _verified: true,
+    emailVerified: new Date().toISOString(),
   },
   {
-    username: 'author-3',
-    email: 'author.3@gmail.com',
+    displayName: 'Mimi Thian',
+    username: 'mimi-thian',
+    email: 'mimi@gmail.com',
     password: 'Welcome@123',
-    role: ['author'],
-  },
-  {
-    username: 'author-4',
-    email: 'author.4@gmail.com',
-    password: 'Welcome@123',
-    role: ['author'],
-  },
-  {
-    username: 'author-5',
-    email: 'author.5@gmail.com',
-    password: 'Welcome@123',
-    role: ['author'],
-  },
-  {
-    username: 'author-6',
-    email: 'author.6@gmail.com',
-    password: 'Welcome@123',
-    role: ['author'],
+    role: ['author', 'user'],
+    _verified: true,
+    emailVerified: new Date().toISOString(),
   },
 ]

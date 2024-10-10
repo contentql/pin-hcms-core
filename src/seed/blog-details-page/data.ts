@@ -15,4 +15,5 @@ export const blogDetailsPageData: BlogDetailsPageDataType = {
       collectionSlug: 'blogs',
     },
   ],
+  isDynamic: true,
 }

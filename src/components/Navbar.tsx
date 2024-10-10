@@ -1,5 +1,6 @@
 import type { SiteSetting } from '@payload-types'
 import Image from 'next/image'
+import Link from 'next/link'
 import { HiChevronDown } from 'react-icons/hi'
 
 import { generateMenuLinks } from '@/utils/generateMenuLinks'
@@ -38,12 +39,14 @@ const Navbar = ({ metadata }: { metadata: SiteSetting }) => {
     <header className='fixed left-0 top-0 z-10 w-full bg-slate-700/50 backdrop-blur-lg'>
       <div className='container flex h-14 items-center justify-between'>
         {logoDetails.url && (
-          <Image
-            src={logoDetails.url}
-            alt={logoDetails.alt}
-            width={24}
-            height={24}
-          />
+          <Link href='/'>
+            <Image
+              src={logoDetails.url}
+              alt={logoDetails.alt}
+              width={24}
+              height={24}
+            />
+          </Link>
         )}
 
         <div className='flex items-center gap-8'>

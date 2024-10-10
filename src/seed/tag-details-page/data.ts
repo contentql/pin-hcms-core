@@ -15,4 +15,5 @@ export const tagDetailsPageData: TagDetailsPageDataType = {
       collectionSlug: 'tags',
     },
   ],
+  isDynamic: true,
 }

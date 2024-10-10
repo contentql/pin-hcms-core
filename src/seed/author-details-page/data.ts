@@ -15,4 +15,5 @@ export const authorDetailsPageData: authorDetailsPageDataType = {
       collectionSlug: 'users',
     },
   ],
+  isDynamic: true,
 }

@@ -6,11 +6,10 @@ import chalk from 'chalk'
 // ? To load environment variables from a .env file
 import 'dotenv/config'
 // ? For special characters (tick and cross) in output
-import figures from 'figures'
 // ? For MongoDB database operations
 import { MongoClient } from 'mongodb'
 // ? For displaying a loading spinner
-import ora, { Ora } from 'ora'
+import ora from 'ora'
 
 // ! For running shell commands (if needed for additional tasks)
 import { seedAuthorDetailsPage } from '@/seed/author-details-page'
@@ -20,6 +19,7 @@ import { seedBlogDetailsPage } from '@/seed/blog-details-page'
 import { seedBlogs } from '@/seed/blogs'
 import { seedBlogsPage } from '@/seed/blogs-page'
 import { seedHomePage } from '@/seed/home-page'
+import { seedSiteSettings } from '@/seed/site-settings/seed'
 import { seedTagDetailsPage } from '@/seed/tag-details-page'
 import { seedTags } from '@/seed/tags'
 import { seedTagsPage } from '@/seed/tags-page'
@@ -75,42 +75,44 @@ const executeSeeding = async (): Promise<void> => {
   }).start()
 
   try {
-    await seedAndLog('Seeding Home Page', seedHomePage, spinner)
-    await seedAndLog('Seeding Tags Page', seedTagsPage, spinner)
-    await seedAndLog('Seeding Tag Details Page', seedTagDetailsPage, spinner)
-    await seedAndLog('Seeding Tags', seedTags, spinner)
-    await seedAndLog('Seeding Authors Page', seedAuthorsPage, spinner)
-    await seedAndLog(
-      'Seeding Author Details Page',
-      seedAuthorDetailsPage,
+    await seedHomePage(spinner)
+    const tagsPage = await seedTagsPage(spinner)
+    const tagsDetailsPage = await seedTagDetailsPage({
       spinner,
-    )
-    await seedAndLog('Seeding Authors', seedAuthors, spinner)
-    await seedAndLog('Seeding Blogs Page', seedBlogsPage, spinner)
-    await seedAndLog('Seeding Blog Details Page', seedBlogDetailsPage, spinner)
-    await seedAndLog('Seeding Blogs', seedBlogs, spinner)
+      id: tagsPage.id,
+    })
+
+    const authorsPage = await seedAuthorsPage(spinner)
+    const authorDetailsPage = await seedAuthorDetailsPage({
+      spinner,
+      id: authorsPage.id,
+    })
+
+    const blogsPage = await seedBlogsPage(spinner)
+    const blogsDetailsPage = await seedBlogDetailsPage({
+      spinner,
+      id: blogsPage.id,
+    })
+
+    const authors = await seedAuthors(spinner)
+    const tags = await seedTags(spinner)
+    await seedBlogs({ tags, authors, spinner })
+
+    await seedSiteSettings({
+      authorDetailsLink: authorDetailsPage,
+      blogDetailsLink: blogsDetailsPage,
+      tagDetailsLink: tagsDetailsPage,
+      spinner,
+      tagsPages: tagsPage,
+      blogsPage: blogsPage,
+      authorPages: authorsPage,
+    })
   } catch (error) {
     console.error(chalk.red('Error running seeds:'), error)
   } finally {
     spinner.stop()
     console.log(chalk.green('Seeding completed.'))
     process.exit(0)
-  }
-}
-
-// Function to log the seeding process with spinner and messages
-const seedAndLog = async <T>(
-  message: string,
-  seedFunction: () => Promise<any>,
-  spinner: Ora,
-): Promise<void> => {
-  spinner.start(`${message}...`)
-  try {
-    await seedFunction()
-    spinner.succeed(`${message} ${chalk.green(figures.tick)} Done.`)
-  } catch (error) {
-    spinner.fail(`${message} ${chalk.red(figures.cross)} Failed.`)
-    throw error
   }
 }
 

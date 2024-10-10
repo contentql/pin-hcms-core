@@ -79,12 +79,13 @@ export const authorRouter = router({
     )
     .query(async ({ input }) => {
       const { authorName } = input
+
       try {
         const { docs: user } = await payload.find({
           collection: 'users',
           draft: false,
           where: {
-            name: {
+            username: {
               equals: authorName,
             },
           },

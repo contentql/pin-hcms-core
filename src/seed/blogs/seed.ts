@@ -1,93 +1,186 @@
 import configPromise from '@payload-config'
-import { Blog } from '@payload-types'
+import { Tag, User } from '@payload-types'
 import { getPayloadHMR } from '@payloadcms/next/utilities'
+import { Ora } from 'ora'
 
-import { getRandomInt } from '@/utils/getRandomInt'
-
-import { BlogDataType, blogsData, blogsImagesData } from './data'
+import { blogListData, styleGuideBlogData } from './data'
 
 const payload = await getPayloadHMR({ config: configPromise })
 
-const seed = async (): Promise<(string | Blog)[]> => {
-  try {
-    const { docs: tags, totalDocs: totalTags } = await payload.find({
-      collection: 'tags',
-    })
+const createStyleGuideBlog = async ({
+  tags,
+  authors,
+}: {
+  tags: Tag[]
+  authors: User[]
+}) => {
+  const {
+    alt,
+    authorsList,
+    content,
+    contentAlt,
+    contentURL,
+    description,
+    posterURL,
+    slug,
+    tagsList,
+    title,
+  } = styleGuideBlogData
 
-    const { docs: authors, totalDocs: totalAuthors } = await payload.find({
-      collection: 'users',
-    })
+  const posterImage = await payload.create({
+    collection: 'media',
+    data: {
+      alt,
+    },
+    filePath: posterURL,
+  })
 
-    const imagesResult = await Promise.allSettled(
-      blogsImagesData.map(blogImageData =>
-        payload.create({
-          collection: 'media',
-          data: {
-            alt: blogImageData.alt,
-          },
-          filePath: blogImageData.filePath,
-        }),
-      ),
-    )
+  const contentImage = await payload.create({
+    collection: 'media',
+    data: {
+      alt: contentAlt,
+    },
+    filePath: contentURL,
+  })
 
-    const formattedImagesResult = imagesResult
-      .map(result =>
-        result.status === 'fulfilled'
-          ? result.value
-          : `Failed to seed: ${result.reason}`,
-      )
-      .filter(result => typeof result !== 'string')
+  const styleGuideContent = content(contentImage.id)
 
-    const formattedBlogsData: BlogDataType[] = blogsData.map(blogData => {
-      const tagId = tags.at(getRandomInt(0, totalTags - 1))?.id
-      const authorId = authors.at(getRandomInt(0, totalAuthors - 1))?.id
-      const blogImageId = formattedImagesResult.at(
-        getRandomInt(0, formattedImagesResult.length - 1),
-      )?.id
+  const styleGuideAuthors = authorsList
+    .map(authorSlug => {
+      const sameAuthor = authors.find(author => author.username === authorSlug)
 
-      return {
-        ...blogData,
-        blogImage: blogImageId!,
-        author: [
-          {
-            relationTo: 'users',
-            value: authorId!,
-          },
-        ],
-        tags: [
-          {
-            relationTo: 'tags',
-            value: tagId!,
-          },
-        ],
+      if (sameAuthor) {
+        return {
+          relationTo: 'users',
+          value: sameAuthor.id,
+        }
       }
     })
-
-    const results = await Promise.allSettled(
-      formattedBlogsData.map(blogData =>
-        payload.create({
-          collection: 'blogs',
-          data: blogData,
-        }),
-      ),
+    .filter(
+      (author): author is { relationTo: 'users'; value: string } => !!author,
     )
 
-    const formattedResults = results.map(result =>
-      result.status === 'fulfilled'
-        ? result.value
-        : `Failed to seed: ${result.reason}`,
-    )
+  const styleGuideTags = tagsList
+    .map(tagSlug => {
+      const sameTag = tags.find(tag => tag.slug === tagSlug)
 
-    const errors = formattedResults.filter(result => typeof result === 'string')
+      if (sameTag) {
+        return {
+          relationTo: 'tags',
+          value: sameTag.id,
+        }
+      }
+    })
+    .filter((tag): tag is { relationTo: 'tags'; value: string } => !!tag)
 
-    if (errors.length > 0) {
-      throw new Error(
-        `Seeding failed with the following errors:\n${errors.join('\n')}`,
-      )
+  await payload.create({
+    collection: 'blogs',
+    data: {
+      blogImage: posterImage.id,
+      content: styleGuideContent,
+      description,
+      slug,
+      title,
+      author: styleGuideAuthors,
+      tags: styleGuideTags,
+      _status: 'published',
+      meta: {
+        title,
+        description,
+        image: posterImage.id,
+      },
+    },
+  })
+}
+
+const seed = async ({
+  spinner,
+  tags,
+  authors,
+}: {
+  spinner: Ora
+  tags: Tag[]
+  authors: User[]
+}) => {
+  try {
+    // creating blogs which don't have any images in middle
+    for await (const blog of blogListData) {
+      const {
+        alt,
+        imageURL,
+        authorsList,
+        content,
+        description,
+        slug,
+        title,
+        tagsList,
+      } = blog
+
+      const image = await payload.create({
+        collection: 'media',
+        data: {
+          alt,
+        },
+        filePath: imageURL,
+      })
+
+      const filteredAuthors = authorsList
+        .map(authorSlug => {
+          const sameAuthor = authors.find(
+            author => author.username === authorSlug,
+          )
+
+          if (sameAuthor) {
+            return {
+              relationTo: 'users',
+              value: sameAuthor.id,
+            }
+          }
+        })
+        .filter(
+          (author): author is { relationTo: 'users'; value: string } =>
+            !!author,
+        )
+
+      const filteredTags = tagsList
+        .map(tagSlug => {
+          const sameTag = tags.find(tag => tag.slug === tagSlug)
+
+          if (sameTag) {
+            return {
+              relationTo: 'tags',
+              value: sameTag.id,
+            }
+          }
+        })
+        .filter((tag): tag is { relationTo: 'tags'; value: string } => !!tag)
+
+      await payload.create({
+        collection: 'blogs',
+        data: {
+          blogImage: image.id,
+          content,
+          description,
+          slug,
+          title,
+          author: filteredAuthors,
+          tags: filteredTags,
+          _status: 'published',
+          meta: {
+            description,
+            title,
+            image: image.id,
+          },
+        },
+      })
     }
 
-    return formattedResults
+    await createStyleGuideBlog({ authors, tags })
+
+    spinner.succeed(`Successfully created blogs...`)
   } catch (error) {
+    spinner.fail(`Failed creating blogs...`)
+
     throw error
   }
 }
