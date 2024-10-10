@@ -112,7 +112,7 @@ function Welcome() {
   }
 
   return (
-    <div className='relative flex flex-col items-center justify-center overflow-hidden  p-8 text-white'>
+    <div className='relative flex min-h-[calc(100vh-180px)] flex-col items-center justify-center overflow-hidden text-white'>
       <ParallaxBackground />
 
       <motion.div
