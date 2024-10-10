@@ -1,5 +1,6 @@
 import { headers } from 'next/headers'
 
+import Branding from '@/components/Branding'
 import Footer from '@/components/Footer'
 import Navbar from '@/components/Navbar'
 import { serverClient } from '@/trpc/serverClient'
@@ -16,6 +17,7 @@ const MarketingLayout = async ({ children }: { children: React.ReactNode }) => {
       <Navbar metadata={metadata} />
       <main className='container mt-16 flex-grow'>{children}</main>
       <Footer metadata={metadata} />
+      <Branding />
     </div>
   )
 }

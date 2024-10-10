@@ -1,3 +1,4 @@
+import { env } from '@env'
 import configPromise from '@payload-config'
 import { Page as PageType } from '@payload-types'
 import { getPayloadHMR } from '@payloadcms/next/utilities'
@@ -41,73 +42,49 @@ export async function generateMetadata({
 }: {
   params: Promise<{ route: string[] }>
 }): Promise<Metadata | {}> {
-  const parsedParams = await params
+  const { route } = await params
 
   try {
     // calling the site-settings to get all the data
     const pageData = await serverClient.page.getPageData({
-      path: parsedParams?.route,
+      path: route,
     })
+
+    let metadata = pageData.meta
 
     const block = pageData.layout
       ?.filter(block => block.blockType === 'Details')
       ?.at(0)
 
-    if (pageData?.isDynamic && block?.collectionSlug) {
+    // checking for dynamic page
+    if (
+      pageData?.isDynamic &&
+      block?.collectionSlug &&
+      block?.collectionSlug !== 'users'
+    ) {
       const { docs } = await payload.find({
         collection: block?.collectionSlug,
         where: {
           slug: {
-            equals: parsedParams?.route.at(-1),
+            equals: route.at(-1),
           },
         },
+        depth: 5,
       })
+
       const doc = docs?.at(0)
-      const metadata = doc?.meta
 
-      if (metadata) {
-        let ogImage = []
-
-        const title = metadata.title
-        const description = metadata.description
-
-        if (metadata.image && typeof metadata.image !== 'string') {
-          ogImage.push({
-            url: metadata.image.sizes?.blogImageSize2?.url!,
-            height: 630,
-            width: 1200,
-            alt: `og image`,
-          })
-        }
-
-        return {
-          title,
-          description,
-          openGraph: {
-            title,
-            description,
-            images: ogImage,
-          },
-          twitter: {
-            title,
-            description,
-            images: ogImage,
-          },
-        }
-      }
+      metadata = doc?.meta || {}
     }
 
-    const metadata = pageData?.meta
-
-    if (metadata) {
+    if (metadata && Object.keys(metadata).length) {
       let ogImage = []
-
       const title = metadata.title
       const description = metadata.description
 
       if (metadata.image && typeof metadata.image !== 'string') {
         ogImage.push({
-          url: metadata.image.sizes?.blogImageSize2?.url!,
+          url: metadata.image?.url!,
           height: 630,
           width: 1200,
           alt: `og image`,
@@ -117,6 +94,8 @@ export async function generateMetadata({
       return {
         title,
         description,
+        // we're appending the http|https int the env variable
+        metadataBase: env.PAYLOAD_URL as unknown as URL,
         openGraph: {
           title,
           description,
