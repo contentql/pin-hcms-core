@@ -2,11 +2,22 @@
   position: relative;
   max-width: 100%;
 
+  .upload__dropzoneContent__orText {
+    align-self: center;
+  }
+
   //Theme updates
   // &__wrap {
   //   background: var(--theme-elevation-50);
   //   padding: base(1);
   // }
+
+  .upload-relationship-details {
+    .thumbnail {
+      height: 5rem;
+      width: 5rem;
+    }
+  }
 
   &__buttons {
     margin: base(-0.25);

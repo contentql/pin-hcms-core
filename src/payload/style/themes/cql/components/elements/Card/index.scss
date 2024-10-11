@@ -1,6 +1,6 @@
 .card {
   background: var(--theme-elevation-50);
-  padding: base(1.25) $baseline;
+  padding: 1rem $baseline;
   position: relative;
 
   &__title {
@@ -13,7 +13,7 @@
   &__actions {
     position: relative;
     z-index: 2;
-    margin-top: base(0.5);
+    margin-top: base(0.75);
     display: inline-flex;
 
     .btn {

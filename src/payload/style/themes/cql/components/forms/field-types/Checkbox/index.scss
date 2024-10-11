@@ -109,6 +109,14 @@
       }
     }
 
+    .checkbox-input__input {
+      background-color: var(--dr-project-color);
+
+      .checkbox-input__icon {
+        color: var(--theme-elevation-0);
+      }
+    }
+
     .checkbox-input__input,
     & input[type='checkbox'] {
       @include inputShadowActive;

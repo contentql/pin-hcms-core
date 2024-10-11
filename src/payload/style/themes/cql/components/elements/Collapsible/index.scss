@@ -132,6 +132,12 @@
       padding: var(--gutter-h);
     }
   }
+
+  .collapsible__header-wrap {
+    .blocks-field__block-header {
+      width: max-content;
+    }
+  }
 }
 
 html[data-theme='dark'] {

@@ -144,3 +144,18 @@ html[data-theme='dark'] {
     }
   }
 }
+
+.group-field__title {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.field-type__wrap {
+  width: 100%;
+}
+
+.relationship-add-new .relationship-add-new__add-button {
+  border-top-left-radius: var(--style-radius-s) !important;
+  border-bottom-left-radius: var(--style-radius-s) !important;
+  border-width: 2px !important;
+}

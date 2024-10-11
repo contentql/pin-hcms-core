@@ -74,6 +74,8 @@
 @import './components/forms/field-types/Textarea';
 @import './components/forms/field-types/Upload';
 @import './components/forms/field-types/RichText';
+@import './components/custom/logoutButton.scss';
+@import './components/custom/navbar.scss';
 
 // views
 @import './components/views/Account';
@@ -82,3 +84,6 @@
 
 @import './components/custom/table';
 @import './components/custom/buttons';
+
+// layout
+@import './components/custom/sidebar.scss';

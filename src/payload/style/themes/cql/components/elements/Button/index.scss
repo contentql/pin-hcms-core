@@ -16,6 +16,8 @@ a.btn {
   text-align: center;
   color: inherit;
 
+  height: max-content;
+
   transition: var(--dr-fast) var(--dr-transition);
   transition-property: background-color, color;
 
