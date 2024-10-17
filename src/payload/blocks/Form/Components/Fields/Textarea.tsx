@@ -24,8 +24,6 @@ const TextArea: React.FC<
     >
   }
 > = ({ name, label, width, register, required: requiredFromProps, errors }) => {
-  console.log('errors', errors)
-
   return (
     <Width width={width as number}>
       <div className='flex flex-col gap-2'>

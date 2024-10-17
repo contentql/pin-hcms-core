@@ -31,7 +31,6 @@ const CheckboxField: React.FC<
   required: requiredFromProps,
   errors,
 }) => {
-  console.log('default value', defaultValue)
   return (
     <Width width={width as number}>
       <div className='flex flex-row items-start gap-2 text-start'>
