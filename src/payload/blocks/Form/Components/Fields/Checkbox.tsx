@@ -1,5 +1,11 @@
 import Width from '../Width'
-import { FieldErrorsImpl, FieldValues, UseFormRegister } from 'react-hook-form'
+import {
+  FieldErrorsImpl,
+  FieldValues,
+  UseFormRegister,
+  UseFormSetValue,
+  UseFormWatch,
+} from 'react-hook-form'
 
 import { Checkbox } from '@/components/common/Checkbox'
 
@@ -13,6 +19,7 @@ interface CheckboxField {
   blockName?: string | null
   blockType: 'checkbox'
 }
+
 const CheckboxField: React.FC<
   CheckboxField & {
     register: UseFormRegister<FieldValues & any>
@@ -21,6 +28,8 @@ const CheckboxField: React.FC<
         [x: string]: any
       }>
     >
+    setValue: UseFormSetValue<FieldValues>
+    watch: UseFormWatch<FieldValues>
   }
 > = ({
   name,
@@ -30,17 +39,21 @@ const CheckboxField: React.FC<
   register,
   required: requiredFromProps,
   errors,
+  setValue,
+  watch,
 }) => {
+  // Watch the checkbox value
+  const checkedValue = watch(name, defaultValue || false)
+
   return (
     <Width width={width as number}>
       <div className='flex flex-row items-start gap-2 text-start'>
         <Checkbox
           {...register(name, { required: requiredFromProps as boolean })}
-          defaultChecked={defaultValue!}
+          checked={checkedValue}
+          onCheckedChange={(checked: boolean) => setValue(name, checked)}
         />
-        <label className='text-md font-semibold capitalize text-neutral-content/60'>
-          {label}
-        </label>
+        <label className='text-md text-neutral-content/60'>{label}</label>
       </div>
       {requiredFromProps && errors[name] && (
         <p className=' text-md mt-2 text-red-500'>
