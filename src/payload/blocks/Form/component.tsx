@@ -34,7 +34,7 @@ const FormBlock: React.FC<FormProps> = ({ params, ...block }) => {
           // Handle fields that have a 'name' property
           switch (field.blockType) {
             case 'checkbox':
-              acc[field.name] = true
+              acc[field.name] = field.defaultValue || false
               break
             case 'number':
               acc[field.name] = field.defaultValue || null
