@@ -114,11 +114,8 @@ export async function generateMetadata({
 
     return {}
   } catch (error: any) {
-    if (error?.message === 'Pages not found') {
-      return <Welcome />
-    }
-    console.error('Error: Page not found')
-    notFound()
+    console.log('Error', error?.message)
+    return {}
   }
 }
 
