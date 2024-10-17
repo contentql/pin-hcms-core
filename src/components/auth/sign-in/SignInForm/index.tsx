@@ -1,11 +1,11 @@
 'use client'
 
+import { Input, LabelInputContainer } from '../../common/fields'
 import { zodResolver } from '@hookform/resolvers/zod'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
-import { Input, LabelInputContainer } from '../../common/fields'
 
 import { Alert, AlertDescription } from '@/components/common/Alert'
 import { trpc } from '@/trpc/client'
@@ -37,8 +37,13 @@ const SignInForm: React.FC = () => {
     error: signInError,
     isSuccess: isSignInSuccess,
   } = trpc.auth.signIn.useMutation({
-    onSuccess: () => {
-      router.push('/profile')
+    onSuccess: result => {
+      const isAdmin = result?.user?.role?.includes('admin')
+      if (isAdmin) {
+        router.push('/admin')
+      } else {
+        router.push('/profile')
+      }
     },
     onError: () => {
       reset()
