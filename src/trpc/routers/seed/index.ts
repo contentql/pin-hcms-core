@@ -9,6 +9,8 @@ import { seedAuthorsPage } from '@/seed/authors-page'
 import { seedBlogDetailsPage } from '@/seed/blog-details-page'
 import { seedBlogs } from '@/seed/blogs'
 import { seedBlogsPage } from '@/seed/blogs-page'
+import { seedContactPage } from '@/seed/contact-page'
+import { seedForm } from '@/seed/forms'
 import { seedHomePage } from '@/seed/home-page'
 import { seedSiteSettings } from '@/seed/site-settings/seed'
 import { seedTagDetailsPage } from '@/seed/tag-details-page'
@@ -54,10 +56,12 @@ export const seedRouter = router({
         spinner,
         id: authorsPage.id,
       })
+      const forms = await seedForm(spinner)
       const authors = await seedAuthors(spinner)
       const tags = await seedTags(spinner)
 
       await seedBlogs({ tags, authors, spinner })
+      const contactPage = await seedContactPage({ spinner, forms })
       await seedSiteSettings({
         authorDetailsLink: authorsDetailsPage,
         blogDetailsLink: blogsDetailsPage,
@@ -66,6 +70,7 @@ export const seedRouter = router({
         tagsPages: tagsPage,
         blogsPage: blogsPage,
         authorPages: authorsPage,
+        contactPage: contactPage,
       })
 
       return { success: true }
