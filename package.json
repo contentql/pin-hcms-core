@@ -57,7 +57,7 @@
     "lucide-react": "^0.453.0",
     "mongodb": "^6.8.0",
     "next": "15.0.0-canary.173",
-    "nprogress": "^0.2.0",
+    "next-nprogress-bar": "^2.3.14",
     "ora": "^8.0.1",
     "payload": "3.0.0-beta.111",
     "prettier": "^3.3.2",
@@ -77,7 +77,6 @@
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.13",
     "@types/node": "^20.14.9",
-    "@types/nprogress": "^0.2.3",
     "@types/react": "npm:types-react@19.0.0-rc.1",
     "@types/react-dom": "npm:types-react-dom@19.0.0-rc.1",
     "dotenv": "^16.4.5",
