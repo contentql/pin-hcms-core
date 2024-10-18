@@ -49,7 +49,6 @@ const Country: React.FC<
 }) => {
   const { data: countries, isLoading: isCountriesLoading } =
     trpc?.form?.getAllCountries.useQuery()
-  console.log('value')
   return (
     <Width width={width as number}>
       <div className='flex flex-col gap-2'>

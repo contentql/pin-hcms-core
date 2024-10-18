@@ -15,7 +15,6 @@ interface FormProps extends FormType {
   params: Params
 }
 const FormBlock: React.FC<FormProps> = ({ params, ...block }) => {
-  console.log('blocks', block)
   const router = useRouter()
   const {
     title,
@@ -35,7 +34,7 @@ const FormBlock: React.FC<FormProps> = ({ params, ...block }) => {
           // Handle fields that have a 'name' property
           switch (field.blockType) {
             case 'checkbox':
-              acc[field.name] = true
+              acc[field.name] = field.defaultValue || false
               break
             case 'number':
               acc[field.name] = field.defaultValue || null
@@ -100,13 +99,12 @@ const FormBlock: React.FC<FormProps> = ({ params, ...block }) => {
         field: name,
         value: value !== undefined && value !== null ? value.toString() : '',
       }))
-    console.log('form data', data, dataToSend)
     newFormSubmit({ id: id, data: dataToSend })
   }
 
   return (
     <div className='mx-auto max-w-5xl rounded-xl border p-8 shadow-md '>
-      <h4 className='text-2xl font-bold'>{block?.title}</h4>
+      <h4 className='mb-4 text-2xl font-bold'>{block?.title}</h4>
       <form id={block?.id!} onSubmit={handleSubmit(onsubmit)}>
         <div className='flex w-full flex-grow flex-wrap gap-4'>
           {block &&
@@ -133,6 +131,7 @@ const FormBlock: React.FC<FormProps> = ({ params, ...block }) => {
         <div className='mt-8 flex justify-end'>
           <button
             type='submit'
+            disabled={isFormSubmissionPending}
             className='w-full rounded-lg  bg-primary px-5 py-2.5 text-center text-sm font-medium text-base-content hover:bg-primary-focus focus:outline-none focus:ring-4 focus:ring-primary/30 sm:w-auto'>
             {isFormSubmissionPending
               ? 'Submitting...'
