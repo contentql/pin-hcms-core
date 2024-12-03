@@ -16,11 +16,11 @@ export const ContactPageData: ContactPageDataType = {
         value: '',
       },
     },
-    {
-      blockType: 'Newsletter',
-      heading: '🔔 Subscribe to our Newsletter',
-      description: 'Stay up to date with our latest news and products',
-      buttonText: 'Subscribe',
-    },
+    // {
+    //   blockType: 'Newsletter',
+    //   heading: '🔔 Subscribe to our Newsletter',
+    //   description: 'Stay up to date with our latest news and products',
+    //   buttonText: 'Subscribe',
+    // },
   ],
 }

@@ -1,5 +1,6 @@
 'use client'
 
+import { Page } from '@payload-types'
 import { useDebouncedEffect } from '@payloadcms/ui'
 import {
   type Action,
@@ -68,7 +69,10 @@ const CommandBar = () => {
 
                 const link = linkMap[section]
 
-                const slug = link && typeof link !== 'string' ? link.path! : ''
+                const slug =
+                  link && typeof link !== 'string'
+                    ? (link.value as Page).path!
+                    : ''
                 const slicedSlug = slug ? slug.split('[')[0] : ''
 
                 if (slug) {
@@ -111,8 +115,8 @@ const CommandBar = () => {
 
       globalSearchMutate({ search: searchQuery })
     },
-    800,
     [searchQuery],
+    800,
   )
 
   // This hook will update the kbar actions
