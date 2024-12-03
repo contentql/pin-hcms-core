@@ -60,9 +60,9 @@ ENV OPENAPI_KEY=$OPENAPI_KEY
 ENV SUBSCRIPTION_PLAN=$SUBSCRIPTION_PLAN
 
 RUN \
-  if [ -f yarn.lock ]; then yarn run build; \
-  elif [ -f package-lock.json ]; then npm run build; \
-  elif [ -f pnpm-lock.yaml ]; then corepack enable pnpm && pnpm run build; \
+  if [ -f yarn.lock ]; then yarn run ci; \
+  elif [ -f package-lock.json ]; then npm run ci; \
+  elif [ -f pnpm-lock.yaml ]; then corepack enable pnpm && pnpm run ci; \
   else echo "Lockfile not found." && exit 1; \
   fi
 
