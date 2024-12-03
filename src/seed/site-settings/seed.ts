@@ -1,11 +1,11 @@
 import { collectionSlug } from '@contentql/core'
 import configPromise from '@payload-config'
 import { Page } from '@payload-types'
-import { getPayloadHMR } from '@payloadcms/next/utilities'
+import { getPayload } from 'payload'
 import { Ora } from 'ora'
 import path from 'path'
 
-const payload = await getPayloadHMR({ config: configPromise })
+const payload = await getPayload({ config: configPromise })
 
 export const seedSiteSettings = async ({
   authorDetailsLink,

@@ -1,10 +1,10 @@
 import configPromise from '@payload-config'
-import { getPayloadHMR } from '@payloadcms/next/utilities'
+import { getPayload } from 'payload'
 import { Ora } from 'ora'
 
 import { authorsPageData } from './data'
 
-const payload = await getPayloadHMR({ config: configPromise })
+const payload = await getPayload({ config: configPromise })
 
 const seed = async (spinner: Ora) => {
   spinner.start(`Started created authors-page...`)

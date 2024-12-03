@@ -1,7 +1,7 @@
 import { env } from '@env'
 import configPromise from '@payload-config'
 import { Page as PageType } from '@payload-types'
-import { getPayloadHMR } from '@payloadcms/next/utilities'
+import { getPayload } from 'payload'
 import type { Metadata, NextPage } from 'next'
 import { notFound } from 'next/navigation'
 
@@ -9,7 +9,7 @@ import Welcome from '@/components/Welcome'
 import RenderBlocks from '@/payload/blocks/RenderBlocks'
 import { serverClient } from '@/trpc/serverClient'
 
-const payload = await getPayloadHMR({
+const payload = await getPayload({
   config: configPromise,
 })
 
