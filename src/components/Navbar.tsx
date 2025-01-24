@@ -1,6 +1,7 @@
 import type { SiteSetting } from '@payload-types'
 import Image from 'next/image'
 import Link from 'next/link'
+import { Fragment } from 'react'
 import { HiChevronDown } from 'react-icons/hi'
 
 import { generateMenuLinks } from '@/utils/generateMenuLinks'
@@ -53,13 +54,19 @@ const Navbar = ({ metadata }: { metadata: SiteSetting }) => {
           {navLinks?.length > 0 && (
             <nav>
               <ul className='flex gap-8'>
-                {navLinks.map(({ label, children, href, newTab, type }) => (
-                  <li className='flex list-none items-center gap-1' key={label}>
-                    {label}{' '}
-                    {children && (
-                      <HiChevronDown className='size-4 text-slate-100' />
+                {navLinks.map(({ label, children, href = '', newTab }) => (
+                  <Fragment key={label}>
+                    {children ? (
+                      <li className='flex list-none items-center gap-1'>
+                        {label}{' '}
+                        <HiChevronDown className='size-4 text-slate-100' />
+                      </li>
+                    ) : (
+                      <Link href={href} target={newTab ? '_blank' : '_self'}>
+                        {label}
+                      </Link>
                     )}
-                  </li>
+                  </Fragment>
                 ))}
               </ul>
             </nav>

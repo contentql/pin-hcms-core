@@ -1,9 +1,9 @@
 import { collectionSlug } from '@contentql/core'
 import configPromise from '@payload-config'
 import { Page } from '@payload-types'
-import { getPayload } from 'payload'
 import { Ora } from 'ora'
 import path from 'path'
+import { getPayload } from 'payload'
 
 const payload = await getPayload({ config: configPromise })
 
@@ -49,8 +49,8 @@ export const seedSiteSettings = async ({
       slug: collectionSlug['site-settings'],
       data: {
         general: {
-          title: 'Bolt',
-          description: 'A Youtuber & Podcaster theme',
+          title: 'ContentQL Theme',
+          description: 'Welcome to ContentQL',
           keywords: ['ContentQL', 'Payload CMS', 'NextJS'],
           faviconUrl: faviconUrl.id,
           ogImageUrl: ogImageUrl.id,
@@ -58,7 +58,7 @@ export const seedSiteSettings = async ({
         navbar: {
           logo: {
             imageUrl: faviconUrl.id,
-            description: 'Bolt Logo',
+            description: 'ContentQL Logo',
             height: 24,
             width: 24,
           },
@@ -67,7 +67,7 @@ export const seedSiteSettings = async ({
               group: false,
               menuLink: {
                 type: 'reference',
-                label: '💎 Posts',
+                label: 'Posts',
                 page: {
                   relationTo: 'pages',
                   value: blogsPage.id,
@@ -82,7 +82,7 @@ export const seedSiteSettings = async ({
               group: false,
               menuLink: {
                 type: 'reference',
-                label: '👥 Team',
+                label: 'Team',
                 page: {
                   relationTo: 'pages',
                   value: authorPages.id,
@@ -97,7 +97,7 @@ export const seedSiteSettings = async ({
               group: false,
               menuLink: {
                 type: 'reference',
-                label: '☎️ Contact',
+                label: 'Contact',
                 page: {
                   relationTo: 'pages',
                   value: contactPage?.id,
@@ -112,7 +112,7 @@ export const seedSiteSettings = async ({
               group: false,
               menuLink: {
                 type: 'reference',
-                label: '🔮 Categories',
+                label: 'Categories',
                 page: {
                   relationTo: 'pages',
                   value: tagsPages.id,
@@ -129,20 +129,14 @@ export const seedSiteSettings = async ({
                 type: 'reference',
               },
               menuLinkGroup: {
-                groupTitle: '📖 Learn',
+                groupTitle: 'Learn',
 
                 groupLinks: [
                   {
                     type: 'custom',
                     newTab: true,
                     label: 'Youtube',
-                    url: 'https://youtube.com',
-                  },
-                  {
-                    type: 'custom',
-                    newTab: true,
-                    label: 'Twitter',
-                    url: 'https://twitter.com',
+                    url: 'https://www.youtube.com/@contentql',
                   },
                 ],
               },
@@ -164,10 +158,10 @@ export const seedSiteSettings = async ({
           logo: {
             height: 24,
             width: 24,
-            description: 'Youtuber & Podcaster',
+            description: 'Welcome to ContentQL',
             imageUrl: faviconUrl.id,
           },
-          copyright: '© 2024 all rights reserved',
+          copyright: `© ${new Date().getFullYear()} all rights reserved`,
           footerLinks: [
             {
               group: true,
@@ -210,13 +204,7 @@ export const seedSiteSettings = async ({
                     type: 'custom',
                     label: 'Youtube',
                     newTab: true,
-                    url: 'https://youtube.com',
-                  },
-                  {
-                    type: 'custom',
-                    label: 'Podcast',
-                    newTab: true,
-                    url: 'https://spotify.com',
+                    url: 'https://www.youtube.com/@contentql',
                   },
                 ],
               },
@@ -258,7 +246,7 @@ export const seedSiteSettings = async ({
       },
     })
 
-    spinner.succeed('Successfully creating site-settings...')
+    spinner.succeed('Successfully created site-settings...')
     return result
   } catch (error) {
     spinner.fail('Failed creating site-settings...')

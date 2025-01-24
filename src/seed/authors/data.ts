@@ -56,4 +56,13 @@ export const authorsData: AuthorDataType[] = [
     _verified: true,
     emailVerified: new Date().toISOString(),
   },
+  {
+    displayName: 'Admin',
+    username: 'admin',
+    email: 'admin@example.com',
+    password: 'changeme',
+    role: ['author', 'user', 'admin'],
+    _verified: true,
+    emailVerified: new Date().toISOString(),
+  },
 ]
