@@ -1,8 +1,8 @@
 import { collectionSlug } from '@contentql/core'
 import { env } from '@env'
 import configPromise from '@payload-config'
-import { getPayload } from 'payload'
 import { NextResponse } from 'next/server'
+import { getPayload } from 'payload'
 
 export const dynamic = 'force-dynamic'
 
@@ -13,8 +13,6 @@ export async function GET() {
     collection: collectionSlug.pages,
     depth: 0,
   })
-
-  console.log({ pages, payloadURL: env.PAYLOAD_URL })
 
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
     <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">

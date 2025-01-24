@@ -1,9 +1,9 @@
 import { collectionSlug, cqlConfig } from '@contentql/core'
 import { env } from '@env'
-import { mongooseAdapter } from '@payloadcms/db-mongodb'
 import { slateEditor } from '@payloadcms/richtext-slate'
 import path from 'path'
 import { RichTextAdapterProvider } from 'payload'
+import sharp from 'sharp'
 import { fileURLToPath } from 'url'
 
 import { ResetPassword } from '@/emails/reset-password'
@@ -102,9 +102,9 @@ export default cqlConfig({
   baseURL: env.PAYLOAD_URL,
 
   secret: env.PAYLOAD_SECRET,
-  db: mongooseAdapter({
-    url: env.DATABASE_URI,
-  }),
+  dbURI: env.DATABASE_URI,
+  dbSecret: env.DATABASE_SECRET,
+  syncDB: false,
 
   s3: {
     accessKeyId: env.S3_ACCESS_KEY_ID,
@@ -126,4 +126,5 @@ export default cqlConfig({
 
   blocks,
   editor,
+  sharp,
 })
