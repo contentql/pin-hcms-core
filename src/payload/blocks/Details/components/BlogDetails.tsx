@@ -8,10 +8,9 @@ import TabComponent, { TabContent } from '@/payload/blocks/common/Tabs'
 
 interface BlogDetailsProps {
   blog: Blog
-  blogsData: Blog[]
 }
 
-const BlogDetails: React.FC<BlogDetailsProps> = ({ blog, blogsData }) => {
+const BlogDetails: React.FC<BlogDetailsProps> = ({ blog }) => {
   const tabs = [
     {
       title: 'Blog Data',
@@ -20,14 +19,6 @@ const BlogDetails: React.FC<BlogDetailsProps> = ({ blog, blogsData }) => {
       color: '#5d5dff',
       content: TabContent,
       data: blog,
-    },
-    {
-      title: 'Blogs Data',
-      id: 'BlogsData',
-      icon: <LiaBlogSolid size={24} />,
-      color: '#5d5dff',
-      content: TabContent,
-      data: blogsData,
     },
   ]
 

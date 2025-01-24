@@ -1,4 +1,5 @@
 import configPromise from '@payload-config'
+import { TRPCError } from '@trpc/server'
 import { getPayload } from 'payload'
 import { z } from 'zod'
 
@@ -24,6 +25,34 @@ export const blogRouter = router({
     }
   }),
 
+  getPaginatedBlogs: publicProcedure
+    .input(
+      z.object({
+        cursor: z.number().optional(),
+        limit: z.number().optional(),
+      }),
+    )
+    .query(async ({ input }) => {
+      const { cursor = 1, limit = 10 } = input // Default page to 1 if not provided
+
+      try {
+        const { docs, totalDocs } = await payload.find({
+          collection: 'blogs',
+          depth: 5,
+          draft: false,
+          limit,
+          page: cursor,
+        })
+
+        const hasNextPage = totalDocs > cursor * limit
+
+        return { docs, nextCursor: hasNextPage ? cursor + 1 : undefined }
+      } catch (error: any) {
+        console.log(error)
+        throw new Error(error.message)
+      }
+    }),
+
   getBlogBySlug: publicProcedure
     .input(
       z.object({
@@ -42,7 +71,13 @@ export const blogRouter = router({
           },
         })
 
-        return docs.at(0)
+        const blog = docs.at(0)
+
+        if (!blog) {
+          throw new TRPCError({ message: 'No blog found!', code: 'NOT_FOUND' })
+        }
+
+        return blog
       } catch (error: any) {
         console.log(error)
         throw new Error(error.message)

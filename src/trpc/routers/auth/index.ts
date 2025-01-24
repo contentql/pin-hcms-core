@@ -1,7 +1,7 @@
 import configPromise from '@payload-config'
-import { getPayload } from 'payload'
 import { TRPCError } from '@trpc/server'
 import { cookies } from 'next/headers'
+import { getPayload } from 'payload'
 
 import { publicProcedure, router } from '@/trpc'
 
@@ -21,7 +21,7 @@ export const authRouter = router({
   signUp: publicProcedure
     .input(SignUpSchema)
     .mutation(async ({ input, ctx }) => {
-      const { username, email, password, avatar } = input
+      const { username, email, password } = input
 
       try {
         // Check if email already exists
@@ -54,7 +54,7 @@ export const authRouter = router({
         if (usernameExists.totalDocs > 0) {
           throw new TRPCError({
             code: 'CONFLICT',
-            message: `${username} already exists`,
+            message: `username ${username} already exists`,
           })
         }
 
@@ -69,8 +69,9 @@ export const authRouter = router({
           locale: undefined,
           fallbackLocale: undefined,
           overrideAccess: true,
-          disableVerificationEmail: false, // Set to true if you want to disable verification email
+          disableVerificationEmail: false, // Set to false if you want to enable verification email
         })
+
         return result
       } catch (error: any) {
         console.error('Error signing up:', error)
@@ -99,6 +100,7 @@ export const authRouter = router({
           overrideAccess: false,
           showHiddenFields: true,
         })
+
         const cookieStore = await cookies()
         cookieStore.set('payload-token', result.token || '', {
           httpOnly: true,
@@ -130,7 +132,7 @@ export const authRouter = router({
           },
         })
 
-        const { docs: users, totalDocs: usersCount } = await payload.find({
+        const { totalDocs: usersCount } = await payload.find({
           collection: 'users',
           where: {
             email: {
@@ -145,6 +147,7 @@ export const authRouter = router({
             message: 'User not found',
           })
         }
+
         return { success: true, token }
       } catch (error: any) {
         console.error('Error during forgot password:', error)

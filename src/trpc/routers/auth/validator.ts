@@ -10,14 +10,14 @@ export const SignUpSchema = z.object({
     .string()
     .min(1, { message: 'Password is required' })
     .min(6, { message: 'Password must be at least 6 characters long' }),
-  avatar: z.string().optional(),
+  imageUrl: z.string().optional(),
 })
 
 export const SignInSchema = z.object({
   email: z
     .string()
-    .min(1, { message: 'E-mail is required' })
-    .email({ message: 'E-mail is invalid' }),
+    .min(1, { message: 'Email is required' })
+    .email({ message: 'Email is invalid' }),
   password: z
     .string()
     .min(1, { message: 'Password is required' })

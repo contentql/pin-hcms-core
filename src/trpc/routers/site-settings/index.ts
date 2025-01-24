@@ -17,7 +17,7 @@ export const siteSettingsRouter = router({
 
       return data
     } catch (error: any) {
-      console.log(error)
+      console.log({ error })
       throw new Error(error.message)
     }
   }),

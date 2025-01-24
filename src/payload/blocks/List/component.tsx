@@ -1,10 +1,9 @@
-'use client'
-
 import { Params } from '../types'
-import { Blog, DetailsType, Tag } from '@payload-types'
+import configPromise from '@payload-config'
+import { DetailsType } from '@payload-types'
+import { unstable_cache } from 'next/cache'
+import { getPayload } from 'payload'
 import React from 'react'
-
-import { trpc } from '@/trpc/client'
 
 import AuthorsList from './components/AuthorsList'
 import BlogsList from './components/BlogsList'
@@ -14,20 +13,59 @@ interface ListProps extends DetailsType {
   params: Params
 }
 
-const List: React.FC<ListProps> = ({ params, ...block }) => {
+const List: React.FC<ListProps> = async ({ params, ...block }) => {
+  const payload = await getPayload({
+    config: configPromise,
+  })
+
   switch (block?.collectionSlug) {
     case 'blogs': {
-      const { data: blogs } = trpc.blog.getAllBlogs.useQuery()
-      return <BlogsList blogs={blogs as Blog[]} />
+      const { docs: blogs = [] } = await unstable_cache(
+        async () =>
+          await payload.find({
+            collection: 'blogs',
+            depth: 5,
+            draft: false,
+            limit: 1000,
+          }),
+        ['list', 'blogs'],
+        { tags: ['list-blogs'] },
+      )()
+
+      return <BlogsList blogs={blogs} />
     }
 
     case 'tags': {
-      const { data: tags } = trpc.tag.getAllTags.useQuery()
-      return <TagsList tags={tags as Tag[]} />
+      const { docs: tags = [] } = await unstable_cache(
+        async () =>
+          await payload.find({
+            collection: 'tags',
+            depth: 5,
+            draft: false,
+            limit: 1000,
+          }),
+        ['list', 'tags'],
+        { tags: ['list-tags'] },
+      )()
+
+      return <TagsList tags={tags} />
     }
 
     case 'users': {
-      const { data: authors } = trpc.author.getAllAuthorsWithCount.useQuery()
+      const { docs: authors = [] } = await unstable_cache(
+        async () =>
+          await payload.find({
+            collection: 'users',
+            where: {
+              role: {
+                equals: 'author',
+              },
+            },
+            limit: 1000,
+          }),
+        ['list', 'authors'],
+        { tags: ['list-authors'] },
+      )()
 
       return <AuthorsList authors={authors} />
     }

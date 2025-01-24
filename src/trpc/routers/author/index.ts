@@ -8,7 +8,7 @@ import { publicProcedure, router } from '@/trpc'
 const payload = await getPayload({ config: configPromise })
 
 export const authorRouter = router({
-  getAllAuthorsWithCount: publicProcedure.query(async () => {
+  getAllAuthors: publicProcedure.query(async () => {
     try {
       const { docs: authors } = await payload.find({
         collection: 'users',
@@ -19,30 +19,60 @@ export const authorRouter = router({
         },
       })
 
-      //   const { docs: blogs } = await payload.find({
-      //     collection: 'blogs',
-      //   })
-
-      const authorBlogCounts = await Promise.all(
-        authors.map(async author => {
-          const count = await payload.count({
-            collection: 'blogs',
-            where: {
-              'author.value': {
-                equals: author.id,
-              },
-            },
-          })
-          return { ...author, ...count }
-        }),
-      )
-
-      return authorBlogCounts
+      return authors
     } catch (error: any) {
       console.error(error)
       throw new Error(error.message)
     }
   }),
+
+  getAllAuthorsWithCount: publicProcedure
+    .input(
+      z.object({
+        cursor: z.number().optional(),
+        limit: z.number().optional(),
+      }),
+    )
+    .query(async ({ input }) => {
+      const { cursor = 1, limit = 10 } = input // Default page to 1 if not provided
+
+      try {
+        const { docs: authors, totalDocs } = await payload.find({
+          collection: 'users',
+          where: {
+            role: {
+              equals: 'author',
+            },
+          },
+          limit: limit,
+          page: cursor,
+        })
+
+        const authorBlogCounts = await Promise.all(
+          authors.map(async author => {
+            const count = await payload.count({
+              collection: 'blogs',
+              where: {
+                'author.value': {
+                  equals: author.id,
+                },
+              },
+            })
+            return { ...author, ...count }
+          }),
+        )
+
+        const hasNextPage = totalDocs > cursor * limit
+
+        return {
+          docs: authorBlogCounts,
+          nextCursor: hasNextPage ? cursor + 1 : undefined,
+        }
+      } catch (error: any) {
+        console.error(error)
+        throw new Error(error.message)
+      }
+    }),
 
   getBlogsByAuthorName: publicProcedure
     .input(
@@ -79,7 +109,6 @@ export const authorRouter = router({
     )
     .query(async ({ input }) => {
       const { authorName } = input
-
       try {
         const { docs: user } = await payload.find({
           collection: 'users',
@@ -110,7 +139,7 @@ export const authorRouter = router({
           collection: 'users',
           draft: false,
           where: {
-            name: {
+            username: {
               equals: authorName,
             },
           },
@@ -160,7 +189,7 @@ export const authorRouter = router({
           collection: 'users',
           draft: false,
           where: {
-            name: {
+            username: {
               equals: authorName,
             },
           },

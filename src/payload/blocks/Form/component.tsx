@@ -1,40 +1,45 @@
 'use client'
 
-import { Params } from '../types'
-import { Form, FormType } from '@payload-types'
+import { FormSubmission, Form as FormType } from '@payload-types'
+import { useMutation } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
 import React from 'react'
-import { useForm } from 'react-hook-form'
+import { FormProvider, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 
-import { trpc } from '@/trpc/client'
+import uploadMedia from '@/utils/uploadMedia'
 
-import { fieldsJsx } from './Components/Fields'
+import { fieldsJsx } from './Components/Fields/index'
 
-interface FormProps extends FormType {
-  params: Params
+export interface Data {
+  [key: string]: string | File[]
 }
-const FormBlock: React.FC<FormProps> = ({ params, ...block }) => {
+
+const Form = ({
+  form,
+  className = '',
+}: {
+  form: FormType
+  className?: string
+}) => {
   const router = useRouter()
   const {
-    title,
     fields,
-    emails,
+    confirmationType,
     redirect,
-    id,
     confirmationMessage,
     submitButtonLabel,
-    confirmationType,
-  } = block?.form?.value as Form
+    id,
+  } = form
 
-  const buildInitialFormState = (fields: Form['fields']) => {
+  const buildInitialFormState = () => {
     return fields?.reduce(
       (acc, field) => {
         if ('name' in field && field.name) {
           // Handle fields that have a 'name' property
           switch (field.blockType) {
             case 'checkbox':
-              acc[field.name] = field.defaultValue || false
+              acc[field.name] = field?.defaultValue || false
               break
             case 'number':
               acc[field.name] = field.defaultValue || null
@@ -50,6 +55,9 @@ const FormBlock: React.FC<FormProps> = ({ params, ...block }) => {
             case 'email':
               acc[field.name] = ''
               break
+            case 'upload':
+              acc[field.name] = null
+              break
             default:
               acc[field] = ''
               break
@@ -64,7 +72,7 @@ const FormBlock: React.FC<FormProps> = ({ params, ...block }) => {
   }
 
   const formMethod = useForm({
-    defaultValues: buildInitialFormState((block?.form?.value as Form).fields),
+    defaultValues: buildInitialFormState(),
   })
 
   const {
@@ -73,76 +81,107 @@ const FormBlock: React.FC<FormProps> = ({ params, ...block }) => {
     formState: { errors },
     control,
     setValue,
+    reset,
+    getValues,
   } = formMethod
 
-  const { mutate: newFormSubmit, isPending: isFormSubmissionPending } =
-    trpc?.form?.newFormSubmission?.useMutation({
-      onSuccess: () => {
-        if (confirmationType === 'redirect' && redirect) {
-          const { url } = redirect
-          const redirectUrl = url
-          if (redirectUrl) router.push(redirectUrl)
-        } else if (confirmationType === 'message' && confirmationMessage)
-          toast.success(`${confirmationMessage}`)
-        else {
-          toast.success('Form successfully submitted')
-        }
-      },
-      onError: () => {
-        toast.error('Failed to submit Form, try again.')
-      },
-    })
-  const onsubmit = (data: any) => {
-    const dataToSend = Object.entries(data)
+  const { mutate, isPending } = useMutation({
+    mutationFn: async (data: Data) => {
+      const url = typeof window !== 'undefined' ? window.location.origin : ''
 
-      .map(([name, value]) => ({
-        field: name,
-        value: value !== undefined && value !== null ? value.toString() : '',
-      }))
-    newFormSubmit({ id: id, data: dataToSend })
+      try {
+        // Creating form-submission payload, if form has images uploading them to media collection and adding them to file field
+        const formattedData = await Promise.all(
+          Object.entries(data).map(async ([name, value]) => {
+            if (typeof value !== 'object') {
+              return { field: name, value }
+            }
+
+            const imageID: any[] = []
+
+            for await (const file of value) {
+              const imageResponse = await uploadMedia(file)
+              imageID.push(imageResponse.id)
+            }
+
+            return {
+              field: name,
+              value: '',
+              file: imageID,
+            }
+          }),
+        )
+
+        const response = await fetch(`${url}/api/form-submissions`, {
+          method: 'POST',
+          body: JSON.stringify({
+            form: id,
+            submissionData: formattedData,
+          }),
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        })
+
+        const formattedResponse = (await response.json()) as FormSubmission
+
+        return formattedResponse
+      } catch (error) {
+        throw new Error('Failed to submit form, please try again!')
+      }
+    },
+    onSuccess: () => {
+      if (confirmationType === 'redirect' && redirect) {
+        const { url } = redirect
+        const redirectUrl = url
+        if (redirectUrl) router.push(redirectUrl)
+      } else if (confirmationType === 'message' && confirmationMessage)
+        toast.success('🎉 Successfully submitted Form', { id: 'form-submit' })
+      reset()
+    },
+  })
+
+  const onsubmit = async (data: Data) => {
+    mutate(data)
   }
 
   return (
-    <div className='mx-auto max-w-5xl rounded-xl border p-8 shadow-md '>
-      <h4 className='mb-4 text-2xl font-bold'>{block?.title}</h4>
-      <form id={block?.id!} onSubmit={handleSubmit(onsubmit)}>
-        <div className='flex w-full flex-grow flex-wrap gap-4'>
-          {block &&
-            fields &&
-            fields?.map((field, index) => {
-              const Field: React.FC<any> = fieldsJsx[field?.blockType]
-              if (Field) {
-                return (
-                  <React.Fragment key={index}>
-                    <Field
-                      form={block?.form}
-                      {...field}
-                      {...formMethod}
-                      register={register}
-                      errors={errors}
-                      setValue={setValue}
-                      control={control}
-                    />
-                  </React.Fragment>
-                )
-              }
-            })}
-        </div>
-        <div className='mt-8 flex justify-end'>
-          <button
-            type='submit'
-            disabled={isFormSubmissionPending}
-            className='w-full rounded-lg  bg-primary px-5 py-2.5 text-center text-sm font-medium text-base-content hover:bg-primary-focus focus:outline-none focus:ring-4 focus:ring-primary/30 sm:w-auto'>
-            {isFormSubmissionPending
-              ? 'Submitting...'
-              : submitButtonLabel
-                ? submitButtonLabel
-                : 'Submit'}
-          </button>
-        </div>
-      </form>
-    </div>
+    <form
+      id={id.toString()}
+      onSubmit={handleSubmit(onsubmit)}
+      className={className}>
+      <div className='flex w-full flex-wrap gap-4 sm:gap-6'>
+        <FormProvider {...formMethod}>
+          {fields
+            ? fields?.map((field, index) => {
+                const Field: React.FC<any> = fieldsJsx[field?.blockType]
+
+                if (Field) {
+                  return (
+                    <React.Fragment key={index}>
+                      <Field
+                        form={form}
+                        {...field}
+                        {...formMethod}
+                        register={register}
+                        errors={errors}
+                        setValue={setValue}
+                        control={control}
+                        getValues={getValues}
+                      />
+                    </React.Fragment>
+                  )
+                }
+              })
+            : null}
+        </FormProvider>
+      </div>
+
+      <button type='submit' className='mt-8' disabled={isPending}>
+        {submitButtonLabel ? submitButtonLabel : 'Submit'}
+      </button>
+    </form>
   )
 }
 
-export default FormBlock
+export default Form

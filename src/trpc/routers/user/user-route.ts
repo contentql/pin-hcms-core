@@ -1,14 +1,12 @@
 import { collectionSlug } from '@contentql/core'
 import configPromise from '@payload-config'
-import { Media } from '@payload-types'
-import { getPayload } from 'payload'
 import { TRPCError } from '@trpc/server'
-import { produce } from 'immer'
 import { cookies } from 'next/headers'
+import { getPayload } from 'payload'
 
 import { router, userProcedure } from '@/trpc/'
 
-import { UpdateProfileImageSchema, UpdateUserSchema } from './validator'
+import { UpdateUserSchema } from './validator'
 
 const payload = await getPayload({ config: configPromise })
 
@@ -19,42 +17,13 @@ export const userRouter = router({
     return user
   }),
 
-  updateUserImage: userProcedure
-    .input(UpdateProfileImageSchema)
-    .mutation(async ({ input, ctx }) => {
-      const { id } = input
-
-      try {
-        const updatedData = produce(ctx.user, draft => {
-          draft.imageUrl = id
-        })
-
-        const user = await payload.update({
-          collection: 'users',
-          id: ctx.user.id,
-          data: updatedData,
-        })
-
-        await payload.delete({
-          collection: 'media',
-          id: (ctx.user.imageUrl as Media).id,
-        })
-
-        return { data: user }
-      } catch (error: any) {
-        console.error('Error updating user image:', error)
-        throw new TRPCError({
-          code: 'INTERNAL_SERVER_ERROR',
-          message: error?.message || 'Internal server error occurred.',
-        })
-      }
-    }),
-
   updateUser: userProcedure
     .input(UpdateUserSchema)
     .mutation(async ({ input, ctx }) => {
       const { user } = ctx
       const { confirmPassword, ...data } = input
+
+      console.log({ data })
 
       if (data.password && data.password !== confirmPassword) {
         throw new TRPCError({
@@ -64,10 +33,16 @@ export const userRouter = router({
       }
 
       try {
+        console.log({ data })
+
         const updatedUser = await payload.update({
           collection: collectionSlug.users,
           id: user.id,
-          data,
+          data: {
+            ...data,
+            // typecasting id, to support mongo & other databases
+            imageUrl: data.imageUrl as any,
+          },
         })
 
         return updatedUser

@@ -1,17 +1,20 @@
-import { env } from '@env'
 import { Media } from '@payload-types'
 import { toast } from 'sonner'
 
-async function uploadMedia(files: FileList | null): Promise<Media | undefined> {
-  const formData = new FormData()
-  if (!files) {
+async function uploadMedia(file: File) {
+  if (!file) {
     toast.info(`please select a file to upload`)
-    return undefined
+    throw new Error(`Please select a file to upload`)
   }
-  formData.append('file', files[0])
+
+  const formData = new FormData()
+
+  formData.append('file', file)
 
   try {
-    const response = await fetch(env.NEXT_PUBLIC_PUBLIC_URL + '/api/media', {
+    const url = typeof window !== 'undefined' ? window.location.origin : ''
+
+    const response = await fetch(url + '/api/media', {
       method: 'POST',
       body: formData,
     })
@@ -27,6 +30,8 @@ async function uploadMedia(files: FileList | null): Promise<Media | undefined> {
     if (error instanceof Error) {
       console.error('Upload failed', error.message)
     }
+
+    throw new Error('Failed to upload file')
   }
 }
 

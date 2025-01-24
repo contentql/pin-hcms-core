@@ -1,7 +1,7 @@
 import configPromise from '@payload-config'
-import { getPayload } from 'payload'
 import { TRPCError } from '@trpc/server'
 import ora from 'ora'
+import { getPayload } from 'payload'
 
 import { seedAuthorDetailsPage } from '@/seed/author-details-page'
 import { seedAuthors } from '@/seed/authors'
@@ -46,9 +46,12 @@ export const seedRouter = router({
       })
 
       const blogsPage = await seedBlogsPage(spinner)
+      const forms = await seedForm(spinner)
+
       const blogsDetailsPage = await seedBlogDetailsPage({
         spinner,
         id: blogsPage.id,
+        forms,
       })
 
       const authorsPage = await seedAuthorsPage(spinner)
@@ -56,12 +59,12 @@ export const seedRouter = router({
         spinner,
         id: authorsPage.id,
       })
-      const forms = await seedForm(spinner)
+
       const authors = await seedAuthors(spinner)
       const tags = await seedTags(spinner)
 
-      await seedBlogs({ tags, authors, spinner })
       const contactPage = await seedContactPage({ spinner, forms })
+      await seedBlogs({ tags, authors, spinner })
       await seedSiteSettings({
         authorDetailsLink: authorsDetailsPage,
         blogDetailsLink: blogsDetailsPage,
@@ -76,6 +79,7 @@ export const seedRouter = router({
       return { success: true }
     } catch (error: any) {
       console.error('Error seeding:', error)
+
       throw new TRPCError({
         code: 'INTERNAL_SERVER_ERROR',
         message: error.message,

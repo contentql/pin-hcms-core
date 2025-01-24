@@ -1,9 +1,9 @@
-'use client'
-
-import { Blog, DetailsType } from '@payload-types'
 import { Params } from '../types'
-
-import { trpc } from '@/trpc/client'
+import configPromise from '@payload-config'
+import { Blog, DetailsType } from '@payload-types'
+import { unstable_cache } from 'next/cache'
+import { notFound } from 'next/navigation'
+import { getPayload } from 'payload'
 
 import AuthorDetails from './components/AuthorDetails'
 import BlogDetails from './components/BlogDetails'
@@ -13,39 +13,119 @@ interface DetailsProps extends DetailsType {
   params: Params
 }
 
-const Details: React.FC<DetailsProps> = ({ params, ...block }) => {
+const Details: React.FC<DetailsProps> = async ({ params, ...block }) => {
+  const payload = await getPayload({
+    config: configPromise,
+  })
+
   switch (block?.collectionSlug) {
     case 'blogs': {
-      const { data: blog } = trpc.blog.getBlogBySlug.useQuery({
-        slug: params?.route.at(-1),
-      })
-      const { data: blogs } = trpc.blog.getAllBlogs.useQuery()
-      return <BlogDetails blog={blog as Blog} blogsData={blogs as Blog[]} />
+      const slug = params?.route?.at(-1) ?? ''
+
+      const { docs } = await unstable_cache(
+        async () =>
+          await payload.find({
+            collection: 'blogs',
+            draft: false,
+            where: {
+              slug: {
+                equals: slug,
+              },
+            },
+          }),
+        ['details', 'blogs', slug],
+        { tags: [`details-blogs-${slug}`] },
+      )()
+
+      const blog = docs.at(0)
+
+      // if blog not found showing 404
+      if (!blog) {
+        return notFound()
+      }
+
+      return <BlogDetails blog={blog as Blog} />
     }
 
     case 'tags': {
-      const { data: blogs } = trpc.tag.getBlogs.useQuery({
-        tagSlug: params?.route.at(-1)!,
-      })
-      return (
-        <TagDetails
-          blogs={blogs?.blogsData as Blog[]}
-          tagDetails={blogs?.tagData?.at(0)}
-        />
-      )
+      const slug = params?.route?.at(-1) ?? ''
+
+      const { docs: tagDocs } = await unstable_cache(
+        async () =>
+          await payload.find({
+            collection: 'tags',
+            where: {
+              slug: {
+                equals: slug,
+              },
+            },
+          }),
+        ['details', 'tags', slug],
+        { tags: [`details-tags-${slug}`] },
+      )()
+
+      const tag = tagDocs?.[0]
+
+      // if tag not found showing 404
+      if (!tag) {
+        return notFound()
+      }
+
+      const { docs: blogsData } = await unstable_cache(
+        async () =>
+          await payload.find({
+            collection: 'blogs',
+            where: {
+              'tags.value': {
+                contains: tag.id,
+              },
+            },
+          }),
+        ['details', 'blogs-by-tags', slug],
+        { tags: [`details-blogs-by-tags-${slug}`] },
+      )()
+
+      return <TagDetails blogs={blogsData} tagDetails={tag} />
     }
 
     case 'users': {
-      const { data: author } = trpc.author.getAuthorByName.useQuery({
-        authorName: params?.route.at(-1)!,
-      })
-      const { data: authorBlogs } = trpc.author.getBlogsByAuthorName.useQuery({
-        authorName: params?.route.at(-1)!,
-      })
+      const authorName = params?.route?.at(-1) ?? ''
+      const { docs: authorDocs } = await unstable_cache(
+        async () =>
+          await payload.find({
+            collection: 'users',
+            where: {
+              username: {
+                equals: authorName,
+              },
+            },
+          }),
+        ['details', 'author', authorName],
+        { tags: [`details-author-${authorName}`] },
+      )()
 
-      return (
-        <AuthorDetails author={author as any} blogsData={authorBlogs as any} />
-      )
+      const author = authorDocs?.[0]
+
+      if (!author) {
+        return notFound()
+      }
+
+      const { docs: blogs } = await unstable_cache(
+        async () =>
+          await payload.find({
+            collection: 'blogs',
+            draft: false,
+            where: {
+              'author.value': {
+                equals: author.id,
+              },
+            },
+          }),
+        ['details', 'blogs-by-author', authorName],
+        { tags: [`details-blogs-by-author-${authorName}`] },
+      )()
+
+      return <AuthorDetails author={author} blogsData={blogs} />
     }
   }
 }
