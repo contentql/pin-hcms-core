@@ -17,11 +17,6 @@
 3. `pnpm generate:types`
 4. `pnpm dev`
 
-# Required Collections
-
-1. pages
-2. blogs
-
 # Basic Idea
 
 Both the collections we create should have the idea of:

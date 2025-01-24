@@ -1,14 +1,14 @@
 import { Params } from '../types'
-import { HomeType } from '@payload-types'
+import { HeroType } from '@payload-types'
 import Image from 'next/image'
 import Link from 'next/link'
 import { FaArrowRight } from 'react-icons/fa'
 
-interface HomeProps extends HomeType {
+interface HeroProps extends HeroType {
   params: Params
 }
 
-export const HomeBlock: React.FC<HomeProps> = ({ params, ...block }) => {
+export const HeroBlock: React.FC<HeroProps> = ({ params, ...block }) => {
   return (
     <section className='relative flex min-h-screen w-full flex-col items-center gap-36 py-4'>
       <div className='hidden w-full items-center justify-between md:flex'>
@@ -19,7 +19,7 @@ export const HomeBlock: React.FC<HomeProps> = ({ params, ...block }) => {
         <p className='inline-flex items-center gap-x-2 text-lg font-semibold'>
           By
           <Image src='/favicon.ico' alt='icon' width={32} height={32} />
-          Analytica
+          ContentQL
         </p>
       </div>
 

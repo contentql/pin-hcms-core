@@ -11,7 +11,7 @@ export const blogDetailsPageData: BlogDetailsPageDataType = {
   _status: 'published',
   layout: [
     {
-      blockType: 'Details',
+      blockType: 'DetailsBlock',
       collectionSlug: 'blogs',
     },
   ],

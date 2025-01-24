@@ -141,17 +141,6 @@ export const seedSiteSettings = async ({
                 ],
               },
             },
-            {
-              group: false,
-              menuLink: {
-                type: 'custom',
-                label: '🗺️ Style Guide',
-                url: '/post/style-guide-all-supported-elements',
-              },
-              menuLinkGroup: {
-                groupLinks: [],
-              },
-            },
           ],
         },
         footer: {

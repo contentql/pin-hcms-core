@@ -8,7 +8,7 @@ export const blogsPageData: BlogsPageDataType = {
   _status: 'published',
   layout: [
     {
-      blockType: 'List',
+      blockType: 'ListBlock',
       title: 'Discover Blogs',
       collectionSlug: 'blogs',
     },

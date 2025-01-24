@@ -8,7 +8,7 @@ export const homePageData: HomePageDataType = {
   _status: 'published',
   layout: [
     {
-      blockType: 'Home',
+      blockType: 'HeroBlock',
       heading: 'Develop your own',
       subHeading: 'Theme With Cql',
     },

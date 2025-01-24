@@ -1,11 +1,11 @@
 import { Block } from 'payload'
 
 const HomeConfig: Block = {
-  slug: 'HomeBlock',
-  interfaceName: 'HomeType',
+  slug: 'HeroBlock',
+  interfaceName: 'HeroType',
   labels: {
-    singular: 'Home Block',
-    plural: 'Home Blocks',
+    singular: 'Hero Block',
+    plural: 'Hero Blocks',
   },
   fields: [
     {

@@ -80,7 +80,7 @@ export interface UserAuthOperations {
 export interface Page {
   id: string;
   title: string;
-  layout?: (HomeType | DetailsType | ListType | FormType | DisqusCommentsType)[] | null;
+  layout?: (HeroType | DetailsType | ListType | FormType | DisqusCommentsType)[] | null;
   meta?: {
     title?: string | null;
     description?: string | null;
@@ -113,14 +113,14 @@ export interface Page {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "HomeType".
+ * via the `definition` "HeroType".
  */
-export interface HomeType {
+export interface HeroType {
   heading?: string | null;
   subHeading?: string | null;
   id?: string | null;
   blockName?: string | null;
-  blockType: 'Home';
+  blockType: 'HeroBlock';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -130,7 +130,7 @@ export interface DetailsType {
   collectionSlug?: ('blogs' | 'tags' | 'users') | null;
   id?: string | null;
   blockName?: string | null;
-  blockType: 'Details';
+  blockType: 'DetailsBlock';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -141,7 +141,7 @@ export interface ListType {
   collectionSlug?: ('blogs' | 'tags' | 'users') | null;
   id?: string | null;
   blockName?: string | null;
-  blockType: 'List';
+  blockType: 'ListBlock';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -634,9 +634,9 @@ export interface PagesSelect<T extends boolean = true> {
   layout?:
     | T
     | {
-        Home?: T | HomeTypeSelect<T>;
-        Details?: T | DetailsTypeSelect<T>;
-        List?: T | ListTypeSelect<T>;
+        HeroBlock?: T | HeroTypeSelect<T>;
+        DetailsBlock?: T | DetailsTypeSelect<T>;
+        ListBlock?: T | ListTypeSelect<T>;
         FormBlock?: T | FormTypeSelect<T>;
         DisqusComments?: T | DisqusCommentsTypeSelect<T>;
       };
@@ -668,9 +668,9 @@ export interface PagesSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "HomeType_select".
+ * via the `definition` "HeroType_select".
  */
-export interface HomeTypeSelect<T extends boolean = true> {
+export interface HeroTypeSelect<T extends boolean = true> {
   heading?: T;
   subHeading?: T;
   id?: T;

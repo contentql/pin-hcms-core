@@ -8,7 +8,7 @@ export const tagsPageData: TagsPageDataType = {
   _status: 'published',
   layout: [
     {
-      blockType: 'List',
+      blockType: 'ListBlock',
       title: 'Discover Tags',
       collectionSlug: 'tags',
     },

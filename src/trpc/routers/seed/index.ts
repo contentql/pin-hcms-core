@@ -51,7 +51,6 @@ export const seedRouter = router({
       const blogsDetailsPage = await seedBlogDetailsPage({
         spinner,
         id: blogsPage.id,
-        forms,
       })
 
       const authorsPage = await seedAuthorsPage(spinner)

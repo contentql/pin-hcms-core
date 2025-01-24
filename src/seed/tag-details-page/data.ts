@@ -11,7 +11,7 @@ export const tagDetailsPageData: TagDetailsPageDataType = {
   _status: 'published',
   layout: [
     {
-      blockType: 'Details',
+      blockType: 'DetailsBlock',
       collectionSlug: 'tags',
     },
   ],

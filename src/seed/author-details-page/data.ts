@@ -11,7 +11,7 @@ export const authorDetailsPageData: authorDetailsPageDataType = {
   _status: 'published',
   layout: [
     {
-      blockType: 'Details',
+      blockType: 'DetailsBlock',
       collectionSlug: 'users',
     },
   ],

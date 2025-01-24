@@ -8,7 +8,7 @@ export const authorsPageData: AuthorsPageDataType = {
   _status: 'published',
   layout: [
     {
-      blockType: 'List',
+      blockType: 'ListBlock',
       title: 'Discover Authors',
       collectionSlug: 'users',
     },
