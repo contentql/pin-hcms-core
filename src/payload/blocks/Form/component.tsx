@@ -4,18 +4,16 @@ import { Params } from '../types'
 import { FormType } from '@payload-types'
 import React from 'react'
 
-import FormComponent from './Components/Form'
+import FormComponent from './components/Form'
 
 interface FormProps extends FormType {
   params: Params
 }
-const FormBlock: React.FC<FormProps> = ({ params, ...block }) => {
+export const FormBlock: React.FC<FormProps> = ({ params, ...block }) => {
   const form =
     block?.form?.value && typeof block?.form?.value === 'object'
       ? block?.form?.value
       : undefined
-
-  console.log({ form })
 
   return (
     <section className='max-w-3xl'>
@@ -24,5 +22,3 @@ const FormBlock: React.FC<FormProps> = ({ params, ...block }) => {
     </section>
   )
 }
-
-export default FormBlock

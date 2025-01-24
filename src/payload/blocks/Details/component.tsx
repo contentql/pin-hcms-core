@@ -13,7 +13,10 @@ interface DetailsProps extends DetailsType {
   params: Params
 }
 
-const Details: React.FC<DetailsProps> = async ({ params, ...block }) => {
+export const DetailsBlock: React.FC<DetailsProps> = async ({
+  params,
+  ...block
+}) => {
   const payload = await getPayload({
     config: configPromise,
   })
@@ -129,5 +132,3 @@ const Details: React.FC<DetailsProps> = async ({ params, ...block }) => {
     }
   }
 }
-
-export default Details

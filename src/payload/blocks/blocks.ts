@@ -1,14 +1,14 @@
 import { DisqusComments } from '@contentql/core/client'
 
-import { Details } from './Details'
-import { FormBlock } from './Form'
-import { Home } from './Home'
-import { List } from './List'
+import { DetailsBlock } from './Details/Component'
+import { FormBlock } from './Form/Component'
+import { HomeBlock } from './Home/Component'
+import { ListBlock } from './List/Component'
 
 export const blocksJSX = {
-  Home,
-  Details,
-  List,
+  HomeBlock,
+  DetailsBlock,
+  ListBlock,
   DisqusComments,
   FormBlock,
 }

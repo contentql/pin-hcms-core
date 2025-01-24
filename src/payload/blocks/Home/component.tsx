@@ -8,7 +8,7 @@ interface HomeProps extends HomeType {
   params: Params
 }
 
-const Home: React.FC<HomeProps> = ({ params, ...block }) => {
+export const HomeBlock: React.FC<HomeProps> = ({ params, ...block }) => {
   return (
     <section className='relative flex min-h-screen w-full flex-col items-center gap-36 py-4'>
       <div className='hidden w-full items-center justify-between md:flex'>
@@ -100,5 +100,3 @@ const Home: React.FC<HomeProps> = ({ params, ...block }) => {
     </section>
   )
 }
-
-export default Home

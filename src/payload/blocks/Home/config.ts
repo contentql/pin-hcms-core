@@ -1,8 +1,7 @@
 import { Block } from 'payload'
 
 const HomeConfig: Block = {
-  slug: 'Home',
-  // imageURL: '',
+  slug: 'HomeBlock',
   interfaceName: 'HomeType',
   labels: {
     singular: 'Home Block',

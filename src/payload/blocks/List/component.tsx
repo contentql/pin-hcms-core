@@ -13,7 +13,7 @@ interface ListProps extends DetailsType {
   params: Params
 }
 
-const List: React.FC<ListProps> = async ({ params, ...block }) => {
+export const ListBlock: React.FC<ListProps> = async ({ params, ...block }) => {
   const payload = await getPayload({
     config: configPromise,
   })
@@ -71,5 +71,3 @@ const List: React.FC<ListProps> = async ({ params, ...block }) => {
     }
   }
 }
-
-export default List

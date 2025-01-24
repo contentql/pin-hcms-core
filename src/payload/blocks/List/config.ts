@@ -1,8 +1,7 @@
 import { Block } from 'payload'
 
 const ListConfig: Block = {
-  slug: 'List',
-  // imageURL: '',
+  slug: 'ListBlock',
   interfaceName: 'ListType',
   labels: {
     singular: 'List Block',

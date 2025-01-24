@@ -8,7 +8,7 @@ import { fileURLToPath } from 'url'
 
 import { ResetPassword } from '@/emails/reset-password'
 import { UserAccountVerification } from '@/emails/verify-email'
-import { blocks } from '@/payload/blocks/index'
+import { blocksConfig } from '@/payload/blocks/config'
 import { revalidateAuthors } from '@/payload/hooks/revalidateAuthors'
 import { revalidateBlogs } from '@/payload/hooks/revalidateBlogs'
 import { revalidatePages } from '@/payload/hooks/revalidatePages'
@@ -164,7 +164,7 @@ export default cqlConfig({
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
 
-  blocks,
+  blocks: blocksConfig,
   editor,
   sharp,
 })
