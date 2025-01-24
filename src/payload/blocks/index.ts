@@ -5,7 +5,14 @@ import { DetailsConfig } from './Details'
 import { FormConfig } from './Form'
 import { HomeConfig } from './Home'
 import { ListConfig } from './List'
+import { ServiceConfig } from './Services/config'
 
 // Exporting an array that consolidates all block configurations
 // This array is useful for registering or iterating over all blocks and their configurations in one place
-export const blocks = [HomeConfig, DetailsConfig, ListConfig, FormConfig]
+export const blocks = [
+  HomeConfig,
+  DetailsConfig,
+  ListConfig,
+  FormConfig,
+  ServiceConfig,
+]

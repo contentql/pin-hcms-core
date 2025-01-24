@@ -80,7 +80,7 @@ export interface UserAuthOperations {
 export interface Page {
   id: string;
   title: string;
-  layout?: (HomeType | DetailsType | ListType | FormType | DisqusCommentsType)[] | null;
+  layout?: (HomeType | DetailsType | ListType | FormType | ServiceType | DisqusCommentsType)[] | null;
   meta?: {
     title?: string | null;
     description?: string | null;
@@ -307,6 +307,20 @@ export interface Form {
     | null;
   updatedAt: string;
   createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ServiceType".
+ */
+export interface ServiceType {
+  services: {
+    title: string;
+    description: string;
+    id?: string | null;
+  }[];
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'Service';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -638,6 +652,7 @@ export interface PagesSelect<T extends boolean = true> {
         Details?: T | DetailsTypeSelect<T>;
         List?: T | ListTypeSelect<T>;
         FormBlock?: T | FormTypeSelect<T>;
+        Service?: T | ServiceTypeSelect<T>;
         DisqusComments?: T | DisqusCommentsTypeSelect<T>;
       };
   meta?:
@@ -702,6 +717,21 @@ export interface ListTypeSelect<T extends boolean = true> {
 export interface FormTypeSelect<T extends boolean = true> {
   title?: T;
   form?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ServiceType_select".
+ */
+export interface ServiceTypeSelect<T extends boolean = true> {
+  services?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        id?: T;
+      };
   id?: T;
   blockName?: T;
 }
