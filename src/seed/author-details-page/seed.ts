@@ -1,12 +1,12 @@
 import configPromise from '@payload-config'
-import { getPayload } from 'payload'
 import { Ora } from 'ora'
+import { getPayload } from 'payload'
 
 import { authorDetailsPageData } from './data'
 
 const payload = await getPayload({ config: configPromise })
 
-const seed = async ({ spinner, id }: { spinner: Ora; id: string }) => {
+const seed = async ({ spinner, id }: { spinner: Ora; id: any }) => {
   spinner.start(`Started created author-details-page...`)
 
   try {

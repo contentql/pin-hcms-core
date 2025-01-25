@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "@clack/prompts": "^0.7.0",
-    "@contentql/core": "^0.5.5",
+    "@contentql/core": "^0.5.6",
     "@hookform/resolvers": "^3.4.0",
     "@payloadcms/live-preview-react": "^3.2.2",
     "@payloadcms/next": "^3.2.2",

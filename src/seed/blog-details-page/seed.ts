@@ -1,12 +1,13 @@
 import configPromise from '@payload-config'
-import { getPayload } from 'payload'
 import { Ora } from 'ora'
+import { getPayload } from 'payload'
 
 import { blogDetailsPageData } from './data'
 
 const payload = await getPayload({ config: configPromise })
 
-const seed = async ({ spinner, id }: { spinner: Ora; id: string }) => {
+// Added id type any to support mongoDB & sqlLite seeding
+const seed = async ({ spinner, id }: { spinner: Ora; id: any }) => {
   spinner.start(`Started created blogs-details-page...`)
 
   try {
