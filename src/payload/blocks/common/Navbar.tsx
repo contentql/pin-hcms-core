@@ -5,7 +5,15 @@ import Link from 'next/link'
 import { Fragment } from 'react'
 import { HiChevronDown } from 'react-icons/hi'
 
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
 import { generateMenuLinks } from '@/utils/generateMenuLinks'
+
+import ThemeSwitcher from './ThemeSwitcher'
 
 const Navbar = ({ metadata }: { metadata: SiteSetting }) => {
   const { navbar } = metadata
@@ -36,7 +44,7 @@ const Navbar = ({ metadata }: { metadata: SiteSetting }) => {
   }
 
   return (
-    <header className='fixed left-0 top-0 z-10 w-full bg-slate-700/50 backdrop-blur-lg'>
+    <header className='fixed left-0 top-0 z-10 w-full bg-card'>
       <div className='container flex h-14 items-center justify-between'>
         {logoDetails.url && (
           <Link href='/'>
@@ -52,14 +60,29 @@ const Navbar = ({ metadata }: { metadata: SiteSetting }) => {
         <div className='flex items-center gap-8'>
           {navLinks?.length > 0 && (
             <nav>
-              <ul className='flex gap-8'>
+              <ul className='flex gap-8 text-sm'>
                 {navLinks.map(({ label, children, href = '', newTab }) => (
                   <Fragment key={label}>
                     {children ? (
-                      <li className='flex list-none items-center gap-1'>
-                        {label}{' '}
-                        <HiChevronDown className='size-4 text-slate-100' />
-                      </li>
+                      <DropdownMenu>
+                        <DropdownMenuTrigger>
+                          <li className='flex list-none items-center gap-1'>
+                            {label}{' '}
+                            <HiChevronDown className='size-4 text-slate-100' />
+                          </li>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent>
+                          {children.map(item => (
+                            <DropdownMenuItem key={item.label}>
+                              <Link
+                                href={item.href}
+                                target={item.newTab ? '_blank' : '_self'}>
+                                {item.label}
+                              </Link>
+                            </DropdownMenuItem>
+                          ))}
+                        </DropdownMenuContent>
+                      </DropdownMenu>
                     ) : (
                       <Link href={href} target={newTab ? '_blank' : '_self'}>
                         {label}
@@ -70,6 +93,8 @@ const Navbar = ({ metadata }: { metadata: SiteSetting }) => {
               </ul>
             </nav>
           )}
+
+          <ThemeSwitcher />
 
           <CommandBar />
         </div>

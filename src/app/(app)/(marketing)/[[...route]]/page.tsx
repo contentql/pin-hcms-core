@@ -130,7 +130,7 @@ export async function generateMetadata({
     let metadata = pageData.meta
 
     const block = pageData.layout
-      ?.filter(block => block.blockType === 'Details')
+      ?.filter(block => block.blockType === 'DetailsBlock')
       ?.at(0)
 
     // checking for dynamic page
@@ -251,7 +251,7 @@ export async function generateStaticParams(): Promise<StaticRoute[]> {
 
             if (formedSlugPage && formedSlugPage.layout) {
               const detailsBlock = formedSlugPage.layout.find(
-                block => block.blockType === 'Details',
+                block => block.blockType === 'DetailsBlock',
               )
 
               if (detailsBlock && detailsBlock.collectionSlug) {

@@ -1,4 +1,3 @@
-import Branding from '@/components/Branding'
 import Footer from '@/payload/blocks/common/Footer'
 import Navbar from '@/payload/blocks/common/Navbar'
 import { serverClient } from '@/trpc/serverClient'
@@ -13,7 +12,6 @@ const MarketingLayout = async ({ children }: { children: React.ReactNode }) => {
         <Navbar metadata={metadata} />
         <main className='container my-20'>{children}</main>
         <Footer metadata={metadata} />
-        <Branding />
       </div>
     </MetadataProvider>
   )

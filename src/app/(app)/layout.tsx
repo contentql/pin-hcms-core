@@ -103,7 +103,7 @@ export default async function RootLayout({
       : '/favicon.ico'
 
   return (
-    <html lang='en' className='dark'>
+    <html lang='en'>
       <head>
         <link rel='icon' type='image/x-icon' href={faviconUrl} />
 

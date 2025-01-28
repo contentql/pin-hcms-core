@@ -2,14 +2,16 @@ import Image from 'next/image'
 
 const Logo: React.FC = () => {
   return (
-    <div className='logo'>
+    <div className='login-icon-container'>
       <Image
         src={'/logo.svg'}
-        width={200}
-        height={20}
+        width={40}
+        height={40}
         alt='ContentQL Logo'
         className='logo-image'
       />
+
+      <p>ContentQL</p>
     </div>
   )
 }
