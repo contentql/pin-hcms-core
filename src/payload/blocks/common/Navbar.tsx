@@ -1,3 +1,4 @@
+import CommandBar from '../../../components/CommandBar'
 import type { SiteSetting } from '@payload-types'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -5,8 +6,6 @@ import { Fragment } from 'react'
 import { HiChevronDown } from 'react-icons/hi'
 
 import { generateMenuLinks } from '@/utils/generateMenuLinks'
-
-import CommandBar from './CommandBar'
 
 const Navbar = ({ metadata }: { metadata: SiteSetting }) => {
   const { navbar } = metadata

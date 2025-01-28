@@ -1,6 +1,6 @@
 import Branding from '@/components/Branding'
-import Footer from '@/components/Footer'
-import Navbar from '@/components/Navbar'
+import Footer from '@/payload/blocks/common/Footer'
+import Navbar from '@/payload/blocks/common/Navbar'
 import { serverClient } from '@/trpc/serverClient'
 import { MetadataProvider } from '@/utils/metadataContext'
 
