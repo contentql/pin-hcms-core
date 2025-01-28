@@ -11,7 +11,7 @@ import { IoMdArrowBack } from 'react-icons/io'
 import { IoReorderThree } from 'react-icons/io5'
 import { RxCross2 } from 'react-icons/rx'
 
-import { cn } from '@/utils/cn'
+import { cn } from '@/lib/utils'
 import { signOut } from '@/utils/signOut'
 
 interface Links {

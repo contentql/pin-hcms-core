@@ -8,7 +8,7 @@ import {
 } from 'react-icons/hi'
 import { IconType } from 'react-icons/lib'
 
-import { cn } from '@/utils/cn'
+import { cn } from '@/lib/utils'
 
 const alertVariants = cva(
   'relative flex gap-4 items-center rounded-rounded-btn w-full rounded py-4 px-2',
