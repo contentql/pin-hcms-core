@@ -8,7 +8,7 @@ export const revalidatePages: CollectionAfterChangeHook<Page> = async ({
 }) => {
   // checking for dynamic blocks present in page or not
   const dynamicBlock = doc?.layout?.find(
-    block => block.blockType === 'Details' && block.collectionSlug,
+    block => block.blockType === 'DetailsBlock' && block.collectionSlug,
   ) as DetailsType | undefined
 
   // if page is published & their is no dynamic block directly revalidating the page
