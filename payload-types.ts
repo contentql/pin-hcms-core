@@ -1251,20 +1251,46 @@ export interface SiteSetting {
   };
   themeSettings: {
     lightMode: {
-      primary: string;
       background: string;
-      text: string;
       foreground: string;
+      primary: string;
+      primaryForeground: string;
+      card: string;
+      cardForeground: string;
       popover: string;
+      popoverForeground: string;
+      secondary: string;
+      secondaryForeground: string;
+      muted: string;
+      mutedForeground: string;
+      accent: string;
+      accentForeground: string;
+      destructive: string;
+      destructiveForeground: string;
       border: string;
+      input: string;
+      ring: string;
     };
     darkMode: {
-      primary: string;
       background: string;
-      text: string;
       foreground: string;
+      primary: string;
+      primaryForeground: string;
+      card: string;
+      cardForeground: string;
       popover: string;
+      popoverForeground: string;
+      secondary: string;
+      secondaryForeground: string;
+      muted: string;
+      mutedForeground: string;
+      accent: string;
+      accentForeground: string;
+      destructive: string;
+      destructiveForeground: string;
       border: string;
+      input: string;
+      ring: string;
     };
     fonts: {
       display: {
@@ -1423,22 +1449,48 @@ export interface SiteSettingsSelect<T extends boolean = true> {
         lightMode?:
           | T
           | {
-              primary?: T;
               background?: T;
-              text?: T;
               foreground?: T;
+              primary?: T;
+              primaryForeground?: T;
+              card?: T;
+              cardForeground?: T;
               popover?: T;
+              popoverForeground?: T;
+              secondary?: T;
+              secondaryForeground?: T;
+              muted?: T;
+              mutedForeground?: T;
+              accent?: T;
+              accentForeground?: T;
+              destructive?: T;
+              destructiveForeground?: T;
               border?: T;
+              input?: T;
+              ring?: T;
             };
         darkMode?:
           | T
           | {
-              primary?: T;
               background?: T;
-              text?: T;
               foreground?: T;
+              primary?: T;
+              primaryForeground?: T;
+              card?: T;
+              cardForeground?: T;
               popover?: T;
+              popoverForeground?: T;
+              secondary?: T;
+              secondaryForeground?: T;
+              muted?: T;
+              mutedForeground?: T;
+              accent?: T;
+              accentForeground?: T;
+              destructive?: T;
+              destructiveForeground?: T;
               border?: T;
+              input?: T;
+              ring?: T;
             };
         fonts?:
           | T
