@@ -4,7 +4,7 @@
 
 @layer base {
   html {
-    @apply bg-background text-foreground;
+    @apply font-body bg-background text-foreground;
   }
 
   * {
@@ -66,17 +66,10 @@
     --chart-5: 340 75% 55%;
   }
 }
+
 @layer utilities {
   .bg-clip-text {
     -webkit-background-clip: text;
     background-clip: text;
-  }
-}
-@layer base {
-  * {
-    @apply border-border;
-  }
-  body {
-    @apply bg-background text-foreground;
   }
 }

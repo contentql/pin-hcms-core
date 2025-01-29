@@ -53,7 +53,7 @@ const Footer = ({ metadata }: { metadata: SiteSetting }) => {
           )}
 
           {logo.description && (
-            <p className='text-secondary '>{logo.description}</p>
+            <p className='text-muted-foreground'>{logo.description}</p>
           )}
         </div>
 
@@ -62,7 +62,7 @@ const Footer = ({ metadata }: { metadata: SiteSetting }) => {
             if (children) {
               return (
                 <div className='text-sm' key={index}>
-                  <p className='mb-4 text-secondary'>{label}</p>
+                  <p className='mb-4 text-muted-foreground'>{label}</p>
 
                   <div className='space-y-2'>
                     {children.map(details => (
@@ -85,7 +85,7 @@ const Footer = ({ metadata }: { metadata: SiteSetting }) => {
       </div>
 
       <div className='container flex flex-col items-center justify-between gap-4 border-t pb-12 pt-4 sm:flex-row'>
-        <p className='text-secondary'>{footer.copyright}</p>
+        <p className='text-muted-foreground'>{footer.copyright}</p>
 
         {socialLinks?.length ? (
           <div>
@@ -96,7 +96,7 @@ const Footer = ({ metadata }: { metadata: SiteSetting }) => {
                 return Component ? (
                   <Link href={value} target='_blank' key={id}>
                     <li className='flex list-none items-center gap-1'>
-                      <Component className='size-6 [&_path]:fill-secondary' />
+                      <Component className='size-6 [&_path]:fill-muted-foreground' />
                     </li>
                   </Link>
                 ) : null
