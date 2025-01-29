@@ -1,23 +1,17 @@
-'use client'
-
-import { useTheme } from '@payloadcms/ui'
 import Image from 'next/image'
 
 const Logo: React.FC = () => {
-  const { theme } = useTheme()
-
-  const logoSrc =
-    theme === 'dark' ? '/images/logo-pink-white.png' : '/images/logo-pink.png'
-
   return (
-    <div className='logo'>
+    <div className='login-icon-container'>
       <Image
-        src={logoSrc}
-        width={200}
-        height={20}
+        src={'/logo.svg'}
+        width={40}
+        height={40}
         alt='ContentQL Logo'
         className='logo-image'
       />
+
+      <p>ContentQL</p>
     </div>
   )
 }

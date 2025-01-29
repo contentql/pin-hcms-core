@@ -3,7 +3,7 @@
 import { motion, useMotionTemplate, useMotionValue } from 'framer-motion'
 import * as React from 'react'
 
-import { cn } from '@/utils/cn'
+import { cn } from '@/lib/utils'
 
 export interface InputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {}
@@ -40,10 +40,10 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         <input
           type={type}
           className={cn(
-            `placeholder-text-base-content duration-400 bg-base-content focus-visible:ring-base-content/40 bg-base-content/10 text-base-content rounded-rounded-btn  flex h-10 w-full border-none px-3  py-2 text-sm 
-          shadow-input transition file:border-0 file:bg-transparent 
-          file:text-sm file:font-medium focus-visible:outline-none
-           focus-visible:ring-[2px] 
+            `placeholder-text-base-content duration-400 flex h-10 w-full rounded-rounded-btn border-none  bg-base-content bg-base-content/10 px-3 py-2 text-sm  text-base-content shadow-input 
+          transition file:border-0 file:bg-transparent file:text-sm 
+          file:font-medium focus-visible:outline-none focus-visible:ring-[2px]
+           focus-visible:ring-base-content/40 
            disabled:cursor-not-allowed
            disabled:opacity-50 group-hover/input:shadow-none
            `,

@@ -12,7 +12,7 @@ export const HeroBlock: React.FC<HeroProps> = ({ params, ...block }) => {
   return (
     <section className='relative flex min-h-screen w-full flex-col items-center gap-36 py-4'>
       <div className='hidden w-full items-center justify-between md:flex'>
-        <code className='rounded-rounded-box border-2 border-base-content/10 bg-base-content/20 px-4 py-2'>
+        <code className='border-base-content/10 bg-base-content/20 rounded border-2 px-4 py-2'>
           Get Started by editing <strong>src/payload/blocks</strong>
         </code>
 
@@ -27,12 +27,12 @@ export const HeroBlock: React.FC<HeroProps> = ({ params, ...block }) => {
         Get Started by editing <strong>src/payload/blocks</strong>
       </code>
 
-      <div>
+      <div className='font-display'>
         <div className='absolute left-[50%] top-[40%] h-[10%] w-[20%] -translate-x-1/2 rounded-full bg-primary blur-[110px]'></div>
-        <h1 className='w-full max-w-2xl text-center text-3xl font-bold md:text-4xl lg:text-7xl'>
+        <h1 className='w-full text-center text-3xl font-bold md:text-4xl lg:text-7xl'>
           {block?.heading}
         </h1>
-        <p className='mt-3 w-full max-w-2xl text-center text-3xl font-bold text-base-content md:text-4xl lg:text-7xl'>
+        <p className='text-base-content mt-3 w-full text-center text-3xl font-bold md:text-4xl lg:text-7xl'>
           {block?.subHeading}
         </p>
       </div>
@@ -40,8 +40,8 @@ export const HeroBlock: React.FC<HeroProps> = ({ params, ...block }) => {
       <div className='grid w-full gap-8 md:grid-cols-4'>
         <Link
           href='/sign-in'
-          className='group w-full cursor-pointer space-y-4 rounded-rounded-box px-2  py-4 transition-all duration-300 hover:bg-base-content/10'>
-          <p className='inline-flex items-center gap-x-4 text-2xl font-bold transition-all duration-300'>
+          className='rounded-rounded-box hover:bg-base-content/10 group w-full cursor-pointer space-y-4  px-2 py-4 transition-all duration-300'>
+          <p className='font-display inline-flex items-center gap-x-4 text-2xl font-bold transition-all duration-300'>
             Sign In
             <span className='group-hover:translate-x-2'>
               <FaArrowRight />
@@ -55,8 +55,8 @@ export const HeroBlock: React.FC<HeroProps> = ({ params, ...block }) => {
 
         <Link
           href='/authors'
-          className='group w-full cursor-pointer space-y-4 rounded-rounded-box px-2  py-4 transition-all duration-300 hover:bg-base-content/10'>
-          <p className='inline-flex items-center gap-x-4 text-2xl font-bold transition-all duration-300'>
+          className='rounded-rounded-box hover:bg-base-content/10 group w-full cursor-pointer space-y-4  px-2 py-4 transition-all duration-300'>
+          <p className='font-display inline-flex items-center gap-x-4 text-2xl font-bold transition-all duration-300'>
             Authors
             <span className='group-hover:translate-x-2'>
               <FaArrowRight />
@@ -70,8 +70,8 @@ export const HeroBlock: React.FC<HeroProps> = ({ params, ...block }) => {
 
         <Link
           href='/blogs'
-          className='group w-full cursor-pointer space-y-4 rounded-rounded-box px-2  py-4 transition-all duration-300 hover:bg-base-content/10'>
-          <p className='inline-flex items-center gap-x-4 text-2xl font-bold transition-all duration-300'>
+          className='rounded-rounded-box hover:bg-base-content/10 group w-full cursor-pointer space-y-4  px-2 py-4 transition-all duration-300'>
+          <p className='font-display inline-flex items-center gap-x-4 text-2xl font-bold transition-all duration-300'>
             Blogs
             <span className='group-hover:translate-x-2'>
               <FaArrowRight />
@@ -85,8 +85,8 @@ export const HeroBlock: React.FC<HeroProps> = ({ params, ...block }) => {
 
         <Link
           href='/tags'
-          className='group w-full cursor-pointer space-y-4 rounded-rounded-box px-2  py-4 transition-all duration-300 hover:bg-base-content/10'>
-          <p className='inline-flex items-center gap-x-4 text-2xl font-bold transition-all duration-300'>
+          className='rounded-rounded-box hover:bg-base-content/10 group w-full cursor-pointer space-y-4  px-2 py-4 transition-all duration-300'>
+          <p className='font-display inline-flex items-center gap-x-4 text-2xl font-bold transition-all duration-300'>
             Tags
             <span className='group-hover:translate-x-2'>
               <FaArrowRight />

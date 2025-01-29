@@ -1,4 +1,6 @@
+import tailwindTypography from '@tailwindcss/typography'
 import type { Config } from 'tailwindcss'
+import tailwindAnimate from 'tailwindcss-animate'
 
 const config: Config = {
   darkMode: ['class'],
@@ -17,44 +19,64 @@ const config: Config = {
         '2xl': '1400px',
       },
     },
-
     extend: {
       colors: {
-        primary: '#A978DE',
-        'primary-focus': '#8C5DB9',
-        'primary-content': '#FFFFFF',
-
-        secondary: '#DE78C5',
-        'secondary-focus': '#B95DA3',
-        'secondary-content': '#ffffff',
-
-        accent: '#d99330',
-        'accent-focus': '#b57721',
-        'accent-content': '#ffffff',
-
-        neutral: '#110e0e',
-        'neutral-focus': '#060404',
-        'neutral-content': '#ffffff',
-
-        'base-100': '#171212',
-        'base-200': '#1f2937',
-        'base-300': '#060404',
-        'base-content': '#ffffff',
-
-        info: '#66c7ff',
-        success: '#87cf3a',
-        warning: '#e1d460',
-        error: '#ff6b6b',
+        primary: {
+          DEFAULT: 'hsl(var(--primary))',
+          foreground: 'hsl(var(--primary-foreground))',
+        },
+        secondary: {
+          DEFAULT: 'hsl(var(--secondary))',
+          foreground: 'hsl(var(--secondary-foreground))',
+        },
+        accent: {
+          DEFAULT: 'hsl(var(--accent))',
+          foreground: 'hsl(var(--accent-foreground))',
+        },
+        background: 'hsl(var(--background))',
+        foreground: 'hsl(var(--foreground))',
+        card: {
+          DEFAULT: 'hsl(var(--card))',
+          foreground: 'hsl(var(--card-foreground))',
+        },
+        popover: {
+          DEFAULT: 'hsl(var(--popover))',
+          foreground: 'hsl(var(--popover-foreground))',
+        },
+        muted: {
+          DEFAULT: 'hsl(var(--muted))',
+          foreground: 'hsl(var(--muted-foreground))',
+        },
+        destructive: {
+          DEFAULT: 'hsl(var(--destructive))',
+          foreground: 'hsl(var(--destructive-foreground))',
+        },
+        border: 'hsl(var(--border))',
+        input: 'hsl(var(--input))',
+        ring: 'hsl(var(--ring))',
+        chart: {
+          '1': 'hsl(var(--chart-1))',
+          '2': 'hsl(var(--chart-2))',
+          '3': 'hsl(var(--chart-3))',
+          '4': 'hsl(var(--chart-4))',
+          '5': 'hsl(var(--chart-5))',
+        },
       },
       borderRadius: {
-        'rounded-box': '1rem',
-        'rounded-btn': '.2rem',
-        'rounded-badge': '1.9rem',
+        DEFAULT: 'var(--border-radius)',
+        none: `0rem`,
+        sm: `0.75rem`,
+        md: `1rem`,
+        lg: `1.5rem`,
+        full: `999rem`,
+      },
+      fontFamily: {
+        display: ['var(--font-display)'],
+        body: ['var(--font-body)'],
       },
     },
   },
-  prefix: '',
-  plugins: [require('tailwindcss-animate'), require('@tailwindcss/typography')],
+  plugins: [tailwindAnimate, tailwindTypography],
 }
 
 export default config
