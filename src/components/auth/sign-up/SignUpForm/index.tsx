@@ -1,22 +1,30 @@
 'use client'
 
-import { Input, LabelInputContainer } from '../../common/fields'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useState } from 'react'
+import { User } from '@payload-types'
+import { useMutation } from '@tanstack/react-query'
+import Link from 'next/link'
 import { useForm } from 'react-hook-form'
 import { GoCheckCircleFill } from 'react-icons/go'
 import slugify from 'slugify'
-import { toast } from 'sonner'
+import { z } from 'zod'
 
 import { Alert, AlertDescription } from '@/components/common/Alert'
-import { trpc } from '@/trpc/client'
+import { Button } from '@/components/ui/button'
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
+import axiosConfig from '@/utils/axiosConfig'
 
 import { SignUpFormData, SignUpFormSchema } from './validator'
 
 const SignUpForm: React.FC = () => {
-  const [isEmailSent, setIsEmailSent] = useState(false)
-  const [emailSentTo, setEmailSentTo] = useState<string>('')
-
   const form = useForm<SignUpFormData>({
     resolver: zodResolver(SignUpFormSchema),
     mode: 'onBlur',
@@ -28,54 +36,41 @@ const SignUpForm: React.FC = () => {
     },
   })
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    setValue,
-    reset,
-  } = form
+  const { handleSubmit } = form
 
-  const {
-    mutate: signUpMutation,
-    isPending: isSignUpPending,
-    isError: isSignUpError,
-    error: signUpError,
-    isSuccess: isSignUpSuccess,
-  } = trpc.auth.signUp.useMutation({
-    onSuccess: data => {
-      reset()
-      setIsEmailSent(true)
-      setEmailSentTo(data.email)
-    },
-    onError: () => {
-      toast.error('Unable to create an account, try again!')
+  const { mutate, isError, isSuccess, isPending, data } = useMutation({
+    mutationFn: async (data: z.infer<typeof SignUpFormSchema>) => {
+      const { confirmPassword, ...userData } = data
+
+      try {
+        const response = await axiosConfig('/api/users', {
+          data: userData,
+          method: 'POST',
+        })
+
+        return response.data?.doc as User
+      } catch (error) {
+        console.log('Failed to sign-up', { error })
+        throw new Error('Failed to sign-up')
+      }
     },
   })
 
   const onSubmit = async (data: SignUpFormData) => {
-    const randomNum = Math.floor(Math.random() * (24 - 1 + 1)) + 1
-    const avatar = `/images/avatar/avatar_${randomNum}.jpg`
-
-    const { confirmPassword, ...userData } = data
-
-    signUpMutation({
-      ...userData,
-      avatar,
-    })
+    mutate(data)
   }
 
   return (
     <div className='flex w-full items-center justify-center'>
-      {isEmailSent ? (
+      {data ? (
         <>
           <div className='mx-auto  text-center'>
-            <div className='mx-auto flex w-fit gap-4 rounded-md bg-base-200 p-4'>
+            <div className='bg-base-200 mx-auto flex w-fit gap-4 rounded-md p-4'>
               <GoCheckCircleFill className='text-cq-success size-6 shrink-0 items-start' />
               <div className='text-left font-semibold'>
                 Email has been sent to{' '}
                 <code className='bg-cq-background rounded-sm px-2 py-1'>
-                  {emailSentTo}
+                  {data.email}
                 </code>
                 <span className='text-cq-text-secondary mt-1 block font-normal'>
                   You can close this window now.
@@ -86,144 +81,113 @@ const SignUpForm: React.FC = () => {
         </>
       ) : (
         <div className='w-full max-w-md p-6'>
-          {isSignUpSuccess ? (
+          {isSuccess ? (
             <Alert variant='success' className='mb-12'>
               <AlertDescription>
                 Successfully signed up ! please verify your email
               </AlertDescription>
             </Alert>
-          ) : isSignUpError ? (
+          ) : isError ? (
             <Alert variant='danger' className='mb-12'>
               <AlertDescription>
                 Sign up failed. Check the details you provided.
               </AlertDescription>
             </Alert>
           ) : null}
-          <h1 className='mb-6 text-center text-3xl font-semibold text-base-content'>
-            Sign Up
-          </h1>
-          <h1 className='mb-6 text-center text-sm font-semibold text-base-content'>
-            Join to Our Community with all time access and free{' '}
-          </h1>
+          <h1 className='mb-6 text-3xl font-semibold'>Sign Up</h1>
 
-          <form onSubmit={handleSubmit(onSubmit)} className='space-y-4'>
-            <div>
-              <LabelInputContainer className='mb-4'>
-                <div className='inline-flex justify-between'>
-                  <label
-                    htmlFor='username'
-                    className='block text-sm font-medium text-base-content/70'>
-                    Username
-                  </label>
-                  {errors?.username && (
-                    <p className='text-sm text-error'>
-                      {errors.username.message}
-                    </p>
-                  )}
-                </div>
-                <Input
-                  {...register('username', {
-                    onChange: (event: React.ChangeEvent<HTMLInputElement>) => {
-                      const value = slugify(event.target.value, {
-                        remove: /[*+~.()'"!:@]/g,
-                        lower: true,
-                        strict: true,
-                        locale: 'en',
-                        trim: false,
-                      })
-                      setValue('username', value, { shouldValidate: true })
-                    },
-                  })}
-                  type='text'
-                  id='username'
-                  name='username'
-                  placeholder='Doe'
-                />
-              </LabelInputContainer>
-            </div>
+          <Form {...form}>
+            <form onSubmit={handleSubmit(onSubmit)} className='space-y-8'>
+              <FormField
+                control={form.control}
+                name={'username'}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Username</FormLabel>
 
-            <div>
-              <LabelInputContainer className='mb-4'>
-                <div className='inline-flex justify-between'>
-                  <label
-                    htmlFor='email'
-                    className='block text-sm font-medium text-base-content/70'>
-                    E-Mail
-                  </label>
-                  {errors?.email && (
-                    <p className='text-sm text-error'>{errors.email.message}</p>
-                  )}
-                </div>
-                <Input
-                  {...register('email')}
-                  type='text'
-                  id='email'
-                  name='email'
-                  placeholder='john.doe@example.com'
-                />
-              </LabelInputContainer>
-            </div>
-            <div>
-              <LabelInputContainer className='mb-8'>
-                <div className='inline-flex justify-between'>
-                  <label
-                    htmlFor='password'
-                    className='block text-sm font-medium text-base-content/70'>
-                    Password
-                  </label>
-                  {errors?.password && (
-                    <p className='text-sm text-error'>
-                      {errors.password.message}
-                    </p>
-                  )}
-                </div>
-                <Input
-                  {...register('password')}
-                  type='password'
-                  id='password'
-                  name='password'
-                  placeholder='● ● ● ● ● ● ● ● ●'
-                />
-              </LabelInputContainer>
-            </div>
-            <div>
-              <LabelInputContainer className='mb-8'>
-                <div className='inline-flex justify-between'>
-                  <label
-                    htmlFor='confirmPassword'
-                    className='block text-sm font-medium text-base-content/70'>
-                    Confirm Password
-                  </label>
-                  {errors?.confirmPassword && (
-                    <p className='text-sm text-error'>
-                      {errors.confirmPassword.message}
-                    </p>
-                  )}
-                </div>
-                <Input
-                  {...register('confirmPassword')}
-                  type='password'
-                  id='confirmPassword'
-                  name='confirmPassword'
-                  placeholder='● ● ● ● ● ● ● ● ●'
-                />
-              </LabelInputContainer>
-            </div>
-            <div>
-              <button
-                type='submit'
-                className='w-full rounded-rounded-btn bg-primary  p-2 text-base-content transition-all duration-500 hover:bg-primary-focus focus:outline-none disabled:cursor-not-allowed disabled:bg-opacity-50'
-                disabled={isSignUpPending}>
-                {isSignUpPending ? 'Creating account...' : 'Sign Up'}
-              </button>
-            </div>
-          </form>
-          <div className='mt-4 text-center text-sm text-base-content/70'>
+                    <FormControl>
+                      <Input
+                        {...field}
+                        onChange={e => {
+                          field.onChange(
+                            slugify(e.target.value, {
+                              remove: /[*+~.()'"!:@]/g,
+                              lower: true,
+                              strict: true,
+                              locale: 'en',
+                              trim: false,
+                            }),
+                          )
+                        }}
+                        placeholder='john-deo'
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name={'email'}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Email</FormLabel>
+
+                    <FormControl>
+                      <Input
+                        {...field}
+                        type='email'
+                        placeholder='johndeo@gmail.com'
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name={'password'}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Password</FormLabel>
+
+                    <FormControl>
+                      <Input {...field} type='password' />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name={'confirmPassword'}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Confirm Password</FormLabel>
+
+                    <FormControl>
+                      <Input {...field} type='password' />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <Button type='submit' className='w-full' disabled={isPending}>
+                {isPending ? 'Creating account...' : 'Sign Up'}
+              </Button>
+            </form>
+          </Form>
+
+          <div className='text-base-content/70 mt-4 text-center text-sm'>
             <p>
               Already have an account?{' '}
-              <a href='/sign-in' className='text-base-content hover:underline'>
-                SignIn here
-              </a>
+              <Link href='/sign-in' className='text-primary underline'>
+                SignIn
+              </Link>
             </p>
           </div>
         </div>

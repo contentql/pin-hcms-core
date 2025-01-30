@@ -1,13 +1,9 @@
 import ResetPasswordForm from './ResetPasswordForm'
 
-interface Props {
-  token: string
-}
-
-const ResetPasswordView: React.FC<Props> = ({ token }) => {
+const ResetPasswordView = () => {
   return (
     <div>
-      <ResetPasswordForm token={token} />
+      <ResetPasswordForm />
     </div>
   )
 }

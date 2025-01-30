@@ -16,6 +16,10 @@ export const Users: CollectionConfig = {
       revalidateAuthors,
     ],
   },
+  access: {
+    ...UsersCollection.access,
+    create: () => true,
+  },
   auth: {
     verify: {
       generateEmailHTML: ({ token, user }) => {

@@ -6,6 +6,7 @@ import { httpBatchLink } from '@trpc/client'
 import { KBarProvider } from 'kbar'
 import { AppProgressBar as ProgressBar } from 'next-nprogress-bar'
 import { ThemeProvider } from 'next-themes'
+import { NuqsAdapter } from 'nuqs/adapters/next/app'
 import React, { useState } from 'react'
 
 import { trpc } from '@/trpc/client'
@@ -32,7 +33,9 @@ export default function Provider({ children }: { children: React.ReactNode }) {
             options={{ showSpinner: false }}
             shallowRouting
           />
-          <KBarProvider>{children}</KBarProvider>
+          <KBarProvider>
+            <NuqsAdapter>{children}</NuqsAdapter>
+          </KBarProvider>
           <ReactQueryDevtools initialIsOpen={false} />
         </QueryClientProvider>
       </trpc.Provider>

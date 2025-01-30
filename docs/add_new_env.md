@@ -9,7 +9,7 @@ specific comment.
 ### Example `.env` File:
 
 ```env
-NEXT_PUBLIC_PUBLIC_URL=***
+NEXT_PUBLIC_WEBSITE_URL=***
 PAYLOAD_URL=***
 
 DATABASE_URI=***

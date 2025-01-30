@@ -1,13 +1,26 @@
 'use client'
 
-import { Input, LabelInputContainer } from '../../common/fields'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useMutation } from '@tanstack/react-query'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
 import { Alert, AlertDescription } from '@/components/common/Alert'
-import { trpc } from '@/trpc/client'
-import { GenerateTokenSchema } from '@/trpc/routers/auth/validator'
+import { Button } from '@/components/ui/button'
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
+import axiosConfig from '@/utils/axiosConfig'
+
+const GenerateTokenSchema = z.object({
+  email: z.string().email({ message: 'Invalid email address' }),
+})
 
 const GenerateResetTokenForm: React.FC = () => {
   const form = useForm<z.infer<typeof GenerateTokenSchema>>({
@@ -15,105 +28,85 @@ const GenerateResetTokenForm: React.FC = () => {
     mode: 'onBlur',
     defaultValues: { email: '' },
   })
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = form
 
-  const {
-    mutate: generateResetPasswordTokenMutation,
-    isPending: isGeneratePasswordPending,
-    isError: isGeneratePasswordError,
-    error: generatePasswordError,
-    isSuccess: isGeneratePasswordSuccess,
-  } = trpc.auth.forgotPassword.useMutation({
-    onSuccess: () => {
-      //   toast.success('Please check you mail!')
+  const { handleSubmit, reset } = form
+
+  const { mutate, isSuccess, isError, isPending } = useMutation({
+    mutationFn: async (data: z.infer<typeof GenerateTokenSchema>) => {
+      try {
+        const response = await axiosConfig('/api/users/forgot-password', {
+          data,
+          method: 'POST',
+        })
+
+        return response.data?.message
+      } catch (error) {
+        console.log('Failed to generate reset-password token', { error })
+        throw new Error('Failed to generate reset-password token')
+      }
     },
-    onError: () => {
-      //   toast.error('Error sending you mail, try again!')
+    onSuccess: status => {
+      if (status === 'Success') {
+        reset()
+      }
     },
   })
 
   const onSubmit = async (data: z.infer<typeof GenerateTokenSchema>) => {
-    generateResetPasswordTokenMutation({
-      ...data,
-    })
+    mutate(data)
   }
 
   return (
-    <main
-      id='content'
-      role='main'
-      className='flex min-h-screen w-full items-center justify-center bg-base-100'>
-      <div className='mx-auto w-full max-w-md drop-shadow-2xl  md:p-8'>
-        <div className='text-center'>
-          {isGeneratePasswordSuccess ? (
-            <Alert variant='success' className='mb-12'>
-              <AlertDescription>
-                An reset email has been successfully sent.
-              </AlertDescription>
-            </Alert>
-          ) : isGeneratePasswordError ? (
-            <Alert variant='danger' className='mb-12'>
-              <AlertDescription>
-                {generatePasswordError.message}
-              </AlertDescription>
-            </Alert>
-          ) : null}
-          <h1 className='block text-2xl font-bold text-base-content'>
-            Forgot password?
-          </h1>
-          <p className='mt-2 text-sm text-base-content/70'>
-            Remember your password?
-            <a
-              className='pl-1 font-medium text-base-content decoration-1 hover:underline'
-              href='/sign-in'>
-              SignIn here
-            </a>
-          </p>
-        </div>
+    <div className='flex min-h-screen w-full flex-col items-center justify-center'>
+      <div>
+        {isSuccess ? (
+          <Alert variant='success' className='mb-12'>
+            <AlertDescription>
+              Reset email has been sent to your email.
+            </AlertDescription>
+          </Alert>
+        ) : isError ? (
+          <Alert variant='danger' className='mb-12'>
+            <AlertDescription>Failed to sent reset email.</AlertDescription>
+          </Alert>
+        ) : null}
+      </div>
 
-        <div className='mt-10'>
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <div className='space-y-4'>
-              <div>
-                <LabelInputContainer className='mb-4'>
-                  <div className='inline-flex justify-between'>
-                    <label
-                      htmlFor='email'
-                      className='mb-2 ml-1 block text-sm font-bold text-base-content/70'>
-                      Email address
-                    </label>
-                    {errors.email && (
-                      <p
-                        className='mt-2 hidden text-xs text-error'
-                        id='email-error'>
-                        {errors.email.message}
-                      </p>
-                    )}
-                  </div>
-                  <Input
-                    {...register('email')}
-                    type='email'
-                    id='email'
-                    name='email'
-                    placeholder='jon@gmail.com'
-                  />
-                </LabelInputContainer>
+      <div className='w-full max-w-md p-6'>
+        <h1 className='text-3xl font-bold'>Forgot password?</h1>
+
+        <div className='mt-8'>
+          <Form {...form}>
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <div className='space-y-8'>
+                <FormField
+                  control={form.control}
+                  name={'email'}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Email</FormLabel>
+
+                      <FormControl>
+                        <Input
+                          {...field}
+                          type='email'
+                          placeholder='johndeo@gmail.com'
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <Button type='submit' className='w-full' disabled={isPending}>
+                  {isPending ? 'Sending...' : 'Send Reset Link'}
+                </Button>
               </div>
-              <button
-                type='submit'
-                disabled={isGeneratePasswordPending}
-                className='mt-3 inline-flex w-full items-center justify-center gap-2 rounded-rounded-btn border border-transparent bg-primary px-4 py-3 text-sm font-semibold text-base-content transition-all hover:bg-primary-focus  disabled:cursor-not-allowed disabled:bg-opacity-50 '>
-                {isGeneratePasswordPending ? 'Sending...' : 'Send Reset Link'}
-              </button>
-            </div>
-          </form>
+            </form>
+          </Form>
         </div>
       </div>
-    </main>
+    </div>
   )
 }
 

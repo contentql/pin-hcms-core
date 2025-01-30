@@ -1,58 +1,57 @@
 'use client'
 
-import { useRouter } from 'next/navigation'
+import { useQuery } from '@tanstack/react-query'
+import { Loader } from 'lucide-react'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { toast } from 'sonner'
 
-import Loading from '@/components/common/Loading'
-import { trpc } from '@/trpc/client'
+import axiosConfig from '@/utils/axiosConfig'
 
-interface PageProps {
-  searchParams: {
-    [key: string]: string | string[] | undefined
-  }
-}
-
-const EmailVerificationView = ({ searchParams }: PageProps) => {
+const EmailVerificationView = () => {
   const router = useRouter()
+  const searchParams = useSearchParams()
+  const token = searchParams.get('token')
 
-  const token = searchParams.token as string
-  const userId = searchParams.id as string
-  const { isLoading, isError, isSuccess } = trpc.auth.verifyEmail.useQuery({
-    token: token,
-    userId: userId,
+  const { isPending, isSuccess, isError } = useQuery({
+    queryFn: async () => {
+      try {
+        const response = await axiosConfig(`/api/users/verify/${token}`, {
+          method: 'POST',
+        })
+
+        return response?.data
+      } catch (error) {
+        throw new Error('')
+      }
+    },
+    queryKey: [`reset-password-${token}`],
+    enabled: !!token,
   })
 
   if (isSuccess) {
     toast.success(`Your email successfully verified`)
-    setTimeout(() => {
-      router.replace('/sign-in')
-    }, 2000)
+    router.push('/sign-in')
   }
-  if (isError) {
-    toast.error(`Failed to verify your email address`)
+
+  if (!token) {
+    router.push('/sign-in')
   }
+
   return (
     <div className='flex min-h-screen items-center justify-center gap-x-2'>
-      {isLoading ? (
-        <Loading />
-      ) : isSuccess ? (
-        <div className=' max-w-lg rounded-md bg-base-200 p-4 text-center text-base-content'>
-          <h3 className='h3 text-2xl '>Email Verified Successfully</h3>
-          <div className=' mt-4 text-success '>
-            Your email has been verified successfully. We are now redirecting
-            you to the sign-in page. Thank you for confirming your email and
-            completing the process!
-          </div>
-        </div>
-      ) : (
-        <div className=' max-w-sm rounded-md bg-base-200 p-4 text-center text-base-content'>
-          <h3 className='h3 text-2xl'>Email Verification Failed</h3>
-          <div className='mt-4 text-error'>
-            There was an issue verifying your email. The link may have expired
-            or been used. Please request a new link or contact support for help.
-          </div>
-        </div>
-      )}
+      {isPending ? (
+        <p>
+          <Loader size={20} className='mr-3 inline-block animate-spin' />
+          Please wait! email verification in progress...
+        </p>
+      ) : null}
+
+      {isError ? (
+        <p>
+          Failed to verify email, the link might be expired. Please request new
+          link or contact support for help
+        </p>
+      ) : null}
     </div>
   )
 }
