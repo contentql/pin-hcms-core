@@ -1,21 +1,19 @@
-import Error from '../Error'
-import Width from '../Width'
-import {
-  FieldErrorsImpl,
-  FieldValues,
-  UseFormRegister,
-  UseFormSetValue,
-} from 'react-hook-form'
+import { useFormContext } from 'react-hook-form'
 
+import {
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form'
 import {
   Select,
   SelectContent,
-  SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
-} from '@/components/common/Select'
+} from '@/components/ui/select'
 
 interface SelectField {
   name: string
@@ -35,59 +33,34 @@ interface SelectField {
   blockType: 'select'
 }
 
-const SelectField: React.FC<
-  SelectField & {
-    setValue: UseFormSetValue<any>
-    register: UseFormRegister<FieldValues & any>
-    errors: Partial<
-      FieldErrorsImpl<{
-        [x: string]: any
-      }>
-    >
-  }
-> = ({
-  name,
-  label,
-  options,
-  defaultValue,
-  width,
-  register,
-  setValue,
-  required: requiredFromProps,
-  errors,
-}) => {
+const SelectField: React.FC<SelectField> = ({ name, label, options }) => {
+  const { control } = useFormContext()
+
   return (
-    <Width width={width as number}>
-      <div className='flex flex-col gap-2'>
-        <label className='text-md font-semibold capitalize text-neutral-content/80'>
-          {label}
-        </label>
-        <Select onValueChange={value => setValue(name, value)}>
-          <SelectTrigger className='w-full flex-shrink-0'>
-            <SelectValue
-              {...register(name, { required: requiredFromProps as boolean })}
-              placeholder={defaultValue || 'Select'}
-            />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectGroup>
-              <SelectLabel>Options</SelectLabel>
-              {options?.map((option, index) => (
-                <SelectItem
-                  key={index}
-                  value={option?.value}
-                  className='capitalize'>
-                  {option?.label}
+    <FormField
+      control={control}
+      name={name}
+      render={({ field }) => (
+        <FormItem>
+          <FormLabel>{label}</FormLabel>
+          <Select onValueChange={field.onChange} defaultValue={field.value}>
+            <FormControl>
+              <SelectTrigger className='border'>
+                <SelectValue />
+              </SelectTrigger>
+            </FormControl>
+            <SelectContent>
+              {options?.map(({ label, value }) => (
+                <SelectItem key={value} value={value}>
+                  {label}
                 </SelectItem>
               ))}
-            </SelectGroup>
-          </SelectContent>
-        </Select>
-        {requiredFromProps && errors[name] && (
-          <Error error={errors[name]} label={label!} />
-        )}
-      </div>
-    </Width>
+            </SelectContent>
+          </Select>
+          <FormMessage />
+        </FormItem>
+      )}
+    />
   )
 }
 export default SelectField

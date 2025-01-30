@@ -1,15 +1,21 @@
 'use client'
 
+import { zodResolver } from '@hookform/resolvers/zod'
 import { FormSubmission, Form as FormType } from '@payload-types'
 import { useMutation } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
 import React from 'react'
-import { FormProvider, useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
+import { z } from 'zod'
 
+import { Button } from '@/components/ui/button'
+import { Form as FormComponent } from '@/components/ui/form'
+import { cn } from '@/lib/utils'
 import uploadMedia from '@/utils/uploadMedia'
 
 import { fieldsJsx } from './Fields'
+import Width from './Width'
 
 export interface Data {
   [key: string]: string | File[]
@@ -23,6 +29,7 @@ const Form = ({
   className?: string
 }) => {
   const router = useRouter()
+
   const {
     fields,
     confirmationType,
@@ -32,6 +39,7 @@ const Form = ({
     id,
   } = form
 
+  // Building form initial values based on field type
   const buildInitialFormState = () => {
     return fields?.reduce(
       (acc, field) => {
@@ -71,8 +79,72 @@ const Form = ({
     )
   }
 
+  // Building a zod-schema based on field type
+  const formSchema = () => {
+    const fieldsSchema = fields
+      ? fields?.reduce(
+          (acc, field) => {
+            if (!field || typeof field !== 'object') return acc
+
+            // Define Zod validation schema per field type
+            switch (field.blockType) {
+              case 'checkbox':
+                acc[field.name] = field.required
+                  ? z.boolean({
+                      message: `${field.label} is required`,
+                    })
+                  : z.boolean().optional()
+                break
+              case 'number':
+                acc[field.name] = field.required
+                  ? z.string({
+                      message: `${field.label} is required`,
+                    })
+                  : z.string().optional()
+                break
+              case 'text':
+              case 'textarea':
+                acc[field.name] = field.required
+                  ? z.string().min(1, `${field.label} is required`)
+                  : z.string().optional()
+                break
+              case 'select':
+              case 'country':
+                acc[field.name] = field.required
+                  ? z.string().min(1, `${field.label} is required`)
+                  : z.string().optional()
+                break
+              case 'email':
+                acc[field.name] = field.required
+                  ? z.string().email(`${field.label} must be a valid email`)
+                  : z.string().optional()
+                break
+              case 'upload':
+                acc[field.name] = field.required
+                  ? z.array(
+                      z.instanceof(File, {
+                        message: `${field.label} is required`,
+                      }),
+                    )
+                  : z.array(z.instanceof(File)).optional()
+                break
+              default:
+                acc['default'] = z.string().optional() // Default case for unknown field types
+                break
+            }
+
+            return acc
+          },
+          {} as Record<string, any>,
+        )
+      : {}
+
+    return z.object(fieldsSchema)
+  }
+
   const formMethod = useForm({
     defaultValues: buildInitialFormState(),
+    resolver: zodResolver(formSchema()),
   })
 
   const {
@@ -146,19 +218,20 @@ const Form = ({
   }
 
   return (
-    <form
-      id={id.toString()}
-      onSubmit={handleSubmit(onsubmit)}
-      className={className}>
-      <div className='flex w-full flex-wrap gap-4 sm:gap-6'>
-        <FormProvider {...formMethod}>
+    <FormComponent {...formMethod}>
+      <form
+        onSubmit={handleSubmit(onsubmit)}
+        className={cn('space-y-8', className)}>
+        <div className='flex w-full flex-wrap gap-4 sm:gap-6'>
           {fields
             ? fields?.map((field, index) => {
                 const Field: React.FC<any> = fieldsJsx[field?.blockType]
 
                 if (Field) {
                   return (
-                    <React.Fragment key={index}>
+                    <Width
+                      key={index}
+                      width={'width' in field ? field.width! : 100}>
                       <Field
                         form={form}
                         {...field}
@@ -169,18 +242,18 @@ const Form = ({
                         control={control}
                         getValues={getValues}
                       />
-                    </React.Fragment>
+                    </Width>
                   )
                 }
               })
             : null}
-        </FormProvider>
-      </div>
+        </div>
 
-      <button type='submit' className='mt-8' disabled={isPending}>
-        {submitButtonLabel ? submitButtonLabel : 'Submit'}
-      </button>
-    </form>
+        <Button type='submit' disabled={isPending}>
+          {submitButtonLabel ? submitButtonLabel : 'Submit'}
+        </Button>
+      </form>
+    </FormComponent>
   )
 }
 

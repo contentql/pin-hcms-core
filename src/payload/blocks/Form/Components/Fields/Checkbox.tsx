@@ -1,13 +1,12 @@
-import Width from '../Width'
-import {
-  FieldErrorsImpl,
-  FieldValues,
-  UseFormRegister,
-  UseFormSetValue,
-  UseFormWatch,
-} from 'react-hook-form'
+import { useFormContext } from 'react-hook-form'
 
-import { Checkbox } from '@/components/common/Checkbox'
+import { Checkbox } from '@/components/ui/checkbox'
+import {
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+} from '@/components/ui/form'
 
 interface CheckboxField {
   name: string
@@ -20,47 +19,22 @@ interface CheckboxField {
   blockType: 'checkbox'
 }
 
-const CheckboxField: React.FC<
-  CheckboxField & {
-    register: UseFormRegister<FieldValues & any>
-    errors: Partial<
-      FieldErrorsImpl<{
-        [x: string]: any
-      }>
-    >
-    setValue: UseFormSetValue<FieldValues>
-    watch: UseFormWatch<FieldValues>
-  }
-> = ({
-  name,
-  defaultValue,
-  label,
-  width,
-  register,
-  required: requiredFromProps,
-  errors,
-  setValue,
-  watch,
-}) => {
-  // Watch the checkbox value
-  const checkedValue = watch(name, defaultValue || false)
+const CheckboxField: React.FC<CheckboxField> = ({ name, label, width }) => {
+  const { control } = useFormContext()
 
   return (
-    <Width width={width as number}>
-      <div className='flex flex-row items-start gap-2 text-start'>
-        <Checkbox
-          {...register(name, { required: requiredFromProps as boolean })}
-          checked={checkedValue}
-          onCheckedChange={(checked: boolean) => setValue(name, checked)}
-        />
-        <label className='text-md text-neutral-content/60'>{label}</label>
-      </div>
-      {requiredFromProps && errors[name] && (
-        <p className=' text-md mt-2 text-red-500'>
-          {errors[name]?.type as any}
-        </p>
+    <FormField
+      control={control}
+      name={name}
+      render={({ field }) => (
+        <FormItem className='flex flex-row items-start space-x-3 space-y-0'>
+          <FormControl>
+            <Checkbox {...field} />
+          </FormControl>
+          <FormLabel className='font-normal'>{label}</FormLabel>
+        </FormItem>
       )}
-    </Width>
+    />
   )
 }
 export default CheckboxField

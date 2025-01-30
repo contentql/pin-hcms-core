@@ -4,13 +4,15 @@
 
 @layer base {
   html {
-    @apply font-body bg-background text-foreground;
+    @apply bg-background font-body text-foreground;
   }
 
   * {
     @apply border-border;
   }
 
+  /* All these css overridden by the admin-panel css variables */
+  /* Check app/(app)/layout.tsx for reference all these css variables are added to html element as inline styles */
   :root {
     --background: 0 0% 100%;
     --foreground: 224 71.4% 4.1%;

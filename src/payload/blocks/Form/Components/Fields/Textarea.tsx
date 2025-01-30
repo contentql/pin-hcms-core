@@ -1,8 +1,13 @@
-import Error from '../Error'
-import Width from '../Width'
-import { FieldErrorsImpl, FieldValues, UseFormRegister } from 'react-hook-form'
+import { useFormContext } from 'react-hook-form'
 
-import { Textarea } from '@/components/common/Textarea'
+import {
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form'
+import { Textarea } from '@/components/ui/textarea'
 
 interface TextareaField {
   name: string
@@ -14,30 +19,24 @@ interface TextareaField {
   blockName?: string | null
   blockType: 'textarea'
 }
-const TextArea: React.FC<
-  TextareaField & {
-    register: UseFormRegister<FieldValues & any>
-    errors: Partial<
-      FieldErrorsImpl<{
-        [x: string]: any
-      }>
-    >
-  }
-> = ({ name, label, width, register, required: requiredFromProps, errors }) => {
+const TextArea: React.FC<TextareaField> = ({ name, label }) => {
+  const { control } = useFormContext()
+
   return (
-    <Width width={width as number}>
-      <div className='flex flex-col gap-2'>
-        <label className='text-md font-semibold capitalize text-neutral-content/60'>
-          {label}
-        </label>
-        <Textarea
-          {...register(name, { required: requiredFromProps as boolean })}
-        />
-        {requiredFromProps && errors[name] && (
-          <Error error={errors[name]} label={label!} />
-        )}
-      </div>
-    </Width>
+    <FormField
+      control={control}
+      name={name}
+      render={({ field }) => (
+        <FormItem>
+          <FormLabel>{label}</FormLabel>
+
+          <FormControl>
+            <Textarea {...field} />
+          </FormControl>
+          <FormMessage />
+        </FormItem>
+      )}
+    />
   )
 }
 export default TextArea

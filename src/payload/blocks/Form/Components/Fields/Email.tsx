@@ -1,8 +1,13 @@
-import Error from '../Error'
-import Width from '../Width'
-import { FieldErrorsImpl, FieldValues, UseFormRegister } from 'react-hook-form'
+import { useFormContext } from 'react-hook-form'
 
-import Input from '@/components/common/Input'
+import {
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
 
 interface EmailField {
   name: string
@@ -13,31 +18,24 @@ interface EmailField {
   blockName?: string | null
   blockType: 'email'
 }
-const Email: React.FC<
-  EmailField & {
-    register: UseFormRegister<FieldValues & any>
-    errors: Partial<
-      FieldErrorsImpl<{
-        [x: string]: any
-      }>
-    >
-  }
-> = ({ name, label, width, register, required: requiredFromProps, errors }) => {
+const Email: React.FC<EmailField> = ({ name, label }) => {
+  const { control } = useFormContext()
+
   return (
-    <Width width={width as number}>
-      <div className='flex flex-col gap-2'>
-        <label className='text-md font-semibold capitalize text-neutral-content/60'>
-          {label}
-        </label>
-        <Input
-          type='email'
-          {...register(name, { required: requiredFromProps as boolean })}
-        />
-        {requiredFromProps && errors[name] && (
-          <Error error={errors[name]} label={label!} />
-        )}
-      </div>
-    </Width>
+    <FormField
+      control={control}
+      name={name}
+      render={({ field }) => (
+        <FormItem>
+          <FormLabel>{label}</FormLabel>
+
+          <FormControl>
+            <Input type='email' {...field} />
+          </FormControl>
+          <FormMessage />
+        </FormItem>
+      )}
+    />
   )
 }
 export default Email
