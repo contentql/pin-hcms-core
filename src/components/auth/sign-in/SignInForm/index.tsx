@@ -1,13 +1,25 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { User } from '@payload-types'
-import { useMutation } from '@tanstack/react-query'
+import { useAction } from 'next-safe-action/hooks'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
+// import axiosConfig from '@/utils/axiosConfig'
+// const SignInSchema = z.object({
+//   email: z
+//     .string()
+//     .min(1, { message: 'Email is required' })
+//     .email({ message: 'Email is invalid' }),
+//   password: z
+//     .string()
+//     .min(1, { message: 'Password is required' })
+//     .min(6, { message: 'Password must be at least 6 characters long' }),
+// })
+import { loginAction } from '@/actions/auth/login'
+import { loginSchema } from '@/actions/auth/validator'
 import { Alert, AlertDescription } from '@/components/common/Alert'
 import { Button } from '@/components/ui/button'
 import {
@@ -19,24 +31,19 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import axiosConfig from '@/utils/axiosConfig'
-
-const SignInSchema = z.object({
-  email: z
-    .string()
-    .min(1, { message: 'Email is required' })
-    .email({ message: 'Email is invalid' }),
-  password: z
-    .string()
-    .min(1, { message: 'Password is required' })
-    .min(6, { message: 'Password must be at least 6 characters long' }),
-})
 
 const SignInForm: React.FC = () => {
   const router = useRouter()
+  const {
+    execute: mutate,
+    isPending,
+    hasSucceeded: isSuccess,
+    hasErrored: isError,
+    result,
+  } = useAction(loginAction)
 
-  const form = useForm<z.infer<typeof SignInSchema>>({
-    resolver: zodResolver(SignInSchema),
+  const form = useForm<z.infer<typeof loginSchema>>({
+    resolver: zodResolver(loginSchema),
     mode: 'onBlur',
     defaultValues: {
       email: '',
@@ -46,39 +53,47 @@ const SignInForm: React.FC = () => {
 
   const { handleSubmit, reset } = form
 
-  const { mutate, isSuccess, isError, isPending } = useMutation({
-    mutationFn: async ({ email, password }: z.infer<typeof SignInSchema>) => {
-      try {
-        const response = await axiosConfig('/api/users/login', {
-          data: {
-            email,
-            password,
-          },
-          method: 'POST',
-        })
+  // const { mutate, isSuccess, isError, isPending } = useMutation({
+  //   mutationFn: async ({ email, password }: z.infer<typeof SignInSchema>) => {
+  //     try {
+  //       const response = await axiosConfig('/api/users/login', {
+  //         data: {
+  //           email,
+  //           password,
+  //         },
+  //         method: 'POST',
+  //       })
 
-        return response?.data?.user as User
-      } catch (error) {
-        console.log('Failed to login', { error })
-        throw new Error('Failed to login')
-      }
-    },
-    onSuccess: user => {
-      console.log({ user })
+  //       return response?.data?.user as User
+  //     } catch (error) {
+  //       console.log('Failed to login', { error })
+  //       throw new Error('Failed to login')
+  //     }
+  //   },
+  //   onSuccess: user => {
+  //     console.log({ user })
 
-      const userRole = user?.role ?? []
+  //     const userRole = user?.role ?? []
 
-      if (userRole.includes('admin')) {
-        router.push('/admin')
-      } else if (userRole.includes('user')) {
-        router.push('/profile')
-      }
+  //     if (userRole.includes('admin')) {
+  //       router.push('/admin')
+  //     } else if (userRole.includes('user')) {
+  //       router.push('/profile')
+  //     }
 
-      reset()
-    },
-  })
+  //     reset()
+  //   },
+  // })
 
-  const onSubmit = (data: z.infer<typeof SignInSchema>) => {
+  const userRole = result?.data?.role ?? []
+
+  if (userRole.includes('admin')) {
+    router.push('/admin')
+  } else if (userRole.includes('user')) {
+    router.push('/profile')
+  }
+
+  const onSubmit = (data: z.infer<typeof loginSchema>) => {
     mutate({
       ...data,
     })

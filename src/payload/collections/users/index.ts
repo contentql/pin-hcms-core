@@ -19,6 +19,7 @@ export const Users: CollectionConfig = {
   access: {
     ...UsersCollection.access,
     create: () => true,
+    update: () => true,
   },
   auth: {
     verify: {
