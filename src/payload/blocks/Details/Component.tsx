@@ -1,6 +1,6 @@
 import { Params } from '../types'
 import configPromise from '@payload-config'
-import { Blog, DetailsType } from '@payload-types'
+import { DetailsType } from '@payload-types'
 import { unstable_cache } from 'next/cache'
 import { notFound } from 'next/navigation'
 import { getPayload } from 'payload'
@@ -47,7 +47,7 @@ export const DetailsBlock: React.FC<DetailsProps> = async ({
         return notFound()
       }
 
-      return <BlogDetails blog={blog as Blog} />
+      return <BlogDetails blog={blog} />
     }
 
     case 'tags': {

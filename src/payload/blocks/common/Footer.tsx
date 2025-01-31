@@ -44,6 +44,7 @@ const Footer = ({ metadata }: { metadata: SiteSetting }) => {
           {logoDetails.url && (
             <Link href='/'>
               <Image
+                unoptimized
                 src={logoDetails.url}
                 alt={logoDetails.alt}
                 width={40}

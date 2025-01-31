@@ -1,8 +1,8 @@
 import { Params } from '../types'
 import { HeroType } from '@payload-types'
+import { ArrowRight } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { FaArrowRight } from 'react-icons/fa'
 
 interface HeroProps extends HeroType {
   params: Params
@@ -37,14 +37,14 @@ export const HeroBlock: React.FC<HeroProps> = ({ params, ...block }) => {
         </p>
       </div>
 
-      <div className='grid w-full gap-8 md:grid-cols-4'>
+      <div className='grid w-full gap-8 md:grid-cols-2 lg:grid-cols-4'>
         <Link
           href='/sign-in'
-          className='rounded-rounded-box hover:bg-base-content/10 group w-full cursor-pointer space-y-4  px-2 py-4 transition-all duration-300'>
-          <p className='font-display inline-flex items-center gap-x-4 text-2xl font-bold transition-all duration-300'>
+          className='group w-full cursor-pointer space-y-4 rounded px-6  py-3 transition-colors duration-300 hover:bg-secondary/30'>
+          <p className='inline-flex items-center gap-x-4 font-display text-2xl font-bold'>
             Sign In
-            <span className='group-hover:translate-x-2'>
-              <FaArrowRight />
+            <span className='transition-transform duration-300 group-hover:translate-x-2'>
+              <ArrowRight />
             </span>
           </p>
           <p className='text-base-content/70'>
@@ -55,11 +55,11 @@ export const HeroBlock: React.FC<HeroProps> = ({ params, ...block }) => {
 
         <Link
           href='/authors'
-          className='rounded-rounded-box hover:bg-base-content/10 group w-full cursor-pointer space-y-4  px-2 py-4 transition-all duration-300'>
-          <p className='font-display inline-flex items-center gap-x-4 text-2xl font-bold transition-all duration-300'>
+          className='group w-full space-y-4 rounded  px-6  py-3 transition-colors duration-300 hover:bg-secondary/30'>
+          <p className='inline-flex items-center gap-x-4 font-display text-2xl font-bold'>
             Authors
-            <span className='group-hover:translate-x-2'>
-              <FaArrowRight />
+            <span className='transition-transform duration-300 group-hover:translate-x-2'>
+              <ArrowRight />
             </span>
           </p>
           <p className='text-base-content/70'>
@@ -70,11 +70,11 @@ export const HeroBlock: React.FC<HeroProps> = ({ params, ...block }) => {
 
         <Link
           href='/blogs'
-          className='rounded-rounded-box hover:bg-base-content/10 group w-full cursor-pointer space-y-4  px-2 py-4 transition-all duration-300'>
-          <p className='font-display inline-flex items-center gap-x-4 text-2xl font-bold transition-all duration-300'>
+          className='group w-full space-y-4 rounded  px-6  py-3 transition-colors duration-300 hover:bg-secondary/30'>
+          <p className='inline-flex items-center gap-x-4 font-display text-2xl font-bold'>
             Blogs
-            <span className='group-hover:translate-x-2'>
-              <FaArrowRight />
+            <span className='transition-transform duration-300 group-hover:translate-x-2'>
+              <ArrowRight />
             </span>
           </p>
           <p className='text-base-content/70'>
@@ -85,11 +85,11 @@ export const HeroBlock: React.FC<HeroProps> = ({ params, ...block }) => {
 
         <Link
           href='/tags'
-          className='rounded-rounded-box hover:bg-base-content/10 group w-full cursor-pointer space-y-4  px-2 py-4 transition-all duration-300'>
-          <p className='font-display inline-flex items-center gap-x-4 text-2xl font-bold transition-all duration-300'>
+          className='group w-full space-y-4 rounded  px-6  py-3 transition-colors duration-300 hover:bg-secondary/30'>
+          <p className='inline-flex items-center gap-x-4 font-display text-2xl font-bold'>
             Tags
-            <span className='group-hover:translate-x-2'>
-              <FaArrowRight />
+            <span className='transition-transform duration-300 group-hover:translate-x-2'>
+              <ArrowRight />
             </span>
           </p>
           <p className='text-base-content/70'>

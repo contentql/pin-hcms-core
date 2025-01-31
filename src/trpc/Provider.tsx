@@ -3,7 +3,6 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { httpBatchLink } from '@trpc/client'
-import { KBarProvider } from 'kbar'
 import { AppProgressBar as ProgressBar } from 'next-nprogress-bar'
 import { ThemeProvider } from 'next-themes'
 import { NuqsAdapter } from 'nuqs/adapters/next/app'
@@ -29,13 +28,11 @@ export default function Provider({ children }: { children: React.ReactNode }) {
         <QueryClientProvider client={queryClient}>
           <ProgressBar
             height='2px'
-            color='#307AC0'
+            color='hsl(var(--primary))'
             options={{ showSpinner: false }}
             shallowRouting
           />
-          <KBarProvider>
-            <NuqsAdapter>{children}</NuqsAdapter>
-          </KBarProvider>
+          <NuqsAdapter>{children}</NuqsAdapter>
           <ReactQueryDevtools initialIsOpen={false} />
         </QueryClientProvider>
       </trpc.Provider>

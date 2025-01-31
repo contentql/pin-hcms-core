@@ -1,9 +1,9 @@
 import CommandBar from '../../../components/CommandBar'
 import type { SiteSetting } from '@payload-types'
+import { ChevronDown } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Fragment } from 'react'
-import { HiChevronDown } from 'react-icons/hi'
 
 import {
   DropdownMenu,
@@ -44,11 +44,12 @@ const Navbar = ({ metadata }: { metadata: SiteSetting }) => {
   }
 
   return (
-    <header className='fixed left-0 top-0 z-10 w-full bg-card'>
+    <header className='fixed left-0 top-0 z-10 w-full bg-secondary/30 backdrop-blur-xl'>
       <div className='container flex h-14 items-center justify-between'>
         {logoDetails.url && (
           <Link href='/'>
             <Image
+              unoptimized
               src={logoDetails.url}
               alt={logoDetails.alt}
               width={24}
@@ -57,7 +58,7 @@ const Navbar = ({ metadata }: { metadata: SiteSetting }) => {
           </Link>
         )}
 
-        <div className='flex items-center gap-8'>
+        <div className='hidden items-center gap-8 md:flex'>
           {navLinks?.length > 0 && (
             <nav>
               <ul className='flex gap-8 text-sm'>
@@ -68,7 +69,7 @@ const Navbar = ({ metadata }: { metadata: SiteSetting }) => {
                         <DropdownMenuTrigger>
                           <li className='flex list-none items-center gap-1'>
                             {label}{' '}
-                            <HiChevronDown className='size-4 text-slate-100' />
+                            <ChevronDown className='size-4 text-slate-100' />
                           </li>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent>

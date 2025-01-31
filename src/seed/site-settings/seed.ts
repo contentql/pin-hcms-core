@@ -32,17 +32,25 @@ export const seedSiteSettings = async ({
     const ogImageUrl = await payload.create({
       collection: 'media',
       data: {
-        alt: 'og-image',
+        alt: 'ContentQL og-image',
       },
-      filePath: path.join(process.cwd(), '/public/images/seed/og-image.png'),
+      filePath: path.join(process.cwd(), '/public/og-image.webp'),
     })
 
     const faviconUrl = await payload.create({
       collection: 'media',
       data: {
-        alt: 'og-image',
+        alt: 'ContentQL favicon',
       },
-      filePath: path.join(process.cwd(), '/public/images/seed/bolt-logo.png'),
+      filePath: path.join(process.cwd(), '/public/favicon.ico'),
+    })
+
+    const logo = await payload.create({
+      collection: 'media',
+      data: {
+        alt: 'ContentQL logo',
+      },
+      filePath: path.join(process.cwd(), '/public/logo.svg'),
     })
 
     const result = await payload.updateGlobal({
@@ -57,7 +65,7 @@ export const seedSiteSettings = async ({
         },
         navbar: {
           logo: {
-            imageUrl: faviconUrl.id,
+            imageUrl: logo.id,
             description: 'ContentQL Logo',
             height: 24,
             width: 24,
@@ -67,7 +75,7 @@ export const seedSiteSettings = async ({
               group: false,
               menuLink: {
                 type: 'reference',
-                label: 'Posts',
+                label: 'Blogs',
                 page: {
                   relationTo: 'pages',
                   value: blogsPage.id,
@@ -82,10 +90,25 @@ export const seedSiteSettings = async ({
               group: false,
               menuLink: {
                 type: 'reference',
-                label: 'Team',
+                label: 'Authors',
                 page: {
                   relationTo: 'pages',
                   value: authorPages.id,
+                },
+              },
+
+              menuLinkGroup: {
+                groupLinks: [],
+              },
+            },
+            {
+              group: false,
+              menuLink: {
+                type: 'reference',
+                label: 'Tags',
+                page: {
+                  relationTo: 'pages',
+                  value: tagsPages.id,
                 },
               },
 
@@ -101,21 +124,6 @@ export const seedSiteSettings = async ({
                 page: {
                   relationTo: 'pages',
                   value: contactPage?.id,
-                },
-              },
-
-              menuLinkGroup: {
-                groupLinks: [],
-              },
-            },
-            {
-              group: false,
-              menuLink: {
-                type: 'reference',
-                label: 'Categories',
-                page: {
-                  relationTo: 'pages',
-                  value: tagsPages.id,
                 },
               },
 
@@ -148,7 +156,7 @@ export const seedSiteSettings = async ({
             height: 24,
             width: 24,
             description: 'Welcome to ContentQL',
-            imageUrl: faviconUrl.id,
+            imageUrl: logo.id,
           },
           copyright: `© ${new Date().getFullYear()} all rights reserved`,
           footerLinks: [
@@ -163,7 +171,7 @@ export const seedSiteSettings = async ({
                 groupLinks: [
                   {
                     type: 'reference',
-                    label: 'Posts',
+                    label: 'Blogs',
                     page: {
                       relationTo: 'pages',
                       value: blogsPage.id,
@@ -171,7 +179,7 @@ export const seedSiteSettings = async ({
                   },
                   {
                     type: 'reference',
-                    label: 'Categories',
+                    label: 'Tags',
                     page: {
                       relationTo: 'pages',
                       value: tagsPages.id,

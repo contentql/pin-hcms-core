@@ -209,7 +209,7 @@ export default async function RootLayout({
   })
 
   return (
-    <html lang='en'>
+    <html lang='en' suppressHydrationWarning>
       <head>
         <link rel='icon' type='image/x-icon' href={faviconUrl} />
         {/* Preloading the custom font given by the user */}
