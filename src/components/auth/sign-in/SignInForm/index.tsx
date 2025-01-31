@@ -7,19 +7,8 @@ import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
-// import axiosConfig from '@/utils/axiosConfig'
-// const SignInSchema = z.object({
-//   email: z
-//     .string()
-//     .min(1, { message: 'Email is required' })
-//     .email({ message: 'Email is invalid' }),
-//   password: z
-//     .string()
-//     .min(1, { message: 'Password is required' })
-//     .min(6, { message: 'Password must be at least 6 characters long' }),
-// })
-import { loginAction } from '@/actions/auth/login'
-import { loginSchema } from '@/actions/auth/validator'
+import { signInAction } from '@/actions/auth/signin'
+import { signInSchema } from '@/actions/auth/validator'
 import { Alert, AlertDescription } from '@/components/common/Alert'
 import { Button } from '@/components/ui/button'
 import {
@@ -40,10 +29,20 @@ const SignInForm: React.FC = () => {
     hasSucceeded: isSuccess,
     hasErrored: isError,
     result,
-  } = useAction(loginAction)
+  } = useAction(signInAction, {
+    onSuccess: ({ data: user }) => {
+      const userRole = user?.role ?? []
+      if (userRole.includes('admin')) {
+        router.push('/admin')
+      } else if (userRole.includes('user')) {
+        router.push('/profile')
+      }
+      reset()
+    },
+  })
 
-  const form = useForm<z.infer<typeof loginSchema>>({
-    resolver: zodResolver(loginSchema),
+  const form = useForm<z.infer<typeof signInSchema>>({
+    resolver: zodResolver(signInSchema),
     mode: 'onBlur',
     defaultValues: {
       email: '',
@@ -53,38 +52,6 @@ const SignInForm: React.FC = () => {
 
   const { handleSubmit, reset } = form
 
-  // const { mutate, isSuccess, isError, isPending } = useMutation({
-  //   mutationFn: async ({ email, password }: z.infer<typeof SignInSchema>) => {
-  //     try {
-  //       const response = await axiosConfig('/api/users/login', {
-  //         data: {
-  //           email,
-  //           password,
-  //         },
-  //         method: 'POST',
-  //       })
-
-  //       return response?.data?.user as User
-  //     } catch (error) {
-  //       console.log('Failed to login', { error })
-  //       throw new Error('Failed to login')
-  //     }
-  //   },
-  //   onSuccess: user => {
-  //     console.log({ user })
-
-  //     const userRole = user?.role ?? []
-
-  //     if (userRole.includes('admin')) {
-  //       router.push('/admin')
-  //     } else if (userRole.includes('user')) {
-  //       router.push('/profile')
-  //     }
-
-  //     reset()
-  //   },
-  // })
-
   const userRole = result?.data?.role ?? []
 
   if (userRole.includes('admin')) {
@@ -93,7 +60,7 @@ const SignInForm: React.FC = () => {
     router.push('/profile')
   }
 
-  const onSubmit = (data: z.infer<typeof loginSchema>) => {
+  const onSubmit = (data: z.infer<typeof signInSchema>) => {
     mutate({
       ...data,
     })

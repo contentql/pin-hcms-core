@@ -6,14 +6,14 @@ import { getPayload } from 'payload'
 
 import { publicClient } from '@/lib/safe-action'
 
-import { loginSchema } from './validator'
+import { signInSchema } from './validator'
 
 const payload = await getPayload({
   config: configPromise,
 })
 
-export const loginAction = publicClient
-  .schema(loginSchema)
+export const signInAction = publicClient
+  .schema(signInSchema)
   .action(async ({ clientInput }) => {
     const { email, password } = clientInput
 
