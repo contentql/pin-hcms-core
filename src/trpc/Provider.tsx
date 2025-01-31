@@ -24,7 +24,7 @@ export default function Provider({ children }: { children: React.ReactNode }) {
   )
 
   return (
-    <ThemeProvider enableSystem attribute='class'>
+    <ThemeProvider enableSystem attribute='class' enableColorScheme={false}>
       <trpc.Provider client={trpcClient} queryClient={queryClient}>
         <QueryClientProvider client={queryClient}>
           <ProgressBar
