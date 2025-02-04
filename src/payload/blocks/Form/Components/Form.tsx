@@ -50,7 +50,7 @@ const Form = ({
               acc[field.name] = field?.defaultValue || false
               break
             case 'number':
-              acc[field.name] = field.defaultValue || null
+              acc[field.name] = field.defaultValue || ''
               break
             case 'text':
             case 'textarea':

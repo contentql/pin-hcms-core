@@ -1,41 +1,34 @@
 'use client'
 
-import { useQuery } from '@tanstack/react-query'
 import { Loader } from 'lucide-react'
+import { useAction } from 'next-safe-action/hooks'
 import { useRouter, useSearchParams } from 'next/navigation'
+import { useEffect } from 'react'
 import { toast } from 'sonner'
 
-import axiosConfig from '@/utils/axiosConfig'
+import { verifyEmailAction } from '@/actions/auth'
 
 const EmailVerificationView = () => {
   const router = useRouter()
   const searchParams = useSearchParams()
   const token = searchParams.get('token')
-
-  const { isPending, isSuccess, isError } = useQuery({
-    queryFn: async () => {
-      try {
-        const response = await axiosConfig(`/api/users/verify/${token}`, {
-          method: 'POST',
-        })
-
-        return response?.data
-      } catch (error) {
-        throw new Error('')
+  const userId = searchParams.get('id')
+  const { execute, isPending, hasErrored } = useAction(verifyEmailAction, {
+    onSuccess: ({ data: emailVerified }) => {
+      if (emailVerified) {
+        toast.success(`Your email successfully verified`)
+        router.push('/sign-in')
       }
     },
-    queryKey: [`reset-password-${token}`],
-    enabled: !!token,
   })
 
-  if (isSuccess) {
-    toast.success(`Your email successfully verified`)
-    router.push('/sign-in')
-  }
-
-  if (!token) {
-    router.push('/sign-in')
-  }
+  useEffect(() => {
+    if (!token || !userId) {
+      router.push('/sign-in')
+    } else {
+      execute({ token, userId })
+    }
+  }, [execute, router, token, userId])
 
   return (
     <div className='flex min-h-screen items-center justify-center gap-x-2'>
@@ -46,7 +39,7 @@ const EmailVerificationView = () => {
         </p>
       ) : null}
 
-      {isError ? (
+      {hasErrored ? (
         <p>
           Failed to verify email, the link might be expired. Please request new
           link or contact support for help

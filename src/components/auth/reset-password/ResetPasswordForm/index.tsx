@@ -1,12 +1,13 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useMutation } from '@tanstack/react-query'
+import { useAction } from 'next-safe-action/hooks'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { User } from 'payload'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
+import { resetPasswordAction } from '@/actions/auth'
+import { resetPasswordSchema } from '@/actions/auth/validator'
 import { Alert, AlertDescription } from '@/components/common/Alert'
 import { Button } from '@/components/ui/button'
 import {
@@ -18,63 +19,44 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import axiosConfig from '@/utils/axiosConfig'
-
-export const ResetPasswordSchema = z.object({
-  password: z
-    .string()
-    .min(8, { message: 'Password must be at least 8 characters long' }),
-  token: z.string(),
-})
 
 const ResetPasswordForm = () => {
   const searchParams = useSearchParams()
   const token = searchParams.get('token')
 
   const router = useRouter()
+  const { execute, hasSucceeded, hasErrored, isPending } = useAction(
+    resetPasswordAction,
+    {
+      onSuccess: ({ data: user }) => {
+        if (user) {
+          router.push('/sign-in')
+        }
+      },
+    },
+  )
   const form = useForm({
-    resolver: zodResolver(ResetPasswordSchema),
+    resolver: zodResolver(resetPasswordSchema),
     mode: 'onBlur',
     defaultValues: { token: token ?? '', password: '' },
   })
 
   const { handleSubmit } = form
 
-  const { mutate, isPending, isSuccess, isError } = useMutation({
-    mutationFn: async (data: z.infer<typeof ResetPasswordSchema>) => {
-      try {
-        const response = await axiosConfig('/api/users/reset-password', {
-          data,
-          method: 'POST',
-        })
-
-        return response.data?.user as User
-      } catch (error) {
-        console.log('Failed to generate reset-password', { error })
-        throw new Error('Failed to generate reset-password')
-      }
-    },
-    onSuccess: user => {
-      if (user) {
-        router.push('/sign-in')
-      }
-    },
-  })
-
-  const onSubmit = async (data: z.infer<typeof ResetPasswordSchema>) => {
-    mutate(data)
+  const onSubmit = async (data: z.infer<typeof resetPasswordSchema>) => {
+    execute(data)
   }
 
   return (
     <div className='flex min-h-screen w-full flex-col items-center justify-center'>
       <div>
-        {isSuccess ? (
+        {hasSucceeded ? (
           <Alert variant='success' className='mb-12'>
             <AlertDescription>
               Successfully updated password, redirecting to sign-in page
             </AlertDescription>
           </Alert>
-        ) : isError ? (
+        ) : hasErrored ? (
           <Alert variant='danger' className='mb-12'>
             <AlertDescription>Failed to reset password</AlertDescription>
           </Alert>

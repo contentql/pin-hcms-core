@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
-import { signInAction } from '@/actions/auth/signin'
+import { signInAction } from '@/actions/auth'
 import { signInSchema } from '@/actions/auth/validator'
 import { Alert, AlertDescription } from '@/components/common/Alert'
 import { Button } from '@/components/ui/button'

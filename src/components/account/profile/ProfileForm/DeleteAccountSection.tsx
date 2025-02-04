@@ -2,10 +2,12 @@
 
 import { User } from '@payload-types'
 import { TriangleAlert } from 'lucide-react'
+import { useAction } from 'next-safe-action/hooks'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { toast } from 'sonner'
 
+import { deleteUserAction } from '@/actions/user'
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
@@ -17,22 +19,16 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
-import { trpc } from '@/trpc/client'
 
 export default function DeleteAccountSection({ user }: { user: User }) {
   const [email, setEmail] = useState('')
   const router = useRouter()
-
-  const {
-    mutate: deleteUserMutation,
-    isPending: isDeleteAccountPending,
-    isError: isDeleteAccountError,
-    error: DeleteAccountError,
-    isSuccess: DeleteAccountSuccess,
-  } = trpc.user.deleteUser.useMutation({
-    onSuccess: () => {
-      toast.success('Account deleted successfully')
-      router.push('/sign-up')
+  const { execute, isPending } = useAction(deleteUserAction, {
+    onSuccess: ({ data }) => {
+      if (data?.success) {
+        toast.success('Account deleted successfully')
+        router.push('/sign-up')
+      }
     },
     onError: () => {
       toast.error('Unable to delete the account, try again!')
@@ -57,17 +53,17 @@ export default function DeleteAccountSection({ user }: { user: User }) {
             </DialogDescription>
           </DialogHeader>
 
-          <p className='mt-6 text-sm leading-3 text-secondary'>
+          <p className='mt-6 text-sm leading-3 text-muted-foreground'>
             Type <strong>{user.email}</strong> to confirm
           </p>
           <Input type='text' onChange={e => setEmail(e.target.value)} />
 
           <DialogFooter>
             <Button
-              disabled={email !== user.email}
-              onClick={() => deleteUserMutation()}
+              disabled={email !== user.email || isPending}
+              onClick={() => execute({ email })}
               variant='destructive'>
-              Yes, Delete Account Forever
+              {isPending ? 'Deleting' : 'Yes, Delete Account Forever'}
             </Button>
           </DialogFooter>
         </DialogContent>

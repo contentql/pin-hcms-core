@@ -1,10 +1,12 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useMutation } from '@tanstack/react-query'
+import { useAction } from 'next-safe-action/hooks'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
+import { forgotPasswordAction } from '@/actions/auth'
+import { forgotPasswordSchema } from '@/actions/auth/validator'
 import { Alert, AlertDescription } from '@/components/common/Alert'
 import { Button } from '@/components/ui/button'
 import {
@@ -16,56 +18,41 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import axiosConfig from '@/utils/axiosConfig'
-
-const GenerateTokenSchema = z.object({
-  email: z.string().email({ message: 'Invalid email address' }),
-})
 
 const GenerateResetTokenForm: React.FC = () => {
-  const form = useForm<z.infer<typeof GenerateTokenSchema>>({
-    resolver: zodResolver(GenerateTokenSchema),
+  const form = useForm<z.infer<typeof forgotPasswordSchema>>({
+    resolver: zodResolver(forgotPasswordSchema),
     mode: 'onBlur',
     defaultValues: { email: '' },
   })
 
   const { handleSubmit, reset } = form
 
-  const { mutate, isSuccess, isError, isPending } = useMutation({
-    mutationFn: async (data: z.infer<typeof GenerateTokenSchema>) => {
-      try {
-        const response = await axiosConfig('/api/users/forgot-password', {
-          data,
-          method: 'POST',
-        })
-
-        return response.data?.message
-      } catch (error) {
-        console.log('Failed to generate reset-password token', { error })
-        throw new Error('Failed to generate reset-password token')
-      }
+  const { execute, hasSucceeded, hasErrored, isPending } = useAction(
+    forgotPasswordAction,
+    {
+      onSuccess: ({ data }) => {
+        if (data) {
+          reset()
+        }
+      },
     },
-    onSuccess: status => {
-      if (status === 'Success') {
-        reset()
-      }
-    },
-  })
+  )
 
-  const onSubmit = async (data: z.infer<typeof GenerateTokenSchema>) => {
-    mutate(data)
+  const onSubmit = async (data: z.infer<typeof forgotPasswordSchema>) => {
+    execute(data)
   }
 
   return (
     <div className='flex min-h-screen w-full flex-col items-center justify-center'>
       <div>
-        {isSuccess ? (
+        {hasSucceeded ? (
           <Alert variant='success' className='mb-12'>
             <AlertDescription>
               Reset email has been sent to your email.
             </AlertDescription>
           </Alert>
-        ) : isError ? (
+        ) : hasErrored ? (
           <Alert variant='danger' className='mb-12'>
             <AlertDescription>Failed to sent reset email.</AlertDescription>
           </Alert>

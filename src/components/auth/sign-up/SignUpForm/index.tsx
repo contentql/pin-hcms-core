@@ -1,14 +1,15 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { User } from '@payload-types'
-import { useMutation } from '@tanstack/react-query'
+import { useAction } from 'next-safe-action/hooks'
 import Link from 'next/link'
 import { useForm } from 'react-hook-form'
 import { GoCheckCircleFill } from 'react-icons/go'
 import slugify from 'slugify'
 import { z } from 'zod'
 
+import { signUpAction } from '@/actions/auth'
+import { signUpSchema } from '@/actions/auth/validator'
 import { Alert, AlertDescription } from '@/components/common/Alert'
 import { Button } from '@/components/ui/button'
 import {
@@ -20,13 +21,10 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import axiosConfig from '@/utils/axiosConfig'
-
-import { SignUpFormData, SignUpFormSchema } from './validator'
 
 const SignUpForm: React.FC = () => {
-  const form = useForm<SignUpFormData>({
-    resolver: zodResolver(SignUpFormSchema),
+  const form = useForm<z.infer<typeof signUpSchema>>({
+    resolver: zodResolver(signUpSchema),
     mode: 'onBlur',
     defaultValues: {
       username: '',
@@ -37,32 +35,16 @@ const SignUpForm: React.FC = () => {
   })
 
   const { handleSubmit } = form
+  const { execute, isPending, hasSucceeded, hasErrored, result } =
+    useAction(signUpAction)
 
-  const { mutate, isError, isSuccess, isPending, data } = useMutation({
-    mutationFn: async (data: z.infer<typeof SignUpFormSchema>) => {
-      const { confirmPassword, ...userData } = data
-
-      try {
-        const response = await axiosConfig('/api/users', {
-          data: userData,
-          method: 'POST',
-        })
-
-        return response.data?.doc as User
-      } catch (error) {
-        console.log('Failed to sign-up', { error })
-        throw new Error('Failed to sign-up')
-      }
-    },
-  })
-
-  const onSubmit = async (data: SignUpFormData) => {
-    mutate(data)
+  const onSubmit = async (data: z.infer<typeof signUpSchema>) => {
+    execute(data)
   }
 
   return (
     <div className='flex w-full items-center justify-center'>
-      {data ? (
+      {result?.data ? (
         <>
           <div className='mx-auto  text-center'>
             <div className='bg-base-200 mx-auto flex w-fit gap-4 rounded-md p-4'>
@@ -70,7 +52,7 @@ const SignUpForm: React.FC = () => {
               <div className='text-left font-semibold'>
                 Email has been sent to{' '}
                 <code className='bg-cq-background rounded-sm px-2 py-1'>
-                  {data.email}
+                  {result?.data?.email}
                 </code>
                 <span className='text-cq-text-secondary mt-1 block font-normal'>
                   You can close this window now.
@@ -81,16 +63,16 @@ const SignUpForm: React.FC = () => {
         </>
       ) : (
         <div className='w-full max-w-md p-6'>
-          {isSuccess ? (
+          {hasSucceeded ? (
             <Alert variant='success' className='mb-12'>
               <AlertDescription>
                 Successfully signed up ! please verify your email
               </AlertDescription>
             </Alert>
-          ) : isError ? (
+          ) : hasErrored ? (
             <Alert variant='danger' className='mb-12'>
               <AlertDescription>
-                Sign up failed. Check the details you provided.
+                Sign up failed. {result.serverError}
               </AlertDescription>
             </Alert>
           ) : null}

@@ -1,12 +1,17 @@
 'use client'
 
+import { zodResolver } from '@hookform/resolvers/zod'
 import type { User } from '@payload-types'
 import { useMutation } from '@tanstack/react-query'
 import { Camera, ImageUp } from 'lucide-react'
+import { useAction } from 'next-safe-action/hooks'
 import { ChangeEvent, useState } from 'react'
+import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { z } from 'zod'
 
+import { updateUserAction } from '@/actions/user'
+import { updateUserSchema } from '@/actions/user/validator'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import {
@@ -18,88 +23,61 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { trpc } from '@/trpc/client'
 import { getInitials } from '@/utils/getInitials'
+import { signOut } from '@/utils/signOut'
 import uploadMedia from '@/utils/uploadMedia'
 
 import DeleteAccountSection from './DeleteAccountSection'
 
-const ProfileFormSchema = z.object({
-  displayName: z.string().optional(),
-  password: z.string().optional(),
-  confirmPassword: z.string().optional(),
-})
-
-type ProfileFormDataType = z.infer<typeof ProfileFormSchema>
-
 const maxFileSize = 1024 * 1024 * 5
 
 const ProfileForm = ({ user }: { user: User }) => {
-  const { data, refetch: refetchUserData } = trpc.user.getUser.useQuery(
-    undefined,
-    {
-      initialData: { ...user, collection: 'users' },
-    },
-  )
-
-  const { imageUrl, username, displayName, role } = data || user
-
-  const [formData, setFormData] = useState<ProfileFormDataType>({
-    displayName: typeof displayName === 'string' ? displayName : '',
-    password: '',
-    confirmPassword: '',
-  })
-
   const [userImage, setUserImage] = useState<File>()
   const [userImageURL, setUserImageURL] = useState('')
   const [open, setOpen] = useState(false)
 
-  const handleOnChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value })
-  }
+  const {
+    execute,
+    result,
+    isPending: isUpdateUserPending,
+  } = useAction(updateUserAction, {
+    onSuccess: ({ data }) => {
+      if (data) {
+        toast.success('Successfully updated profile!')
+      }
+    },
+  })
 
-  const { mutate: updateUserMutation, isPending: isUpdateUserPending } =
-    trpc.user.updateUser.useMutation({
-      onSuccess: () => {
-        refetchUserData()
-        toast.success('Profile updated successfully')
-        setOpen(false)
-      },
-      onError() {
-        return null
-      },
-    })
+  const { imageUrl, username, displayName, role } = result?.data || user
+
+  const form = useForm({
+    resolver: zodResolver(updateUserSchema),
+    defaultValues: {
+      displayName: displayName ?? '',
+      password: '',
+      confirmPassword: '',
+    },
+  })
+
+  const { handleSubmit } = form
 
   const { mutate: uploadProfilePic, isPending: uploadingImage } = useMutation({
     mutationFn: uploadMedia,
     onSuccess: data => {
-      updateUserMutation({
+      execute({
         imageUrl: data.id,
       })
     },
   })
-
-  const handleUserUpdateForm = (e: any) => {
-    e.preventDefault()
-    const sanitizedData = Object.fromEntries(
-      Object.entries(formData).filter(([key, value]) => Boolean(value)),
-    )
-
-    if (
-      sanitizedData.password &&
-      sanitizedData.password !== sanitizedData.confirmPassword
-    ) {
-      toast.error('Passwords do not match!')
-      return
-    }
-
-    updateUserMutation({
-      ...sanitizedData,
-    })
-  }
 
   const userDetails = {
     url:
@@ -137,8 +115,12 @@ const ProfileForm = ({ user }: { user: User }) => {
     }
   }
 
+  const onSubmit = (data: z.infer<typeof updateUserSchema>) => {
+    execute(data)
+  }
+
   return (
-    <div className='w-full max-w-4xl'>
+    <div className='w-full max-w-4xl p-4'>
       <h2 className='text-3xl font-semibold'>Account Settings</h2>
 
       <div className='relative h-max w-max'>
@@ -166,6 +148,7 @@ const ProfileForm = ({ user }: { user: User }) => {
               <Camera size={20} />
             </Button>
           </DialogTrigger>
+
           <DialogContent className='sm:max-w-[425px]'>
             <DialogHeader>
               <DialogTitle>Change your photo</DialogTitle>
@@ -182,18 +165,21 @@ const ProfileForm = ({ user }: { user: User }) => {
               <div className='flex w-full items-center justify-center'>
                 <label
                   htmlFor='dropzone-file'
-                  className='flex h-64 w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed transition-colors hover:bg-secondary/10'>
+                  className='flex h-64 w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed text-muted-foreground transition-colors hover:bg-secondary/10'>
                   <div className='flex flex-col items-center justify-center pb-6 pt-5'>
-                    <ImageUp className='text-secondary' />
+                    <ImageUp />
 
                     <p className='mt-4 text-sm'>
-                      <span className='font-semibold'>Click to upload</span>
+                      <span className='font-semibold text-foreground'>
+                        Click to upload
+                      </span>
                     </p>
-                    <p className='mt-2 text-center text-xs leading-5 text-secondary'>
+                    <p className='mt-2 text-center text-xs leading-5'>
                       Use square image for best results,
                       <br /> maximum upload size is 5MB
                     </p>
                   </div>
+
                   <input
                     accept='image/*'
                     multiple={false}
@@ -205,6 +191,7 @@ const ProfileForm = ({ user }: { user: User }) => {
                 </label>
               </div>
             </div>
+
             <DialogFooter>
               <Button
                 variant='outline'
@@ -223,100 +210,104 @@ const ProfileForm = ({ user }: { user: User }) => {
                     uploadProfilePic(userImage)
                   }
                 }}>
-                Save changes
+                {uploadingImage || isUpdateUserPending
+                  ? 'Saving changes...'
+                  : 'Save changes'}
               </Button>
             </DialogFooter>
           </DialogContent>
         </Dialog>
       </div>
 
-      <form onSubmit={handleUserUpdateForm} className='mb-16 items-center'>
-        <div className='mb-4 sm:mb-6'>
-          <label
-            htmlFor='displayName'
-            className='mb-1 block text-sm font-medium text-secondary'>
-            Name
-          </label>
-          <Input
-            type='text'
-            id='displayName'
-            name='displayName'
-            placeholder='John'
-            value={formData?.displayName}
-            onChange={handleOnChange}
+      <Form {...form}>
+        <form onSubmit={handleSubmit(onSubmit)} className='mb-8 space-y-8'>
+          <FormField
+            control={form.control}
+            name={'displayName'}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Name</FormLabel>
+
+                <FormControl>
+                  <Input {...field} placeholder='John Deo' />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
           />
-        </div>
 
-        <div className='mb-4 flex w-full flex-col items-center space-x-0 space-y-4 sm:mb-6 sm:flex-row sm:space-x-4 sm:space-y-0'>
-          <div className='w-full'>
-            <label
-              htmlFor='username'
-              className='mb-1 block text-sm font-medium text-secondary'>
-              Username
-            </label>
-            <Input
-              type='text'
-              id='username'
-              name='username'
-              placeholder='john-deo'
-              value={user?.username!}
-              disabled
+          <div className='mb-4 flex w-full flex-col items-center space-x-0 space-y-4 sm:mb-6 sm:flex-row sm:space-x-4 sm:space-y-0'>
+            <div className='w-full space-y-1'>
+              <FormLabel>Username</FormLabel>
+              <Input
+                type='text'
+                id='username'
+                name='username'
+                placeholder='john-deo'
+                value={user?.username!}
+                disabled
+              />
+            </div>
+
+            <div className='w-full space-y-1'>
+              <FormLabel>Email</FormLabel>
+              <Input
+                type='text'
+                id='email'
+                name='email'
+                placeholder='john.doe@example.com'
+                value={user?.email}
+                disabled
+              />
+            </div>
+          </div>
+
+          <div className='mb-4 flex w-full flex-col items-center space-x-0 space-y-4 sm:mb-6 sm:flex-row sm:space-x-4 sm:space-y-0'>
+            <FormField
+              control={form.control}
+              name={'password'}
+              render={({ field }) => (
+                <FormItem className='w-full'>
+                  <FormLabel>Password</FormLabel>
+
+                  <FormControl>
+                    <Input {...field} type='password' />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name={'confirmPassword'}
+              render={({ field }) => (
+                <FormItem className='w-full'>
+                  <FormLabel>Confirm Password</FormLabel>
+
+                  <FormControl>
+                    <Input {...field} type='password' />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
             />
           </div>
 
-          <div className='w-full'>
-            <label
-              htmlFor='email'
-              className='mb-1 block text-sm font-medium text-secondary'>
-              Email
-            </label>
-            <Input
-              type='text'
-              id='email'
-              name='email'
-              placeholder='john.doe@example.com'
-              value={user?.email}
-              disabled
-            />
-          </div>
-        </div>
-
-        <div className='mb-4 flex w-full flex-col items-center space-x-0 space-y-4 sm:mb-6 sm:flex-row sm:space-x-4 sm:space-y-0'>
-          <div className='w-full'>
-            <label
-              htmlFor='password'
-              className='mb-1 block text-sm font-medium text-secondary'>
-              New Password
-            </label>
-            <Input
-              type='password'
-              id='password'
-              name='password'
-              onChange={handleOnChange}
-            />
-          </div>
-
-          <div className='w-full'>
-            <label
-              htmlFor='confirmPassword'
-              className='mb-1 block text-sm font-medium text-secondary'>
-              Confirm Password
-            </label>
-            <Input
-              type='password'
-              id='confirmPassword'
-              name='confirmPassword'
-              onChange={handleOnChange}
-            />
-          </div>
-        </div>
-
-        <Button type='submit' disabled={isUpdateUserPending}>
-          Update Profile
-        </Button>
-      </form>
+          <Button type='submit' disabled={isUpdateUserPending}>
+            {isUpdateUserPending ? 'Updating Profile' : 'Update Profile'}
+          </Button>
+        </form>
+      </Form>
 
       <DeleteAccountSection user={user} />
+
+      <Button
+        className='my-8 block'
+        variant='outline'
+        onClick={() => signOut()}>
+        Sign Out
+      </Button>
     </div>
   )
 }
