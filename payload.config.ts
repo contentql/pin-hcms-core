@@ -36,26 +36,30 @@ export default cqlConfig({
   collections: [Users, Media, Pages, Blogs, Tags],
   globals: [SiteSettings],
 
-  s3: {
-    collections: {
-      media: true,
-    },
-    bucket: env.S3_BUCKET,
-    config: {
-      credentials: {
-        accessKeyId: env.S3_ACCESS_KEY_ID,
-        secretAccessKey: env.S3_SECRET_ACCESS_KEY,
-      },
-      endpoint: env.S3_ENDPOINT,
-      region: env.S3_REGION,
-    },
-  },
+  // Note: If you're using S3, you'll need to uncomment this section and comment staticDir in the Media collection
 
-  resend: {
-    apiKey: env.RESEND_API_KEY,
-    defaultFromAddress: env.RESEND_SENDER_EMAIL,
-    defaultFromName: env.RESEND_SENDER_NAME,
-  },
+  // s3: {
+  //   collections: {
+  //     media: true,
+  //   },
+  //   bucket: env.S3_BUCKET!,
+  //   config: {
+  //     credentials: {
+  //       accessKeyId: env.S3_ACCESS_KEY_ID!,
+  //       secretAccessKey: env.S3_SECRET_ACCESS_KEY!,
+  //     },
+  //     endpoint: env.S3_ENDPOINT,
+  //     region: env.S3_REGION,
+  //   },
+  // },
+
+  // Note: If you're using resend, you'll need to uncomment this section
+
+  // resend: {
+  //   apiKey: env.RESEND_API_KEY!,
+  //   defaultFromAddress: env.RESEND_SENDER_EMAIL!,
+  //   defaultFromName: env.RESEND_SENDER_NAME!,
+  // },
 
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
